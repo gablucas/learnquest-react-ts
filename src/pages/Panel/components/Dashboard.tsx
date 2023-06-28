@@ -1,19 +1,20 @@
-import useData from '../../../hooks/useData';
+import React from 'react';
 import styles from '../Panel.module.css';
+import { GlobalContext } from '../../../GlobalContext';
 
 const Dashboard = () => {
-  const data = useData();
+  const { myData } = React.useContext(GlobalContext);
 
   return (
     <div className={styles.dashboard}>
       <div>
         Total alunos
-        <span>{data.myData.users.filter((f) => f.access === 'student').length}</span>
+        <span>{myData && myData.users.filter((f) => f.access === 'student').length}</span>
       </div>
 
       <div>
         Total professores
-        <span>{data.myData.users.filter((f) => f.access === 'teacher').length}</span>
+        <span>{myData && myData.users.filter((f) => f.access === 'teacher').length}</span>
       </div>
 
       <div>
