@@ -1,0 +1,8 @@
+.login a {
+  font-weight: 700;
+  color: #FFA700;
+}
+
+.login a:hover {
+  filter: brightness(1.2);
+}

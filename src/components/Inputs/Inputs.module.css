@@ -1,0 +1,17 @@
+.inputs label,
+.inputs input,
+.inputs select {
+  display: block;
+}
+
+.inputs input,
+.inputs select {
+  padding: 10px;
+  border-radius: 4px;
+}
+
+
+.inputs span {
+  font-size: .75rem;
+  color: red;
+}

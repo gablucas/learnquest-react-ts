@@ -1,0 +1,52 @@
+.panel {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+}
+
+.dashboard {
+  display: flex;
+  gap: 20px;
+}
+
+.dashboard div {
+display: flex;
+flex-direction: column;
+text-align: center;
+padding: 12px;
+border: 1px solid #302B33;
+border-radius: 7px;
+background: linear-gradient(#302B33, #2B2F33);
+}
+
+.userpanel .users {
+  border-radius: 7px;
+  background-color: #302B33;  
+}
+
+.userpanel .users div {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  padding: 10px;
+  border-bottom: 1px solid #000000;
+}
+
+.userpanel .user {
+  border-bottom: 1px solid #000000;
+  background-color: #2B2F33;
+}
+
+.newuser {
+  position: fixed;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  background-color: rgba(0, 0, 0, .7);
+}
+
+.newuser > div {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}

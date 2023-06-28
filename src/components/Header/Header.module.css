@@ -1,0 +1,38 @@
+.header {
+  border-bottom: 1px solid #313131;
+  padding: 2rem;
+  margin-bottom: 40px;
+}
+
+.header div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header nav {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.header a {
+  font-weight: 500;
+  text-transform: uppercase;
+  transition: color .3s, background-color .3s;
+}
+
+.register {
+  padding: 8px;
+  border-radius: 7px;
+  border: 1px solid #FFA700;
+}
+
+.login:hover {
+  color: #FFA700;
+}
+
+.register:hover {
+  color: #121214;
+  background-color: #FFA700;
+}
