@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { Routes, Route, HashRouter } from 'react-router-dom'
 import Footer from './components/Footer';
 import Header from './components/Header';
 import Home from './pages/Home';
@@ -16,7 +16,7 @@ function App() {
 
   return (
     <>
-      <BrowserRouter>
+      <HashRouter>
         <GlobalProvider>
           <Header />
           <Routes>
@@ -36,7 +36,7 @@ function App() {
           </Routes>
           <Footer />
         </GlobalProvider>
-      </BrowserRouter>
+      </HashRouter>
     </>
   )
 }
