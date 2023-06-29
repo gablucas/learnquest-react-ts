@@ -1,6 +1,6 @@
-.login a {
-  font-weight: 700;
-  color: #FFA700;
+.login {
+  display: grid;
+  justify-content: center;
 }
 
 .login a:hover {

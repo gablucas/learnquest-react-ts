@@ -1,57 +1,86 @@
 import React from 'react';
-import useUsers, { IInstituition } from "./useUsers";
-import { GlobalContext } from '../GlobalContext';
+import { GlobalContext } from "../GlobalContext";
 
-interface IStudent {
+export interface IInstituition {
   id: string,
-  access: string,
   nome: string,
   email: string,
-  instituition: string,
-  password: string | number,
+  users: IUser[],
+  preferences: {
+    defaultPassword: string,
+  }
+}
+
+interface IUser {
+  id: string,
+  access: 'admin' | 'teacher' | 'student',
+  nome: string,
+  login: string,
+  email: string,
+  password: string,
   status: 'active' | 'disabled',
 }
 
-interface ITeacher {
-  id: string,
-  access: string,
-  nome: string,
-  email: string,
-  instituition: string,
-  password: string | number,
-  status: 'active' | 'disabled',
-}
 
 type UseDataReturn = {
-  createUser: (user: IStudent | ITeacher) => void,
+  getData: () => IInstituition,
+  createInitialUser: () => void,
+  createUser: (user: IUser) => void,
   removeUser: (email: string) => void,
 }
 
 const useData = (): UseDataReturn => {
-  const { setMyData } = React.useContext(GlobalContext);
-  const users = useUsers();
-  const data: IInstituition[] = JSON.parse(localStorage.getItem('instituitions') as string);
-  const index = data.findIndex((fi) => fi.email === users.loggedUser());
+  const { setData } = React.useContext(GlobalContext)
 
-  function createUser(user: IStudent | ITeacher): void {
-    data[index].users.push(user);
-    localStorage.setItem('instituitions', JSON.stringify(data));
-    setMyData(data[index]);
+  function createInitialUser(): void {
+    if (!localStorage.getItem('data')) {
+      const data: IInstituition = {
+        id: '1',
+        nome: 'Instituição',
+        email: 'instituicao@edu.com.br',
+        users: [{
+          id: '1',
+          access: 'admin',
+          nome: 'Admnistrador',
+          login: 'admin',
+          email: 'instituicao@edu.com.br',
+          password: '123',
+          status: 'active' 
+        }],
+        preferences: {
+          defaultPassword: '123',
+        }
+      }
+
+      localStorage.setItem('data', JSON.stringify(data));
+    }
   }
-  
-  
+
+  function getData(): IInstituition {
+    return JSON.parse(localStorage.getItem('data') as string);
+  }
+
+  function createUser(user: IUser): void {
+    const updateData = getData();
+    updateData.users.push(user);
+    localStorage.setItem('data', JSON.stringify(updateData));
+    setData(updateData);
+  }
+
   function removeUser(email: string): void {
-    const indexUser = data[index].users.findIndex((fi) => fi.email === email);
-    data[index].users.splice(indexUser, 1)
-    localStorage.setItem('instituitions', JSON.stringify(data));
-    setMyData(data[index]);
+    let updateData = getData();
+    updateData = {...updateData, users: updateData.users.filter((user) => user.email !== email)};
+    localStorage.setItem('data', JSON.stringify(updateData));
+    setData(updateData);
   }
 
   return {
+    createInitialUser,
+    getData,
     createUser,
     removeUser,
   }
-  
+
 }
 
 export default useData;

@@ -5,9 +5,9 @@ import useData from '../../../hooks/useData';
 import { GlobalContext } from '../../../GlobalContext';
 
 const Users = () => {
-  const { removeUser } = useData();
   const [toggle, setToggle] = React.useState<boolean>(false);
-  const { myData } = React.useContext(GlobalContext)
+  const { data } = React.useContext(GlobalContext)
+  const { removeUser } = useData();
 
   function handleDelete(email: string) {
     removeUser(email);
@@ -27,7 +27,7 @@ const Users = () => {
           <span>Excluir</span>
           </div>
 
-        {myData && myData.users.map((m) => (
+        {data.users.map((m) => (
           <div key={m.id} className={Styles.user}>
             <span>{m.nome}</span>
             <span>{m.email}</span>

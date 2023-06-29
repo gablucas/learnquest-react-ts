@@ -1,34 +1,40 @@
 import React from 'react';
-import useUsers, { IInstituition } from './hooks/useUsers';
+import useData, { IInstituition } from './hooks/useData';
+
 
 type GlobalContextProps = {
-  auth: boolean,
-  setAuth: React.Dispatch<React.SetStateAction<boolean>>,
-  myData: IInstituition | undefined,
-  setMyData: React.Dispatch<React.SetStateAction<IInstituition | undefined>>,
+  data: IInstituition,
+  setData: React.Dispatch<React.SetStateAction<IInstituition>>,
 };
 
-const intialValue = { 
-  auth: !!localStorage.getItem('logged'), 
-  setAuth: () => !!localStorage.getItem('logged'),
-  myData: undefined,
-  setMyData: () => undefined,
+const intialValue: GlobalContextProps = { 
+  data: {
+    id: '',
+    email: '',
+    nome: '',
+    users: [],
+    preferences: {
+      defaultPassword: '',
+    }
+  },
+  setData: () => null,
 };
-
-export const GlobalContext = React.createContext<GlobalContextProps>(intialValue);
 
 type GlobalProviderProps = {
   children: React.ReactNode
 };
 
-export const GlobalProvider = ({ children }: GlobalProviderProps) => {
-  const users = useUsers();
-  const [auth, setAuth] = React.useState(!!localStorage.getItem('logged'));
-  const [myData, setMyData] = React.useState<IInstituition | undefined>(users.instituitions.find((f) => f.email === users.loggedUser()))
 
+export const GlobalContext = React.createContext<GlobalContextProps>(intialValue);
+
+export const GlobalProvider = ({ children }: GlobalProviderProps) => {
+  const { createInitialUser, getData } = useData();
+  createInitialUser();
+
+  const [data, setData] = React.useState(getData);
 
   return (
-    <GlobalContext.Provider value={{ auth, setAuth, myData, setMyData }}>
+    <GlobalContext.Provider value={{ data, setData }}>
       { children }
     </GlobalContext.Provider>
   )
