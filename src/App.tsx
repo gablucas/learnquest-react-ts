@@ -3,7 +3,6 @@ import Footer from './components/Footer';
 import Header from './components/Header';
 import Home from './pages/Home';
 import Plans from './pages/Planos/Plans';
-import Register from './pages/Register/Register';
 import Panel from './pages/Panel';
 import Login from './pages/Login';
 import ProtectedRoutes from './components/Helper/ProtectedRoutes';
@@ -20,8 +19,8 @@ function App() {
         <GlobalProvider>
           <Header />
           <Routes>
-            <Route path='/' element={<Home />} />
 
+            <Route path='/' element={<Login />} />
             <Route element={<ProtectedRoutes />}>
               <Route path='/painel' element={<Panel />}>
                 <Route path='' element={<Dashboard />} />
@@ -30,9 +29,6 @@ function App() {
               </Route>
             </Route>
 
-            <Route path='/registrar' element={<Register />} />
-            <Route path='/planos' element={<Plans />} />
-            <Route path='/login' element={<Login />} />
           </Routes>
           <Footer />
         </GlobalProvider>
