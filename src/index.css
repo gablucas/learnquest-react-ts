@@ -54,7 +54,6 @@ input:focus {
 
 form {
   display: grid;
-  width: 400px;
   gap: 12px;
   padding: 40px;
   border-radius: 7px;

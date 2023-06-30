@@ -3,6 +3,10 @@
   justify-content: center;
 }
 
+.login form {
+  width: 400px;
+}
+
 .login a:hover {
   filter: brightness(1.2);
 }

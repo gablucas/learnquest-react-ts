@@ -27,15 +27,17 @@ const Newuser = ({ setToggle }: NewuserProps) => {
 
     if (access.validate() && login.validate() && access.validate() && name.validate() && email.validate()) {
 
-      createUser({
-        id: getRandomId(),
-        access: access.value as 'admin' | 'teacher' | 'student',
-        login: login.value,
-        email: email.value,
-        nome: name.value,
-        password: data.preferences.defaultPassword,
-        status: 'active',
-      })
+      if(data) {
+        createUser({
+          id: getRandomId(),
+          access: access.value as 'admin' | 'teacher' | 'student',
+          login: login.value,
+          email: email.value,
+          nome: name.value,
+          password: data.preferences.defaultPassword,
+          status: 'active',
+        })
+      }
     }
 
       setToggle(false);

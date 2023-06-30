@@ -5,9 +5,11 @@ import Input from '../../components/Inputs/Input';
 import useForm, { UseFormType } from '../../hooks/useForm';
 import { Navigate, NavigateFunction, useNavigate } from 'react-router-dom';
 import { GlobalContext } from '../../GlobalContext';
+import useData from '../../hooks/useData';
 
 const Login = () => {
   const { data, setUser } = React.useContext(GlobalContext);
+  const { getUser } = useData();
 
   const navigate: NavigateFunction = useNavigate();
   const login: UseFormType = useForm();
@@ -20,7 +22,14 @@ const Login = () => {
       if (data?.users.some((s) => s.login === login.value && s.password === password.value)) {
         localStorage.setItem('logged', login.value);
         setUser(login.value);
-        navigate('/painel');
+
+        if (getUser()?.access !== "student") {
+          navigate('/painel');
+        } else {
+          navigate('/estudante');
+        }
+
+
       } else {
         password.setError('Usuário ou Senha invalidos');
       }

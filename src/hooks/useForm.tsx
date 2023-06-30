@@ -8,7 +8,11 @@ export type UseFormType = {
   setError: Dispatch<SetStateAction<string | null>>
 }
 
-const useForm = (): UseFormType => {
+interface Teste {
+  teste: () => UseFormType,
+}
+
+const useForm = (): UseFormType & Teste => {
   const [value, setValue] = React.useState<string>('');
   const [error, setError] = React.useState<string | null>(null);
 
@@ -26,12 +30,23 @@ const useForm = (): UseFormType => {
     setValue(e.currentTarget.value);
   }
 
+  function teste(): UseFormType {
+    return {
+      onChange,
+      value,
+      validate,
+      error,
+      setError,
+    }
+  }
+
   return {
     onChange,
     value,
     validate,
     error,
     setError,
+    teste,
   }
 
 }

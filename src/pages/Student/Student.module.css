@@ -1,0 +1,46 @@
+.student_menu_container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.student_menu_container a,
+.student_menu_container button {
+  padding: 8px;
+  border-radius: 7px;
+  background-color: #302B33;  
+}
+
+.student_menu_container a:hover,
+.student_menu_container button:hover {
+  background-color: #464149;
+}
+
+.student_lessons {
+  display: flex;
+}
+
+.student_lessons > a {
+  padding: 12px;
+  border-radius: 7px;
+  background-color: #302B33;
+}
+
+.student_lessons a > div {
+  width: 200px;
+  height: 200px;
+  background-color: #FFA700;
+}
+
+.student_lesson {
+  display: grid;
+  justify-items: center;
+}
+
+.student_lesson form {
+  width: 800px;
+}
+
+.student_lesson p {
+  margin-bottom: 40px;
+}
