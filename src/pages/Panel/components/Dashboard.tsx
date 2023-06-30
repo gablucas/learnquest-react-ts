@@ -6,15 +6,25 @@ const Dashboard = () => {
   const { data } = React.useContext(GlobalContext);
 
   return (
-    <div className={styles.dashboard}>
+    <div className={styles.dashboard_container}>
       <div>
-        Total alunos
-        <span>{data.users.filter((f) => f.access === 'student').length}</span>
+        Administradores
+        <span>{data?.users.filter((f) => f.access === 'admin').length}</span>
       </div>
 
       <div>
-        Total professores
-        <span>{data.users.filter((f) => f.access === 'teacher').length}</span>
+        Professores
+        <span>{data?.users.filter((f) => f.access === 'teacher').length}</span>
+      </div>
+
+      <div>
+        Alunos
+        <span>{data?.users.filter((f) => f.access === 'student').length}</span>
+      </div>
+
+      <div>
+        Aulas
+        <span>{data?.lessons.length}</span>
       </div>
 
       <div>
@@ -27,10 +37,6 @@ const Dashboard = () => {
         <span>0</span>
       </div>
 
-      <div>
-        Aulas criadas
-        <span>0</span>
-      </div>
 
     </div>
   )
