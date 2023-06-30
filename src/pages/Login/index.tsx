@@ -7,7 +7,7 @@ import { Navigate, NavigateFunction, useNavigate } from 'react-router-dom';
 import { GlobalContext } from '../../GlobalContext';
 
 const Login = () => {
-  const { data } = React.useContext(GlobalContext);
+  const { data, setUser } = React.useContext(GlobalContext);
 
   const navigate: NavigateFunction = useNavigate();
   const login: UseFormType = useForm();
@@ -19,6 +19,7 @@ const Login = () => {
     if (login.validate() && password.validate()) {
       if (data?.users.some((s) => s.login === login.value && s.password === password.value)) {
         localStorage.setItem('logged', login.value);
+        setUser(login.value);
         navigate('/painel');
       } else {
         password.setError('Usuário ou Senha invalidos');

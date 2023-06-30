@@ -9,31 +9,30 @@ const Users = () => {
   const { data } = React.useContext(GlobalContext)
   const { removeUser } = useData();
 
-  function handleDelete(email: string) {
-    removeUser(email);
-  }
-  
   return (
-    <section className={Styles.userpanel}>
-      <button onClick={() => setToggle(!toggle)}>Criar usuário</button>
+    <section className={Styles.users_container}>
 
+      <div className={Styles.users_options}>
+        <button onClick={() => setToggle(!toggle)}>Criar usuário +</button>
+      </div>
 
       <div className={Styles.users}>
+
         <div>
           <span>Nome</span>
           <span>Email</span>
           <span>Estado</span>
           <span>Editar</span>
           <span>Excluir</span>
-          </div>
+        </div>
 
-        {data.users.map((m) => (
+        {data?.users.map((m) => (
           <div key={m.id} className={Styles.user}>
             <span>{m.nome}</span>
             <span>{m.email}</span>
             <span>{m.status === 'active' ? 'Ativado' : 'Desativado'}</span>
             <button>Editar</button>
-            <button onClick={() => handleDelete(m.email)}>Excluir</button>
+            <button onClick={() => removeUser(m.email)}>Excluir</button>
           </div>
         ))}
       </div>

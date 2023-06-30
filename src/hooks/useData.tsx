@@ -6,6 +6,7 @@ export interface IInstituition {
   nome: string,
   email: string,
   users: IUser[],
+  lessons: ILesson[],
   preferences: {
     defaultPassword: string,
   }
@@ -21,12 +22,31 @@ interface IUser {
   status: 'active' | 'disabled',
 }
 
+type Questions = {
+  id: string,
+  question: string,
+  answer: string,
+  xp: number,
+  needEvaluation: boolean,
+}
+
+export interface ILesson {
+  id: string,
+  createdBy: string,
+  title: string,
+  video: string,
+  text: string,
+  questions: Questions[],
+}
 
 type UseDataReturn = {
   getData: () => IInstituition,
   createInitialUser: () => void,
   createUser: (user: IUser) => void,
   removeUser: (email: string) => void,
+  getUser: () => IUser | undefined,
+  createLesson: (lesson: ILesson) => void,
+  removeLesson: (id: string) => void,
 }
 
 const useData = (): UseDataReturn => {
@@ -47,6 +67,7 @@ const useData = (): UseDataReturn => {
           password: '123',
           status: 'active' 
         }],
+        lessons: [],
         preferences: {
           defaultPassword: '123',
         }
@@ -74,11 +95,39 @@ const useData = (): UseDataReturn => {
     setData(updateData);
   }
 
+  function getUser(): IUser | undefined {
+    const data = getData();
+    const userLogin = localStorage.getItem('logged');
+
+    if (data && userLogin) {
+      return data.users.find((user) => user.login === userLogin);
+    } else {
+      return undefined;
+    }
+  }
+
+  function createLesson(lesson: ILesson): void {
+    const updateData = getData();
+    updateData.lessons.push(lesson);
+    localStorage.setItem('data', JSON.stringify(updateData));
+    setData(updateData);
+  }
+
+  function removeLesson(id: string) {
+    const updateData = getData();
+    updateData.lessons = updateData.lessons.filter((lesson) => lesson.id !== id);
+    localStorage.setItem('data', JSON.stringify(updateData));
+    setData(updateData);
+  }
+
   return {
     createInitialUser,
     getData,
     createUser,
     removeUser,
+    getUser,
+    createLesson,
+    removeLesson,
   }
 
 }
