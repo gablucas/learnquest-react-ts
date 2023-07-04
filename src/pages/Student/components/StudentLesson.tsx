@@ -2,32 +2,44 @@ import React from 'react';
 import Styles from '../Student.module.css';
 import { GlobalContext } from '../../../GlobalContext';
 import { Link, useParams } from 'react-router-dom';
-import useForm from '../../../hooks/useForm';
-import Input from '../../../components/Inputs/Input';
-
+import useData, { IInstituition, LessonTest } from '../../../hooks/useData';
 
 const StudentLesson = () => {
   const { data } = React.useContext(GlobalContext);
   const { id } = useParams();
-  const { teste } = useForm();
+  const [answer, setAnswer] = React.useState<LessonTest>();
+  const { saveStudentLesson } = useData();
+
   // Analisar se utilizar variavel local afeta o desempenho a cada renderizacao
-  const lesson = data?.lessons.find((f) => f.id === id);
+  const lesson = (data as IInstituition).lessons.find((f) => f.id === id);
 
-  // Array com os objetos que são desestruturados em cada input para fazer a validação e passar o valor
-   const testeInput = lesson?.questions.map(() => teste())
+  React.useEffect(() => {
+    if (lesson) {
+      setAnswer({id: lesson.id, answers: lesson.questions.map((question) => ({id: question.id, value: ''}))})
+    }
+  }, [lesson])
 
-  
-  
+
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>, index: number): void {
+    if (answer) {
+      const newAnswer = {...answer};
+      newAnswer.answers[index].value = e.target.value;
+      setAnswer(newAnswer);
+    }
+  }
+
+
   function handleSubmit(e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault();
-    
-    if (testeInput?.every((i) => i.validate())) {
-      console.log('Validado')
+
+    if (answer?.answers.every((answer) => answer.value)) {
+      console.log('validado')
+      saveStudentLesson(answer)
     }
   }
 
   
-  if (lesson && testeInput)
+  if (lesson && answer)
   return (
     <div className={Styles.student_lesson}>
       <h1>{lesson.title}</h1>
@@ -37,7 +49,8 @@ const StudentLesson = () => {
         <h2>Avaliação</h2>
         {lesson.questions.map((question, index) => (
           <div key={question.id}>
-            <Input type='text' label={question.question} {...testeInput[index]}/>
+            <label>{question.question}</label>
+            <input type='text' value={answer.answers[index].value} onChange={(e) => handleChange(e, index)} />
           </div>
         ))}
         <button>Finalizar Avaliação</button>

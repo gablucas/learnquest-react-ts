@@ -19,7 +19,7 @@ const Login = () => {
     e.preventDefault();
 
     if (login.validate() && password.validate()) {
-      if (data?.users.some((s) => s.login === login.value && s.password === password.value)) {
+      if (data?.users.some((s) => s.login.toLowerCase() === login.value.toLowerCase() && s.password.toLowerCase() === password.value.toLowerCase())) {
         localStorage.setItem('logged', login.value);
         setUser(login.value);
 
@@ -29,14 +29,13 @@ const Login = () => {
           navigate('/estudante');
         }
 
-
       } else {
         password.setError('Usuário ou Senha invalidos');
       }
     }
   }
 
-  if (localStorage.getItem('logged')) return <Navigate to='/painel' />
+  if (localStorage.getItem('logged')) return <Navigate to='/estudante' />
   return(
     <Container>
       <div className={Styles.login}>
