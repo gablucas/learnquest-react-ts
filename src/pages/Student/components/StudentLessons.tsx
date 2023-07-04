@@ -8,7 +8,7 @@ const StudentLessons = () => {
 
   return (
     <div className={Styles.student_lessons_container}>
-      <h1>Lessons</h1>
+      <h1>Aulas</h1>
 
       <div className={Styles.student_lessons}>
         {data?.lessons.map((lesson) => (
@@ -18,6 +18,8 @@ const StudentLessons = () => {
           </Link>
         ))}
       </div>
+
+      <h1>Aulas Finalizadas</h1>
 
     </div>
   )

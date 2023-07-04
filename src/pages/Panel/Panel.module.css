@@ -92,6 +92,10 @@
   padding: 6px;
 }
 
+.users div {
+  grid-template-columns: repeat(6, 1fr);
+}
+
 .users div + div,
 .lessons div + div {
   border-top: 1px solid #121214;

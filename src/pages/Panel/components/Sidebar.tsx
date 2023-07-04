@@ -12,6 +12,7 @@ const Sidebar = () => {
       <ul>
         {getUser()?.access === 'admin' && <li><Link to='/painel'>Visão geral</Link></li>}
         {getUser()?.access === 'admin' && <li><Link to='usuarios'>Usuarios</Link></li>}
+        {getUser()?.access === 'admin' && <li><Link to='turmas'>Turmas</Link></li>}
         {getUser()?.access !== 'student' && <li><Link to='aulas'>Aulas</Link></li>}
         {getUser()?.access === 'admin' && <li><Link to='preferencias'>Preferências</Link></li>}
         <li><button onClick={logoutUser}>Sair</button></li>
