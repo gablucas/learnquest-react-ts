@@ -28,7 +28,7 @@ const Lessons = () => {
           <div key={lesson.id} className={Styles.lesson}>
             <span>{lesson.title}</span>
             <span>{lesson.createdBy}</span>
-            <span>{lesson.questions.length + 1}</span>
+            <span>{lesson.questions.length}</span>
             <button>Editar</button>
             <button onClick={() => removeLesson(lesson.id)}>Deletar</button>
           </div>

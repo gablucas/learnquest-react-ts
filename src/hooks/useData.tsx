@@ -5,7 +5,7 @@ export interface IInstituition {
   id: string,
   nome: string,
   email: string,
-  users: IUser[],
+  users: Array<IUser | IStudent>,
   lessons: ILesson[],
   preferences: {
     defaultPassword: string,
@@ -22,7 +22,16 @@ interface IUser {
   status: 'active' | 'disabled',
 }
 
-type Questions = {
+export type LessonTest = {
+  id: string,
+  answers: {id: string, value: string}[]
+}
+
+interface IStudent extends IUser {
+  lessons: LessonTest[];
+}
+
+export type Questions = {
   id: string,
   question: string,
   answer: string,
@@ -42,15 +51,17 @@ export interface ILesson {
 type UseDataReturn = {
   getData: () => IInstituition,
   createInitialUser: () => void,
-  createUser: (user: IUser) => void,
+  createUser: (user: IUser | IStudent) => void,
   removeUser: (email: string) => void,
-  getUser: () => IUser | undefined,
+  getUser: () => IUser | IStudent | undefined,
+  logoutUser: () => void,
   createLesson: (lesson: ILesson) => void,
   removeLesson: (id: string) => void,
+  saveStudentLesson: (answer: LessonTest) => void,
 }
 
 const useData = (): UseDataReturn => {
-  const { setData } = React.useContext(GlobalContext)
+  const { setData, setUser } = React.useContext(GlobalContext)
 
   function createInitialUser(): void {
     if (!localStorage.getItem('data')) {
@@ -81,7 +92,7 @@ const useData = (): UseDataReturn => {
     return JSON.parse(localStorage.getItem('data') as string);
   }
 
-  function createUser(user: IUser): void {
+  function createUser(user: IUser | IStudent): void {
     const updateData = getData();
     updateData.users.push(user);
     localStorage.setItem('data', JSON.stringify(updateData));
@@ -95,15 +106,20 @@ const useData = (): UseDataReturn => {
     setData(updateData);
   }
 
-  function getUser(): IUser | undefined {
+  function getUser(): IUser | IStudent | undefined {
     const data = getData();
     const userLogin = localStorage.getItem('logged');
 
     if (data && userLogin) {
-      return data.users.find((user) => user.login === userLogin);
+      return data.users.find((user) => user.login.toLowerCase() === userLogin.toLowerCase());
     } else {
       return undefined;
     }
+  }
+
+  function logoutUser(): void {
+    localStorage.removeItem('logged');
+    setUser(null);
   }
 
   function createLesson(lesson: ILesson): void {
@@ -120,14 +136,30 @@ const useData = (): UseDataReturn => {
     setData(updateData);
   }
 
+  function saveStudentLesson(answer: LessonTest): void {
+    console.log(answer)
+    const updateData = getData();
+    updateData.users = updateData.users.map((user) => {
+      if (user.login.toLowerCase() === localStorage.getItem('logged')?.toLowerCase()) {
+        return {...user, lessons: [...(user as IStudent).lessons, answer]}
+      }
+      return user;
+    })
+    console.log(updateData)
+    localStorage.setItem('data', JSON.stringify(updateData));
+    setData(updateData);
+  }
+
   return {
     createInitialUser,
     getData,
     createUser,
     removeUser,
     getUser,
+    logoutUser,
     createLesson,
     removeLesson,
+    saveStudentLesson,
   }
 
 }

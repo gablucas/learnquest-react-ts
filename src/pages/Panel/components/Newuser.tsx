@@ -36,6 +36,7 @@ const Newuser = ({ setToggle }: NewuserProps) => {
           nome: name.value,
           password: data.preferences.defaultPassword,
           status: 'active',
+          lessons: [],
         })
       }
     }
