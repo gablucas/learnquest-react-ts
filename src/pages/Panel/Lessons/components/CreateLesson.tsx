@@ -1,8 +1,10 @@
 import React, { useContext } from 'react';
-import Styles from '../Panel.module.css';
-import useData, { IInstituition, ILesson } from '../../../hooks/useData';
+import Styles from '../../Panel.module.css';
+import useData from '../../../../hooks/useData';
 import { useNavigate } from 'react-router-dom';
-import { GlobalContext } from '../../../GlobalContext';
+import { GlobalContext } from '../../../../GlobalContext';
+import { ILesson } from '../../../../types/Lessons';
+import { IInstituition } from '../../../../types/Users';
 
 const CreateLesson = () => {
   const { data } = useContext(GlobalContext);

@@ -5,16 +5,16 @@ import Panel from './pages/Panel';
 import Login from './pages/Login';
 import ProtectedRoutes from './components/Helper/ProtectedRoutes';
 import { GlobalProvider } from './GlobalContext';
-import Users from './pages/Panel/components/Users';
-import Dashboard from './pages/Panel/components/Dashboard';
-import Preferences from './pages/Panel/components/Preferences';
-import Lessons from './pages/Panel/components/Lessons';
-import CreateLesson from './pages/Panel/components/CreateLesson';
+import Users from './pages/Panel/Users/Users';
+import Dashboard from './pages/Panel/Dashboard/Dashboard';
+import Preferences from './pages/Panel/Preferences/Preferences';
+import Lessons from './pages/Panel/Lessons/Lessons';
+import CreateLesson from './pages/Panel/Lessons/components/CreateLesson';
 import Student from './pages/Student';
-import StudentLessons from './pages/Student/components/StudentLessons';
-import StudentInfo from './pages/Student/components/StudentInfo';
-import StudentLesson from './pages/Student/components/StudentLesson';
-import Classes from './pages/Panel/components/Classes';
+import StudentLessons from './pages/Student/StudentLessons/StudentLessons';
+import StudentInfo from './pages/Student/StudendInfo/StudentInfo';
+import StudentLesson from './pages/Student/StudentLesson/StudentLesson';
+import Classes from './pages/Panel/Classes/Classes';
 
 function App() {
 

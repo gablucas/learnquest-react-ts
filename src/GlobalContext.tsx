@@ -1,5 +1,6 @@
 import React from 'react';
-import useData, { IInstituition } from './hooks/useData';
+import useData from './hooks/useData';
+import { IInstituition } from './types/Users';
 
 type GlobalContextProps = {
   data: IInstituition | null,

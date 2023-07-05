@@ -1,63 +1,8 @@
 import React from 'react';
 import { GlobalContext } from "../GlobalContext";
-
-export interface IInstituition {
-  id: string,
-  nome: string,
-  email: string,
-  users: Array<IUser | IStudent>,
-  classes: Classes[],
-  lessons: ILesson[],
-  preferences: {
-    defaultPassword: string,
-  }
-}
-
-export interface Classes {
-  id: string,
-  name: string,
-  students: string[],
-  status: Status,
-}
-
-interface IUser {
-  id: string,
-  access: 'admin' | 'teacher' | 'student',
-  nome: string,
-  login: string,
-  email: string,
-  password: string,
-  status: Status,
-}
-
-type Status = 'active' | 'disabled';
-
-export type LessonTest = {
-  id: string,
-  answers: {id: string, value: string}[]
-}
-
-interface IStudent extends IUser {
-  lessons: LessonTest[];
-}
-
-export type Questions = {
-  id: string,
-  question: string,
-  answer: string,
-  xp: number,
-  needEvaluation: boolean,
-}
-
-export interface ILesson {
-  id: string,
-  createdBy: string,
-  title: string,
-  video: string,
-  text: string,
-  questions: Questions[],
-  classes: string[],
-}
+import { IInstituition, IUser, IStudent } from '../types/Users';
+import { ILesson, LessonTest } from '../types/Lessons';
+import { Classes } from '../types/Classes';
 
 type UseDataReturn = {
   getData: () => IInstituition,

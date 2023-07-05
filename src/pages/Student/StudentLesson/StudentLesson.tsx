@@ -2,7 +2,9 @@ import React from 'react';
 import Styles from '../Student.module.css';
 import { GlobalContext } from '../../../GlobalContext';
 import { Link, useParams } from 'react-router-dom';
-import useData, { IInstituition, LessonTest } from '../../../hooks/useData';
+import useData from '../../../hooks/useData';
+import { LessonTest } from '../../../types/Lessons';
+import { IInstituition } from '../../../types/Users';
 
 const StudentLesson = () => {
   const { data } = React.useContext(GlobalContext);

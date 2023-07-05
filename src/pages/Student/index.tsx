@@ -1,7 +1,7 @@
 import Styles from './Student.module.css';
 import Container from "../../components/Container";
 import { Outlet } from 'react-router-dom';
-import StudentMenu from './components/StudentMenu';
+import StudentMenu from './StudentMenu/StudentMenu';
 
 const Student = () => {
 

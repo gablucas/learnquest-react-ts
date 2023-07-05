@@ -1,7 +1,9 @@
 import React from 'react';
-import Styles from '../Panel.module.css';
-import { GlobalContext } from '../../../GlobalContext';
-import useData, { Classes, IInstituition } from '../../../hooks/useData';
+import Styles from '../../Panel.module.css';
+import { GlobalContext } from '../../../../GlobalContext';
+import useData from '../../../../hooks/useData';
+import { IInstituition } from '../../../../types/Users';
+import { Classes } from '../../../../types/Classes';
 
 type NewuserProps = {
   setToggle: React.Dispatch<React.SetStateAction<boolean>>
