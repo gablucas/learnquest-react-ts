@@ -16,6 +16,7 @@ const CreateLesson = () => {
     video: '',
     text: '',
     questions: [{id: '1' ,question: '', answer: '', xp: 0, needEvaluation: false}],
+    classes: []
   })
 
   function handleCreateQuestion(e: React.MouseEvent<HTMLButtonElement>): void {
@@ -23,6 +24,16 @@ const CreateLesson = () => {
     const addNewQuestion = {...lesson};
     addNewQuestion.questions.push({id: (lesson.questions.length + 1).toString(), question: '', answer: '', xp: 0, needEvaluation: false});
     setLesson(addNewQuestion);
+  }
+
+  function handleClasses(e: React.ChangeEvent<HTMLInputElement>, classId: string): void {
+    if (e.target.checked) {
+      setLesson({...lesson, classes: [...lesson.classes, classId]})
+    } else {
+      const updateLesson = {...lesson};
+      updateLesson.classes = updateLesson.classes.filter((f) => f !== classId);
+      setLesson(updateLesson)
+    }
   }
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>, propertie: string, index?: number): void {
@@ -59,7 +70,7 @@ const CreateLesson = () => {
     e.preventDefault();
     
     console.log(lesson.questions[0].question !== '')
-    if (lesson.title && lesson.text && lesson.questions.every((question) => question.question && question.answer)) {
+    if (lesson.title && lesson.text && lesson.classes.length > 0 && lesson.questions.every((question) => question.question && question.answer)) {
 
       createLesson(lesson);
       navigate('/painel/aulas');
@@ -83,6 +94,18 @@ const CreateLesson = () => {
         <div>
           <label>Descrição da aula</label>
           <input type='text' value={lesson.text} onChange={(e) => handleChange(e, 'text')}/>
+        </div>
+
+        <div>
+          <h2>Turmas</h2>
+          <div className={Styles.createlesson_classes}>
+            {data?.classes.map((c) => (
+              <div key={c.id}>
+                <input type='checkbox' onChange={(e) => handleClasses(e, c.id)}/>
+                <label>{c.name}</label>
+              </div>
+            ))}
+          </div>
         </div>
 
         <div>

@@ -18,7 +18,7 @@ const Lessons = () => {
       <div className={Styles.lessons}>
         <div>
           <span>Título</span>
-          <span>Criado por</span>
+          <span>Criada por</span>
           <span>Questões</span>
           <span>Editar</span>
           <span>Excluir</span>

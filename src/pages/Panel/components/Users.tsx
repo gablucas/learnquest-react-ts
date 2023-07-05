@@ -21,18 +21,24 @@ const Users = () => {
         <div>
           <span>Nome</span>
           <span>Email</span>
+          <span>Acesso</span>
           <span>Estado</span>
           <span>Editar</span>
           <span>Excluir</span>
         </div>
 
-        {data?.users.map((m) => (
+        {data?.users.map((m, index) => (
           <div key={m.id} className={Styles.user}>
             <span>{m.nome}</span>
             <span>{m.email}</span>
+            <span>{m.access}</span>
             <span>{m.status === 'active' ? 'Ativado' : 'Desativado'}</span>
-            <button>Editar</button>
-            <button onClick={() => removeUser(m.email)}>Excluir</button>
+            {index !== 0 && (
+              <>
+                <button>Editar</button>
+                <button onClick={() => removeUser(m.email)}>Excluir</button>
+              </>
+            )}
           </div>
         ))}
       </div>
