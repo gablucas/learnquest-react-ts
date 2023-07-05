@@ -14,6 +14,7 @@ import Student from './pages/Student';
 import StudentLessons from './pages/Student/components/StudentLessons';
 import StudentInfo from './pages/Student/components/StudentInfo';
 import StudentLesson from './pages/Student/components/StudentLesson';
+import Classes from './pages/Panel/components/Classes';
 
 function App() {
 
@@ -28,6 +29,7 @@ function App() {
               <Route path='/painel' element={<Panel />}>
                 <Route path='' element={<Dashboard />} />
                 <Route path='usuarios' element={<ProtectedRoutes allowedAccess={['admin']}><Users /></ProtectedRoutes>} />
+                <Route path='turmas' element={<ProtectedRoutes allowedAccess={['admin']}><Classes /></ProtectedRoutes>} />
                 <Route path='preferencias' element={<ProtectedRoutes allowedAccess={['admin']}><Preferences /></ProtectedRoutes>} />
                 <Route path='aulas' element={<Lessons />}/>
                 <Route path='aulas/criar' element={<CreateLesson />} />

@@ -49,9 +49,10 @@
   background: linear-gradient(#302B33, #2B2F33);
 }
 
-/* Componente Users e Lessons*/
+/* Componente Users, Classes e Lessons*/
 
 .users_container,
+.classes_container,
 .lessons_container {
   display: grid;
   align-content: start;
@@ -59,6 +60,7 @@
 }
 
 .users,
+.classes,
 .lessons {
   display: grid;
   border-radius: 7px;
@@ -66,11 +68,13 @@
 }
 
 .users_options,
+.classes_options,
 .lessons_options {
   display: grid;
 }
 
 .users_options button,
+.classes_options button,
 .lessons_options a {
   justify-self: start;
   padding: 8px;
@@ -80,11 +84,13 @@
 }
 
 .users_options button:hover,
+.classes_options button:hover,
 .lessons_options a:hover {
   background-color: #464149;
 }
 
 .users div,
+.classes div,
 .lessons div {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -97,24 +103,28 @@
 }
 
 .users div + div,
+.classes div + div,
 .lessons div + div {
   border-top: 1px solid #121214;
 }
 
 .user button,
+.classes button,
 .lesson button {
   padding: 8px;
   border-radius: 7px;
 }
 
 .user button:hover,
+.classes button:hover,
 .lesson button:hover {
   background-color: #464149;
 }
 
-/* Componente Newuser */
+/* Componente Newuser e Newclass */
 
-.newuser {
+.newuser,
+.newclass {
   position: fixed;
   top: 0px;
   right: 0px;
@@ -123,11 +133,33 @@
   background-color: rgba(0, 0, 0, .7);
 }
 
-.newuser > div {
+.newuser > div,
+.newclass > div {
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+}
+
+/* Componente Newclass */
+.newclass form {
+  width: 400px;
+  height: 600px;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+
+.newclass_students {
+  height: 90%;
+  padding: 12px;
+  border-radius: 7px;
+  background-color: #121214; 
+  overflow-y: scroll;
+}
+
+.newclass_students > div {
+  display: flex;
+  gap: 10px;
 }
 
 /* Componente CreateLesson */
@@ -151,6 +183,20 @@
   display: flex;
   gap: 10px;
 }
+
+.createlesson_classes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 12px;
+  background-color: #121214; 
+}
+
+.createlesson_classes > div {
+  display: flex;
+  gap: 4px;
+}
+
 
 /* Componente Preferences */
 .preferences {

@@ -6,10 +6,18 @@ export interface IInstituition {
   nome: string,
   email: string,
   users: Array<IUser | IStudent>,
+  classes: Classes[],
   lessons: ILesson[],
   preferences: {
     defaultPassword: string,
   }
+}
+
+export interface Classes {
+  id: string,
+  name: string,
+  students: string[],
+  status: Status,
 }
 
 interface IUser {
@@ -19,8 +27,10 @@ interface IUser {
   login: string,
   email: string,
   password: string,
-  status: 'active' | 'disabled',
+  status: Status,
 }
+
+type Status = 'active' | 'disabled';
 
 export type LessonTest = {
   id: string,
@@ -46,6 +56,7 @@ export interface ILesson {
   video: string,
   text: string,
   questions: Questions[],
+  classes: string[],
 }
 
 type UseDataReturn = {
@@ -58,6 +69,8 @@ type UseDataReturn = {
   createLesson: (lesson: ILesson) => void,
   removeLesson: (id: string) => void,
   saveStudentLesson: (answer: LessonTest) => void,
+  createClass: (newclass: Classes) => void,
+  removeClass: (classId: string) => void,
 }
 
 const useData = (): UseDataReturn => {
@@ -78,6 +91,7 @@ const useData = (): UseDataReturn => {
           password: '123',
           status: 'active' 
         }],
+        classes: [],
         lessons: [],
         preferences: {
           defaultPassword: '123',
@@ -137,7 +151,6 @@ const useData = (): UseDataReturn => {
   }
 
   function saveStudentLesson(answer: LessonTest): void {
-    console.log(answer)
     const updateData = getData();
     updateData.users = updateData.users.map((user) => {
       if (user.login.toLowerCase() === localStorage.getItem('logged')?.toLowerCase()) {
@@ -145,7 +158,20 @@ const useData = (): UseDataReturn => {
       }
       return user;
     })
-    console.log(updateData)
+    localStorage.setItem('data', JSON.stringify(updateData));
+    setData(updateData);
+  }
+
+  function createClass(newclass: Classes): void {
+    const updateData = getData();
+    updateData.classes.push(newclass);
+    localStorage.setItem('data', JSON.stringify(updateData));
+    setData(updateData);
+  }
+
+  function removeClass(classId: string): void {
+    const updateData = getData();
+    updateData.classes = updateData.classes.filter((c) => c.id !== classId);
     localStorage.setItem('data', JSON.stringify(updateData));
     setData(updateData);
   }
@@ -160,8 +186,9 @@ const useData = (): UseDataReturn => {
     createLesson,
     removeLesson,
     saveStudentLesson,
+    createClass,
+    removeClass,
   }
-
 }
 
 export default useData;
