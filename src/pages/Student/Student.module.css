@@ -50,9 +50,9 @@
   margin-bottom: 40px;
 }
 
-.student_info_container {
+.student_info_dashboard {
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: auto auto auto;
   justify-content: start;
   gap: 20px;
 }
@@ -88,7 +88,8 @@
 }
 
 .student_info_donelessons, 
-.student_info_todolessons {
+.student_info_todolessons,
+.student_info_data {
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -107,3 +108,29 @@
   grid-row: 2;
 }
 
+.student_info_data {
+  width: 400px;
+  text-align: start;
+  grid-column: 3;
+  grid-row: 1/3;
+}
+
+.student_info_data span:first-child {
+  line-height: 1;
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.student_info_data span {
+  font-size: 1.2rem;
+}
+
+.student_info_historylessons {
+  margin-top: 40px;
+}
+
+.student_info_historylessons > div {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
