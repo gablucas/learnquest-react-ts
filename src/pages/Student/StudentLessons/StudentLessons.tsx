@@ -1,31 +1,32 @@
 import React from 'react';
 import Styles from '../Student.module.css';
-import { GlobalContext } from "../../../GlobalContext";
-import { Link } from 'react-router-dom';
+import { GlobalContext } from '../../../GlobalContext';
 import useData from '../../../hooks/useData';
+import { Link } from 'react-router-dom';
+import { IStudent } from '../../../types/Users';
 
 const StudentLessons = () => {
   const { data } = React.useContext(GlobalContext);
   const { getUser } = useData();
+  const student = getUser() as IStudent;
 
-  const userClass = data?.classes.find((f) => f.students.some((s) => s === getUser()?.id));
-  const lessons = data?.lessons.filter((f) => f.classes.some((id) => id === userClass?.id));
+  const studentClass = data?.classes.find((f) => f.students.some((id) => id === student?.id));
+  const lessons = data?.lessons.filter((lesson) => lesson.classes.some((id) => id === studentClass?.id && !student.lessons.some((s) => s.id === lesson.id)));
 
   return (
     <div className={Styles.student_lessons_container}>
-      <h1>Aulas</h1>
 
-      <div className={Styles.student_lessons}>
-        {lessons?.map((lesson) => (
-          <Link to={`aula/${lesson.id}`} key={lesson.id}>
-            <div></div>
-            <span>{lesson.title}</span>
-          </Link>
-        ))}
+      <h1>Suas aulas</h1>
+
+      <div className={Styles.student_lessons_list}>
+        <ul>
+          {lessons?.map((lesson) => (
+            <li className={Styles.student_lessons}>
+              <Link to={`/estudante/aula/${lesson.id}`}  key={lesson.id}><span>{lesson.title}</span></Link>
+            </li>
+          ))}
+        </ul>
       </div>
-
-      <h1>Aulas Finalizadas</h1>
-
     </div>
   )
 }

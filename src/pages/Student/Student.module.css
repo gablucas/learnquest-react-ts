@@ -2,6 +2,7 @@
   display: flex;
   justify-content: center;
   gap: 10px;
+  margin-bottom: 20px;
 }
 
 .student_menu_container a,
@@ -16,9 +17,16 @@
   background-color: #464149;
 }
 
-.student_lessons {
-  display: flex;
-  gap: 20px;
+
+.student_lessons_list {
+  padding: 20px;
+  border-radius: 7px;
+  background-color: #302B33;  
+}
+
+.student_lessons_list ul {
+  height: 540px;
+  background-color: #121214;
 }
 
 .student_lessons > a {
@@ -26,14 +34,7 @@
   gap: 10px;
   align-items: center;
   padding: 12px;
-  border-radius: 7px;
-  background-color: #302B33;
-}
-
-.student_lessons a > div {
-  width: 50px;
-  height: 50px;
-  background-color: #FFA700;
+  background-color: #1E1C1F;
 }
 
 .student_lesson {
@@ -48,3 +49,61 @@
 .student_lesson p {
   margin-bottom: 40px;
 }
+
+.student_info_container {
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: start;
+  gap: 20px;
+}
+
+.student_info_level {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  border-radius: 7px;
+  background-color: #302B33;
+
+  grid-row: 1/3;
+}
+
+.student_info_level div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+}
+
+.student_info_level span:first-child,
+.student_info_donelessons span:first-child, 
+.student_info_todolessons span:first-child {
+  text-align: center;
+  line-height: 1;
+  font-size: 3rem;
+  font-weight: 700;
+}
+
+.student_info_donelessons, 
+.student_info_todolessons {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding: 10px;
+  border-radius: 7px;
+  background-color: #302B33;
+}
+
+.student_info_donelessons {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.student_info_todolessons {
+  grid-column: 2;
+  grid-row: 2;
+}
+

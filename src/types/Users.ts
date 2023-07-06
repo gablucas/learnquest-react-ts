@@ -9,6 +9,7 @@ export interface IInstituition {
   users: Array<IUser | IStudent>,
   classes: Classes[],
   lessons: ILesson[],
+  subjects: string[],
   preferences: {
     defaultPassword: string,
   }
@@ -25,5 +26,7 @@ export interface IUser {
 }
 
 export interface IStudent extends IUser {
+  level: number,
+  xp: number,
   lessons: LessonTest[];
 }

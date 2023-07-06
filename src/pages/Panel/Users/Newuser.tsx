@@ -7,6 +7,7 @@ import useRandom from '../../../hooks/useRandom';
 import useData from '../../../hooks/useData';
 import { GlobalContext } from '../../../GlobalContext';
 import { Link } from 'react-router-dom';
+import { IInstituition, IStudent, IUser } from '../../../types/Users';
 
 
 type NewuserProps = {
@@ -27,22 +28,31 @@ const Newuser = ({ setToggle }: NewuserProps) => {
 
     if (access.validate() && login.validate() && access.validate() && name.validate() && email.validate()) {
 
-      if(data) {
-        createUser({
-          id: getRandomId(),
-          access: access.value as 'admin' | 'teacher' | 'student',
-          login: login.value,
-          email: email.value,
-          nome: name.value,
-          password: data.preferences.defaultPassword,
-          status: 'active',
-          lessons: [],
-        })
+      const user: IUser = {
+        id: getRandomId(),
+        access: access.value as 'admin' | 'teacher' | 'student',
+        login: login.value,
+        email: email.value,
+        nome: name.value,
+        password: (data as IInstituition).preferences.defaultPassword,
+        status: 'active',
       }
-    }
 
+      if(access.value === 'student') {
+        const student: IStudent = {
+          ...user,
+          level: 1,
+          xp: 0,
+          lessons: [],
+        }
+        createUser(student);
+      } else {
+        createUser(user);
+      }
+      
       setToggle(false);
     }
+  }
 
   
 

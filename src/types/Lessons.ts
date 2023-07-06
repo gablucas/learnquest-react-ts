@@ -17,6 +17,7 @@ export interface ILesson {
   title: string,
   video: string,
   text: string,
+  subject: string,
   questions: Questions[],
   classes: string[],
 }

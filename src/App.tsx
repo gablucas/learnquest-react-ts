@@ -9,12 +9,13 @@ import Users from './pages/Panel/Users/Users';
 import Dashboard from './pages/Panel/Dashboard/Dashboard';
 import Preferences from './pages/Panel/Preferences/Preferences';
 import Lessons from './pages/Panel/Lessons/Lessons';
-import CreateLesson from './pages/Panel/Lessons/components/CreateLesson';
 import Student from './pages/Student';
+import Classes from './pages/Panel/Classes/Classes';
+import CreateLesson from './pages/Panel/Lessons/components/CreateLesson';
 import StudentLessons from './pages/Student/StudentLessons/StudentLessons';
 import StudentInfo from './pages/Student/StudendInfo/StudentInfo';
 import StudentLesson from './pages/Student/StudentLesson/StudentLesson';
-import Classes from './pages/Panel/Classes/Classes';
+import Subjects from './pages/Panel/Subjects/Subjects';
 
 function App() {
 
@@ -30,6 +31,7 @@ function App() {
                 <Route path='' element={<Dashboard />} />
                 <Route path='usuarios' element={<ProtectedRoutes allowedAccess={['admin']}><Users /></ProtectedRoutes>} />
                 <Route path='turmas' element={<ProtectedRoutes allowedAccess={['admin']}><Classes /></ProtectedRoutes>} />
+                <Route path='materias' element={<ProtectedRoutes allowedAccess={['admin']}><Subjects /></ProtectedRoutes>} />
                 <Route path='preferencias' element={<ProtectedRoutes allowedAccess={['admin']}><Preferences /></ProtectedRoutes>} />
                 <Route path='aulas' element={<Lessons />}/>
                 <Route path='aulas/criar' element={<CreateLesson />} />
@@ -38,8 +40,8 @@ function App() {
 
             <Route element={<ProtectedRoutes allowedAccess={['student']}/>}>
               <Route path='/estudante' element={<Student />}>
-                <Route path='' element={<StudentLessons />} />
-                <Route path='informacoes' element={<StudentInfo />} />
+                <Route path='' element={<StudentInfo />} />
+                <Route path='aulas' element={<StudentLessons />} />
                 <Route path='aula/:id' element={<StudentLesson />} />
               </Route>
             </Route>

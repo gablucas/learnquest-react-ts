@@ -1,18 +1,20 @@
 import React from 'react';
 import Styles from '../Student.module.css';
 import { GlobalContext } from '../../../GlobalContext';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import useData from '../../../hooks/useData';
 import { LessonTest } from '../../../types/Lessons';
-import { IInstituition } from '../../../types/Users';
+import { IInstituition, IStudent } from '../../../types/Users';
 
 const StudentLesson = () => {
   const { data } = React.useContext(GlobalContext);
   const { id } = useParams();
   const [answer, setAnswer] = React.useState<LessonTest>();
-  const { saveStudentLesson } = useData();
+  const { saveStudentLesson, getUser } = useData();
+  const navigate = useNavigate();
 
   // Analisar se utilizar variavel local afeta o desempenho a cada renderizacao
+  const student = getUser() as IStudent;
   const lesson = (data as IInstituition).lessons.find((f) => f.id === id);
 
   React.useEffect(() => {
@@ -35,13 +37,20 @@ const StudentLesson = () => {
     e.preventDefault();
 
     if (answer?.answers.every((answer) => answer.value)) {
-      console.log('validado')
-      saveStudentLesson(answer)
+      saveStudentLesson(answer);
+      navigate('/estudante/aulas');
     }
   }
 
+  if (student.lessons.some((s) => s.id === id)) {
+  return (
+    <>
+      <h1>Você ja fez essa tarefa</h1>
+      <Link to='/estudante/aulas'>Voltar para tarefas</Link>
+    </>
+  )
   
-  if (lesson && answer)
+  } else if (lesson && answer) {
   return (
     <div className={Styles.student_lesson}>
       <h1>{lesson.title}</h1>
@@ -60,12 +69,14 @@ const StudentLesson = () => {
     </div>
   )
 
-  return (
-    <>
-      <h1>Essa tarefa não existe</h1>
-      <Link to='/estudante'>Voltar para tarefas</Link>
-    </>
-  )
+} else {
+    return (
+      <>
+        <h1>Essa tarefa não existe</h1>
+        <Link to='/estudante/aulas'>Voltar para tarefas</Link>
+      </>
+    )
+  }
 }
 
 export default StudentLesson;
