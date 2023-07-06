@@ -1,63 +1,8 @@
 import React from 'react';
 import { GlobalContext } from "../GlobalContext";
-
-export interface IInstituition {
-  id: string,
-  nome: string,
-  email: string,
-  users: Array<IUser | IStudent>,
-  classes: Classes[],
-  lessons: ILesson[],
-  preferences: {
-    defaultPassword: string,
-  }
-}
-
-export interface Classes {
-  id: string,
-  name: string,
-  students: string[],
-  status: Status,
-}
-
-interface IUser {
-  id: string,
-  access: 'admin' | 'teacher' | 'student',
-  nome: string,
-  login: string,
-  email: string,
-  password: string,
-  status: Status,
-}
-
-type Status = 'active' | 'disabled';
-
-export type LessonTest = {
-  id: string,
-  answers: {id: string, value: string}[]
-}
-
-interface IStudent extends IUser {
-  lessons: LessonTest[];
-}
-
-export type Questions = {
-  id: string,
-  question: string,
-  answer: string,
-  xp: number,
-  needEvaluation: boolean,
-}
-
-export interface ILesson {
-  id: string,
-  createdBy: string,
-  title: string,
-  video: string,
-  text: string,
-  questions: Questions[],
-  classes: string[],
-}
+import { IInstituition, IUser, IStudent } from '../types/Users';
+import { ILesson, LessonTest, Questions } from '../types/Lessons';
+import { Classes } from '../types/Classes';
 
 type UseDataReturn = {
   getData: () => IInstituition,
@@ -71,6 +16,8 @@ type UseDataReturn = {
   saveStudentLesson: (answer: LessonTest) => void,
   createClass: (newclass: Classes) => void,
   removeClass: (classId: string) => void,
+  createSubject: (subject: string) => void,
+  removeSubject: (subject: string) => void,
 }
 
 const useData = (): UseDataReturn => {
@@ -82,17 +29,46 @@ const useData = (): UseDataReturn => {
         id: '1',
         nome: 'Instituição',
         email: 'instituicao@edu.com.br',
-        users: [{
-          id: '1',
-          access: 'admin',
-          nome: 'Admnistrador',
-          login: 'admin',
-          email: 'instituicao@edu.com.br',
-          password: '123',
-          status: 'active' 
+        users: [
+          {
+            id: '1',
+            access: 'admin',
+            nome: 'Admnistrador',
+            login: 'admin',
+            email: 'instituicao@edu.com.br',
+            password: '123',
+            status: 'active' 
+          },
+          {
+            id: '2',
+            access: 'student',
+            nome: 'Estudante',
+            login: 'estudante',
+            email: 'estudante@edu.com.br',
+            password: '123',
+            status: 'active',
+            level: 1,
+            xp: 0,
+            lessons: [],
+          }
+        ],
+        classes: [{id: '1', name: 'Turma 1', status: 'active', students: ['2']}],
+        lessons: [{
+          classes: ['1'], 
+          createdBy: 'admin', 
+          id: '1', 
+          questions: [
+            {id: "1", question: "Quanto é 1 + 1?", answer: "2", xp: 25, needEvaluation: false}, 
+            {id: "2", question: "Quanto é 2 + 2?", answer: "4", xp: 50, needEvaluation: false}, 
+            {id: "3", question: "Quanto é 3 + 3?", answer: "6", xp: 75, needEvaluation: false}, 
+            {id: "4", question: "Quanto é 4 + 4?", answer: "8", xp: 100, needEvaluation: false}
+          ], 
+          subject: 'Matemática', 
+          text: 'Nessa aula você aprenderá a somar', 
+          title: 'Aprendendo a somar', 
+          video: ''
         }],
-        classes: [],
-        lessons: [],
+        subjects: ['Matemática'],
         preferences: {
           defaultPassword: '123',
         }
@@ -138,7 +114,7 @@ const useData = (): UseDataReturn => {
 
   function createLesson(lesson: ILesson): void {
     const updateData = getData();
-    updateData.lessons.push(lesson);
+    updateData.lessons.unshift(lesson);
     localStorage.setItem('data', JSON.stringify(updateData));
     setData(updateData);
   }
@@ -152,12 +128,29 @@ const useData = (): UseDataReturn => {
 
   function saveStudentLesson(answer: LessonTest): void {
     const updateData = getData();
-    updateData.users = updateData.users.map((user) => {
-      if (user.login.toLowerCase() === localStorage.getItem('logged')?.toLowerCase()) {
-        return {...user, lessons: [...(user as IStudent).lessons, answer]}
+    const user = getUser() as IStudent;
+
+    // Verifica as questões acertadas e calcula o xp ganho
+    const questions = updateData.lessons.find((lessonId) => lessonId.id === answer.id)?.questions;
+    const xp = (questions as Questions[]).map((m, index) => m.answer === answer.answers[index].value ? m.xp : 0).reduce((anterior, atual) => anterior + atual);
+
+    if (user.xp + xp >= user.level * 125) {
+      const restXP = (user.xp + xp) - (user.level * 125);
+      user.level += 1;
+      user.xp = restXP;
+    } else {
+      user.xp += xp;
+    }
+
+    user.lessons.push(answer)
+
+    updateData.users = updateData.users.map((u) => {
+      if (u.login.toLowerCase() === localStorage.getItem('logged')?.toLowerCase()) {
+        return {...user}
       }
-      return user;
+      return u;
     })
+
     localStorage.setItem('data', JSON.stringify(updateData));
     setData(updateData);
   }
@@ -176,6 +169,20 @@ const useData = (): UseDataReturn => {
     setData(updateData);
   }
 
+  function createSubject(subject: string): void {
+    const updateData = getData();
+    updateData.subjects.push(subject);
+    localStorage.setItem('data', JSON.stringify(updateData));
+    setData(updateData);
+  }
+
+  function removeSubject(subject: string): void {
+    const updateData = getData();
+    updateData.subjects = updateData.subjects.filter((f) => f !== subject)
+    localStorage.setItem('data', JSON.stringify(updateData));
+    setData(updateData);
+  }
+
   return {
     createInitialUser,
     getData,
@@ -188,6 +195,8 @@ const useData = (): UseDataReturn => {
     saveStudentLesson,
     createClass,
     removeClass,
+    createSubject,
+    removeSubject,
   }
 }
 

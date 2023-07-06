@@ -19,7 +19,7 @@ const Login = () => {
     e.preventDefault();
 
     if (login.validate() && password.validate()) {
-      if (data?.users.some((s) => s.login.toLowerCase() === login.value.toLowerCase() && s.password.toLowerCase() === password.value.toLowerCase())) {
+      if (data?.users.some((s) => s.login.toLowerCase() === login.value.toLowerCase() && s.password === password.value)) {
         localStorage.setItem('logged', login.value);
         setUser(login.value);
 

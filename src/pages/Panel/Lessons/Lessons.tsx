@@ -19,6 +19,7 @@ const Lessons = () => {
         <div>
           <span>Título</span>
           <span>Criada por</span>
+          <span>Matéria</span>
           <span>Questões</span>
           <span>Editar</span>
           <span>Excluir</span>
@@ -28,6 +29,7 @@ const Lessons = () => {
           <div key={lesson.id} className={Styles.lesson}>
             <span>{lesson.title}</span>
             <span>{lesson.createdBy}</span>
+            <span>{lesson.subject}</span>
             <span>{lesson.questions.length}</span>
             <button>Editar</button>
             <button onClick={() => removeLesson(lesson.id)}>Deletar</button>

@@ -1,8 +1,10 @@
 import React, { useContext } from 'react';
-import Styles from '../Panel.module.css';
-import useData, { IInstituition, ILesson } from '../../../hooks/useData';
+import Styles from '../../Panel.module.css';
+import useData from '../../../../hooks/useData';
 import { useNavigate } from 'react-router-dom';
-import { GlobalContext } from '../../../GlobalContext';
+import { GlobalContext } from '../../../../GlobalContext';
+import { ILesson } from '../../../../types/Lessons';
+import { IInstituition } from '../../../../types/Users';
 
 const CreateLesson = () => {
   const { data } = useContext(GlobalContext);
@@ -15,14 +17,15 @@ const CreateLesson = () => {
     title: '',
     video: '',
     text: '',
-    questions: [{id: '1' ,question: '', answer: '', xp: 0, needEvaluation: false}],
+    subject: '',
+    questions: [{id: '1' ,question: '', answer: '', xp: 25, needEvaluation: false}],
     classes: []
   })
 
   function handleCreateQuestion(e: React.MouseEvent<HTMLButtonElement>): void {
     e.stopPropagation();
     const addNewQuestion = {...lesson};
-    addNewQuestion.questions.push({id: (lesson.questions.length + 1).toString(), question: '', answer: '', xp: 0, needEvaluation: false});
+    addNewQuestion.questions.push({id: (lesson.questions.length + 1).toString(), question: '', answer: '', xp: 25, needEvaluation: false});
     setLesson(addNewQuestion);
   }
 
@@ -34,6 +37,10 @@ const CreateLesson = () => {
       updateLesson.classes = updateLesson.classes.filter((f) => f !== classId);
       setLesson(updateLesson)
     }
+  }
+
+  function handleSubject(e: React.ChangeEvent<HTMLSelectElement>): void {
+    setLesson({...lesson, subject: e.target.value})
   }
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>, propertie: string, index?: number): void {
@@ -70,7 +77,7 @@ const CreateLesson = () => {
     e.preventDefault();
     
     console.log(lesson.questions[0].question !== '')
-    if (lesson.title && lesson.text && lesson.classes.length > 0 && lesson.questions.every((question) => question.question && question.answer)) {
+    if (lesson.title && lesson.text && lesson.classes.length > 0 && lesson.subject && lesson.questions.every((question) => question.question && question.answer)) {
 
       createLesson(lesson);
       navigate('/painel/aulas');
@@ -106,6 +113,16 @@ const CreateLesson = () => {
               </div>
             ))}
           </div>
+        </div>
+
+        <div>
+          <h2>Matéria</h2>
+          <select onChange={handleSubject}>
+            <option value=''>Selecione uma matéria</option>
+            {data?.subjects.map((subject) => (
+              <option value={subject}>{subject}</option>
+            ))}
+          </select>
         </div>
 
         <div>

@@ -8,8 +8,8 @@ const StudentMenu = () => {
 
   return (
     <div className={Style.student_menu_container}>
-      <Link to='/estudante'>Minhas tarefas</Link>
-      <Link to='informacoes'>Minhas informações</Link>
+      <Link to='aulas'>Minhas aulas</Link>
+      <Link to=''>Minhas informações</Link>
       <button onClick={logoutUser}>Sair</button>
     </div>
   )

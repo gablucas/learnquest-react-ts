@@ -17,9 +17,9 @@ const Header = () => {
         <nav>
           {!user ? (
             <>
-            <Link to='/login' className={styles.login}>Entrar</Link>
-            <Link to='/registrar' className={styles.register}>Registrar</Link>
-          </>
+              <Link to='/login' className={styles.login}>Entrar</Link>
+              <Link to='/registrar' className={styles.register}>Registrar</Link>
+            </>
           ) : (
             <Link to='/painel'>{getUser()?.nome}</Link>
           )}

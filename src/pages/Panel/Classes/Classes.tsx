@@ -1,7 +1,7 @@
 import React from 'react';
 import Styles from '../Panel.module.css';
 import { GlobalContext } from '../../../GlobalContext';
-import Newclass from './Newclass';
+import Newclass from './components/Newclass';
 import useData from '../../../hooks/useData';
 
 const Classes = () => {
