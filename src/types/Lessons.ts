@@ -1,6 +1,6 @@
 export type LessonTest = {
   id: string,
-  answers: {id: string, value: string}[]
+  answers: {id: string, value: string, isCorrect: boolean, xp: number}[]
 }
 
 export type Questions = {

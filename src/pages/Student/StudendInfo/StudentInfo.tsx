@@ -10,7 +10,8 @@ const StudentInfo = () => {
   const student = getUser() as IStudent;
 
   const studentClass = data?.classes.find((f) => f.students.some((id) => id === student?.id));
-  const lessons = data?.lessons.filter((lesson) => lesson.classes.some((id) => id === studentClass?.id && !student.lessons.some((s) => s.id === lesson.id)));
+  const todoLessons = data?.lessons.filter((lesson) => lesson.classes.some((id) => id === studentClass?.id && !student.lessons.some((s) => s.id === lesson.id)));
+  const doneLessons = data?.lessons.filter((lesson) => lesson.classes.some((id) => id === studentClass?.id && student.lessons.some((s) => s.id === lesson.id)));
 
   return (
     <div className={Styles.student_info_container}>
@@ -25,7 +26,7 @@ const StudentInfo = () => {
         </div>
 
         <div className={Styles.student_info_todolessons}>
-          <span>{lessons?.length}</span>
+          <span>{todoLessons?.length}</span>
           <span>Aulas para fazer</span>
         </div>
 
@@ -40,30 +41,39 @@ const StudentInfo = () => {
           <span>Rank 1</span>
           <span>XP {student.xp + (student.level - 1) * 125}</span>
         </div>
-      </div>
 
-      <div className={Styles.student_info_historylessons}>
-        <h2>Histórico de aulas</h2>
-
-        <div>
-          <span>Aula</span>
-          <span>Matéria</span>
-          <span>Questões</span>
-          <span>Acertos</span>
-          <span>Erros</span>
-          <span>XP Ganho</span>
+        <div className={Styles.student_info_messages}>
+          <span>Mensagem 1</span>
+          <span>Mensagem 2</span>
+          <span>Mensagem 3</span>
         </div>
 
-        {student.lessons.map((lesson) => (
+      </div>
+
+      <div className={Styles.student_info_historic_container}>
+        <h2>Histórico de aulas</h2>
+
+        <div className={Styles.student_info_historic_list}>
           <div>
-            <span>{data?.lessons.find((dataLesson) => dataLesson.id === lesson.id)?.title}</span>
-            <span>{data?.lessons.find((dataLesson) => dataLesson.id === lesson.id)?.subject}</span>
-            <span>{lesson.answers.length}</span>
-            <span>0</span>
-            <span>0</span>
-            <span>125</span>
+            <span>Aula</span>
+            <span>Matéria</span>
+            <span>Questões</span>
+            <span>Acertos</span>
+            <span>Erros</span>
+            <span>XP Ganho</span>
           </div>
-        ))}
+
+          {student.lessons.map((lesson, index) => (
+            <div>
+              <span>{data?.lessons.find((dataLesson) => dataLesson.id === lesson.id)?.title}</span>
+              <span>{data?.lessons.find((dataLesson) => dataLesson.id === lesson.id)?.subject}</span>
+              <span>{lesson.answers.length}</span>
+              <span>{student.lessons[index].answers.filter((f) => f.isCorrect === true).length}</span>
+              <span>{student.lessons[index].answers.filter((f) => f.isCorrect === false).length}</span>
+              <span>{student.lessons[index].answers.map((l) => l.xp).reduce((acc, cur) => acc + cur)}</span>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   )

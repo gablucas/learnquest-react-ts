@@ -19,10 +19,22 @@ const StudentLessons = () => {
       <h1>Suas aulas</h1>
 
       <div className={Styles.student_lessons_list}>
+        <div>
+          <span>Aula</span>
+          <span>Matéria</span>
+          <span>Questões</span>
+          <span>XP Total</span>
+        </div>
+
         <ul>
           {lessons?.map((lesson) => (
             <li className={Styles.student_lessons}>
-              <Link to={`/estudante/aula/${lesson.id}`}  key={lesson.id}><span>{lesson.title}</span></Link>
+              <Link to={`/estudante/aula/${lesson.id}`}  key={lesson.id}>
+                <span>{lesson.title}</span>
+                <span>{lesson.subject}</span>
+                <span>{lesson.questions.length}</span>
+                <span>{lesson.questions.map((m) => m.xp).reduce((acc, cur) => acc + cur)}</span>
+              </Link>
             </li>
           ))}
         </ul>

@@ -131,8 +131,16 @@ const useData = (): UseDataReturn => {
     const user = getUser() as IStudent;
 
     // Verifica as questões acertadas e calcula o xp ganho
-    const questions = updateData.lessons.find((lessonId) => lessonId.id === answer.id)?.questions;
-    const xp = (questions as Questions[]).map((m, index) => m.answer === answer.answers[index].value ? m.xp : 0).reduce((anterior, atual) => anterior + atual);
+    const questions = updateData.lessons.find((lesson) => lesson.id === answer.id)?.questions;
+    let xp = 0;
+
+    questions?.forEach((question, index) => {
+      if (question.answer === answer.answers[index].value) {
+        answer.answers[index].isCorrect = true;
+        answer.answers[index].xp = question.xp;
+        xp += question.xp;
+      }
+    })
 
     if (user.xp + xp >= user.level * 125) {
       const restXP = (user.xp + xp) - (user.level * 125);
