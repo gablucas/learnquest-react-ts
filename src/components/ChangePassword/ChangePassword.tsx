@@ -5,8 +5,8 @@ import Modal from "../Modal";
 
 const ChangePassword = () => {
   const { editPassword } = useData();
-  const password = useForm();
-  const confirmPassword = useForm();
+  const password = userForm('');
+  const confirmPassword = userForm('');
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault();

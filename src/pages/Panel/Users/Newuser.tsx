@@ -18,10 +18,11 @@ const Newuser = ({ setToggle }: NewuserProps) => {
   const { data } = React.useContext(GlobalContext);
   const { createUser } = useData();
   const { getRandomId } = useRandom();
-  const access: UseFormType = useForm();
-  const name: UseFormType = useForm();
-  const login: UseFormType = useForm();
-  const email: UseFormType = useForm();
+  const access: UseFormType = useForm('');
+  const name: UseFormType = useForm('');
+  const login: UseFormType = useForm('');
+  const email: UseFormType = useForm('');
+
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault();

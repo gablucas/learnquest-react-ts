@@ -13,7 +13,7 @@ type Newsubjectprops = {
 const Newsubject = ({ setToggle }: Newsubjectprops) => {
   const { data } = React.useContext(GlobalContext);
   const { createSubject } = useData();
-  const materia: UseFormType = useForm();
+  const materia: UseFormType = userForm('');
 
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>): void {

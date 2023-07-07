@@ -3,17 +3,25 @@ import Styles from '../Panel.module.css';
 import Newuser from "./Newuser";
 import useData from '../../../hooks/useData';
 import { GlobalContext } from '../../../GlobalContext';
+import EditUser from './EditUser';
 
 const Users = () => {
   const [toggle, setToggle] = React.useState<boolean>(false);
+  const [toggleEdit, setToggleEdit] = React.useState<boolean>(false);
+  const [userID, setUserID] = React.useState<string>('');
   const { data } = React.useContext(GlobalContext)
   const { removeUser } = useData();
+
+  function handleEdit(userid: string): void {
+    setToggleEdit(true);
+    setUserID(userid)
+  }
 
   return (
     <section className={Styles.users_container}>
 
       <div className={Styles.users_options}>
-        <button onClick={() => setToggle(!toggle)}>Criar usuário +</button>
+        <button onClick={() => setToggle(true)}>Criar usuário +</button>
       </div>
 
       <div className={Styles.users}>
@@ -35,7 +43,7 @@ const Users = () => {
             <span>{m.status === 'active' ? 'Ativado' : 'Desativado'}</span>
             {index !== 0 && (
               <>
-                <button>Editar</button>
+                <button onClick={() => handleEdit(m.id)}>Editar</button>
                 <button onClick={() => removeUser(m.email)}>Excluir</button>
               </>
             )}
@@ -44,7 +52,8 @@ const Users = () => {
       </div>
 
 
-      {toggle && <Newuser setToggle={setToggle} />}
+      {toggle && (<Newuser setToggle={setToggle} />)}
+      {toggleEdit && (<EditUser setToggle={setToggleEdit} userID={userID} />)}
     </section>
   )
 }

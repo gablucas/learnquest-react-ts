@@ -9,6 +9,7 @@ type UseDataReturn = {
   createInitialUser: () => void,
   createUser: (user: IUser | IStudent) => void,
   removeUser: (email: string) => void,
+  editUser: (id: string, nome: string, login: string, email: string, password: string) => void,
   getUser: () => IUser | IStudent | undefined,
   logoutUser: () => void,
   createLesson: (lesson: ILesson) => void,
@@ -94,6 +95,20 @@ const useData = (): UseDataReturn => {
   function removeUser(email: string): void {
     let updateData = getData();
     updateData = {...updateData, users: updateData.users.filter((user) => user.email !== email)};
+    localStorage.setItem('data', JSON.stringify(updateData));
+    setData(updateData);
+  }
+
+  function editUser(id: string, nome: string, login: string, email: string, password: string): void {
+    const updateData = getData();
+    updateData.users = updateData.users.map((user) => {
+      if (user.id === id) {
+        return {...user, nome, login, email, password}
+      }
+
+      return user;
+    })
+
     localStorage.setItem('data', JSON.stringify(updateData));
     setData(updateData);
   }
@@ -224,6 +239,7 @@ const useData = (): UseDataReturn => {
     getData,
     createUser,
     removeUser,
+    editUser,
     getUser,
     logoutUser,
     createLesson,

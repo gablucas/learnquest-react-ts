@@ -10,7 +10,7 @@ type EditDefaultPasswordProps = {
 
 const EditDefaultPassword = ({ setToggle }: EditDefaultPasswordProps) => {
   const { editDefaultPassword } = useData();
-  const editPassword = useForm();
+  const editPassword = useForm('');
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault();
