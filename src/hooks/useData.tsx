@@ -1,7 +1,7 @@
 import React from 'react';
 import { GlobalContext } from "../GlobalContext";
 import { IInstituition, IUser, IStudent } from '../types/Users';
-import { ILesson, LessonTest, Questions } from '../types/Lessons';
+import { ILesson, LessonTest } from '../types/Lessons';
 import { Classes } from '../types/Classes';
 
 type UseDataReturn = {
@@ -18,6 +18,7 @@ type UseDataReturn = {
   removeClass: (classId: string) => void,
   createSubject: (subject: string) => void,
   removeSubject: (subject: string) => void,
+  editDefaultPassword: (password: string) => void,
 }
 
 const useData = (): UseDataReturn => {
@@ -191,6 +192,13 @@ const useData = (): UseDataReturn => {
     setData(updateData);
   }
 
+  function editDefaultPassword(password: string): void {
+    const updateData = getData();
+    updateData.preferences.defaultPassword = password;
+    localStorage.setItem('data', JSON.stringify(updateData));
+    setData(updateData);
+  }
+
   return {
     createInitialUser,
     getData,
@@ -205,6 +213,7 @@ const useData = (): UseDataReturn => {
     removeClass,
     createSubject,
     removeSubject,
+    editDefaultPassword,
   }
 }
 

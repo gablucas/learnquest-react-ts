@@ -1,5 +1,4 @@
 import React from 'react';
-import Styles from '../Panel.module.css';
 import Input from '../../../components/Inputs/Input';
 import Select from '../../../components/Inputs/Select';
 import useForm, { UseFormType } from '../../../hooks/useForm';
@@ -69,7 +68,7 @@ const Newuser = ({ setToggle }: NewuserProps) => {
           <button>Cadastrar</button>
         </form>
 
-        <span>Será gerado uma senha padrão, veja em <Link to='preferencias'>Preferencias</Link></span>
+        <span>Será gerado uma senha padrão, veja em <Link to='/painel/preferencias'>Preferencias</Link></span>
       </div>
     </Modal>
   )
