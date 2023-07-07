@@ -19,6 +19,7 @@ type UseDataReturn = {
   createSubject: (subject: string) => void,
   removeSubject: (subject: string) => void,
   editDefaultPassword: (password: string) => void,
+  editPassword: (password: string) => void,
 }
 
 const useData = (): UseDataReturn => {
@@ -199,6 +200,25 @@ const useData = (): UseDataReturn => {
     setData(updateData);
   }
 
+  function editPassword(password: string): void {
+    const updateData = getData();
+    const updateUser = getUser();
+
+    updateData.users = updateData.users.map((user) => {
+      if (user.id === updateUser?.id) {
+        return {...user, password}
+      }
+
+      return user;
+    })
+    
+    
+
+
+    localStorage.setItem('data', JSON.stringify(updateData));
+    setData(updateData);
+  }
+
   return {
     createInitialUser,
     getData,
@@ -214,6 +234,7 @@ const useData = (): UseDataReturn => {
     createSubject,
     removeSubject,
     editDefaultPassword,
+    editPassword,
   }
 }
 

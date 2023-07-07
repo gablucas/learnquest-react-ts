@@ -1,8 +1,7 @@
 import React from 'react';
 import Styles from '../Panel.module.css';
 import { GlobalContext } from '../../../GlobalContext';
-import EditDefaultPassword from './editDefaultPassword';
-
+import EditDefaultPassword from './EditDefaultPassword';
 
 const Preferences = () => {
   const { data } = React.useContext(GlobalContext);

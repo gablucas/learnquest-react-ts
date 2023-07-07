@@ -1,15 +1,22 @@
+import React from 'react';
 import styles from './Panel.module.css';
 import Container from "../../components/Container";
 import { Outlet } from "react-router-dom";
 import Sidebar from "./Sidebar/Sidebar";
+import ChangePassword from '../../components/ChangePassword/ChangePassword';
+import useData from '../../hooks/useData';
+import { GlobalContext } from '../../GlobalContext';
 
 const Panel = () => {
+  const { data } = React.useContext(GlobalContext)
+  const { getUser } = useData();
 
   return (
     <Container>
       <div className={styles.panel}>
         <Sidebar />
         <Outlet />
+        {getUser()?.password == data?.preferences.defaultPassword && (<ChangePassword />)}
       </div>
     </Container>
   )

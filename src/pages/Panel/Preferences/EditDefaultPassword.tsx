@@ -12,7 +12,9 @@ const EditDefaultPassword = ({ setToggle }: EditDefaultPasswordProps) => {
   const { editDefaultPassword } = useData();
   const editPassword = useForm();
 
-  function handleSubmit(): void {
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>): void {
+    e.preventDefault();
+
     if (editPassword.validate()) {
       editDefaultPassword(editPassword.value);
       setToggle(false);
