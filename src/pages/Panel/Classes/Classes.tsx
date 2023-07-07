@@ -20,6 +20,7 @@ const Classes = () => {
 
         <div>
           <span>Nome</span>
+          <span>Alunos</span>
           <span>Estado</span>
           <span>Editar</span>
           <span>Excluir</span>
@@ -28,13 +29,13 @@ const Classes = () => {
         {data?.classes.map((m) => (
           <div key={m.id} className={Styles.class}>
             <span>{m.name}</span>
+            <span>{m.students.length}</span>
             <span>{m.status === 'active' ? 'Ativado' : 'Desativado'}</span>
             <button>Editar</button>
             <button onClick={() => removeClass(m.id)}>Excluir</button>
           </div>
         ))}
       </div>
-
 
       {toggle && <Newclass setToggle={setToggle} />}
     </section>

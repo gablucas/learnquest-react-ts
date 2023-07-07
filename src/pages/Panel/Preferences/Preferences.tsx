@@ -8,9 +8,11 @@ const Preferences = () => {
 
   return (
     <div className={Styles.preferences}>
-      <div>
-        <h2>Senha padrão</h2>
+
+      <div className={Styles.preferences_defaultpassword}>
+        <span>Senha padrão</span>
         <span>{data?.preferences.defaultPassword}</span>
+        <button>Alterar senha</button>
       </div>
     </div>
   )

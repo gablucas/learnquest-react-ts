@@ -29,6 +29,19 @@
   background-color: #121214;
 }
 
+.student_lessons_list > div {
+  padding-bottom: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.student_lessons_list > div,
+.student_lessons_list ul li a {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  text-align: center;
+}
+
 .student_lessons > a {
   display: flex;
   gap: 10px;
@@ -50,9 +63,9 @@
   margin-bottom: 40px;
 }
 
-.student_info_container {
+.student_info_dashboard {
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: auto auto 300px 1fr;
   justify-content: start;
   gap: 20px;
 }
@@ -88,7 +101,9 @@
 }
 
 .student_info_donelessons, 
-.student_info_todolessons {
+.student_info_todolessons,
+.student_info_data,
+.student_info_messages {
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -107,3 +122,52 @@
   grid-row: 2;
 }
 
+.student_info_data {
+  text-align: start;
+  grid-column: 3;
+  grid-row: 1/3;
+}
+
+.student_info_messages {
+  grid-column: 4;
+  grid-row: 1/3;
+}
+
+.student_info_data span:first-child {
+  line-height: 1;
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.student_info_data span {
+  font-size: 1.2rem;
+}
+
+.student_info_historic_container {
+  margin-top: 40px;
+}
+
+.student_info_historic_list {
+  border: 1px solid #302B33;
+  border-radius: 7px ;
+}
+
+.student_info_historic_list > div span:nth-of-type(n + 2) {
+  text-align: center;
+}
+
+.student_info_historic_list div:nth-of-type(1) {
+  border-radius: 7px 7px 0 0 ;
+  background-color: #302B33;
+}
+
+.student_info_historic_list > div {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  padding: 6px;
+}
+
+.student_info_historic_list > div:nth-of-type(n + 2) {
+  border-bottom: 1px solid #302B33;
+}

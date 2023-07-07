@@ -20,11 +20,9 @@ const Subjects = () => {
 
         <div>
           <span>Nome</span>
-          <span>Email</span>
-          <span>Acesso</span>
-          <span>Estado</span>
           <span>Editar</span>
           <span>Excluir</span>
+          <span>Aulas</span>
         </div>
 
         {data?.subjects.map((m) => (
@@ -32,6 +30,7 @@ const Subjects = () => {
             <span>{m}</span>
             <button>Editar</button>
             <button onClick={() => removeSubject(m)}>Excluir</button>
+            <span>{data.lessons.map((lesson) => lesson.subject === m).length}</span>
           </div>
         ))}
       </div>

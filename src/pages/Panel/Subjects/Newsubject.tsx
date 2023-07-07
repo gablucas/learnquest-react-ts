@@ -4,6 +4,7 @@ import Input from '../../../components/Inputs/Input';
 import useForm, { UseFormType } from '../../../hooks/useForm';
 import useData from '../../../hooks/useData';
 import { GlobalContext } from '../../../GlobalContext';
+import Modal from '../../../components/Modal';
 
 type Newsubjectprops = {
   setToggle: React.Dispatch<React.SetStateAction<boolean>>
@@ -26,23 +27,16 @@ const Newsubject = ({ setToggle }: Newsubjectprops) => {
     }
   }
 
-  function handleClose(e: React.MouseEvent<HTMLDivElement>): void {
-    if (e.target === e.currentTarget) setToggle(false);
-  }
-
   return (
-    <div className={Styles.newuser} onClick={handleClose}>
-
-      <div>
-        <h2>Criar novo usuário</h2>
+    <Modal setToggle={setToggle}>
+      <div className={Styles.newuser}>
+        <h2>Criar nova matéria</h2>
         <form onSubmit={handleSubmit}>
           <Input type='text' label='Matéria' {...materia} />
           <button>Cadastrar</button>
         </form>
-
       </div>
-
-    </div>
+    </Modal>
   )
 }
 

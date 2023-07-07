@@ -8,9 +8,7 @@ const Panel = () => {
   return (
     <Container>
       <div className={styles.panel}>
-        <div>
-          <Sidebar />
-        </div>
+        <Sidebar />
         <Outlet />
       </div>
     </Container>

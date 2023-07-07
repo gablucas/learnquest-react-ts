@@ -19,7 +19,7 @@ const StudentLesson = () => {
 
   React.useEffect(() => {
     if (lesson) {
-      setAnswer({id: lesson.id, answers: lesson.questions.map((question) => ({id: question.id, value: ''}))})
+      setAnswer({id: lesson.id, answers: lesson.questions.map((question) => ({id: question.id, value: '', isCorrect: false, xp: 0}))})
     }
   }, [lesson])
 

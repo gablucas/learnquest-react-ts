@@ -4,6 +4,7 @@
   display: grid;
   grid-template-columns: 1fr 4fr;
   gap: 10px;
+  align-items: start;
 }
 
 /* Component Sidebar */
@@ -122,26 +123,6 @@
   background-color: #464149;
 }
 
-/* Componente Newuser e Newclass */
-
-.newuser,
-.newclass {
-  position: fixed;
-  top: 0px;
-  right: 0px;
-  bottom: 0px;
-  left: 0px;
-  background-color: rgba(0, 0, 0, .7);
-}
-
-.newuser > div,
-.newclass > div {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-}
-
 /* Componente Newclass */
 .newclass form {
   width: 400px;
@@ -201,5 +182,33 @@
 
 /* Componente Preferences */
 .preferences {
-  background-color: #302B33;
+  display: grid;
+  place-content: start;
+}
+
+.preferences_defaultpassword {
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+  border-radius: 7px;
+  background-color: #302B33; 
+  text-align: center;
+}
+
+.preferences_defaultpassword span:nth-child(1) {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.preferences_defaultpassword button {
+  padding: 6px;
+  margin-top: 8px;
+  border-radius: 7px;
+  font-weight: 600;
+  color: #302B33;
+  background-color: #FFA700;
+}
+
+.preferences_defaultpassword button:hover {
+  filter: brightness(1.2);
 }
