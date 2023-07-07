@@ -4,6 +4,7 @@ import { GlobalContext } from '../../../../GlobalContext';
 import useData from '../../../../hooks/useData';
 import { IInstituition } from '../../../../types/Users';
 import { Classes } from '../../../../types/Classes';
+import Modal from '../../../../components/Modal';
 
 type NewuserProps = {
   setToggle: React.Dispatch<React.SetStateAction<boolean>>
@@ -46,16 +47,11 @@ const Newclass = ({ setToggle }: NewuserProps) => {
     }
   }
 
-  
-  function handleClose(e: React.MouseEvent<HTMLDivElement>): void {
-    if (e.target === e.currentTarget) setToggle(false);
-  }
-
   if (data)
   return (
-    <div className={Styles.newclass} onClick={handleClose}>
+    <Modal setToggle={setToggle}>
 
-      <div>
+      <div className={Styles.newclass}>
         <h2>Criar nova turma</h2>
         <form onSubmit={handleSubmit}>
 
@@ -80,7 +76,7 @@ const Newclass = ({ setToggle }: NewuserProps) => {
         </form>
       </div>
 
-    </div>
+      </Modal>
   )
 }
 

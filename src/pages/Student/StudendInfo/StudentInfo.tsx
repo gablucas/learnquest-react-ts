@@ -11,7 +11,6 @@ const StudentInfo = () => {
 
   const studentClass = data?.classes.find((f) => f.students.some((id) => id === student?.id));
   const todoLessons = data?.lessons.filter((lesson) => lesson.classes.some((id) => id === studentClass?.id && !student.lessons.some((s) => s.id === lesson.id)));
-  const doneLessons = data?.lessons.filter((lesson) => lesson.classes.some((id) => id === studentClass?.id && student.lessons.some((s) => s.id === lesson.id)));
 
   return (
     <div className={Styles.student_info_container}>

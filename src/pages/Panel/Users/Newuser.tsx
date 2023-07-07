@@ -8,6 +8,7 @@ import useData from '../../../hooks/useData';
 import { GlobalContext } from '../../../GlobalContext';
 import { Link } from 'react-router-dom';
 import { IInstituition, IStudent, IUser } from '../../../types/Users';
+import Modal from '../../../components/Modal';
 
 
 type NewuserProps = {
@@ -56,13 +57,8 @@ const Newuser = ({ setToggle }: NewuserProps) => {
 
   
 
-  function handleClose(e: React.MouseEvent<HTMLDivElement>): void {
-    if (e.target === e.currentTarget) setToggle(false);
-  }
-
   return (
-    <div className={Styles.newuser} onClick={handleClose}>
-
+    <Modal setToggle={setToggle}>
       <div>
         <h2>Criar novo usuário</h2>
         <form onSubmit={handleSubmit}>
@@ -75,8 +71,7 @@ const Newuser = ({ setToggle }: NewuserProps) => {
 
         <span>Será gerado uma senha padrão, veja em <Link to='preferencias'>Preferencias</Link></span>
       </div>
-
-    </div>
+    </Modal>
   )
 }
 
