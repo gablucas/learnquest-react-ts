@@ -13,8 +13,8 @@ const Users = () => {
   const { removeUser } = useData();
 
   function handleEdit(userid: string): void {
+    setUserID(userid);
     setToggleEdit(true);
-    setUserID(userid)
   }
 
   return (

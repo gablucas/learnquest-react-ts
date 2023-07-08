@@ -2,7 +2,7 @@ import React from 'react';
 import { GlobalContext } from "../GlobalContext";
 import { IInstituition, IUser, IStudent } from '../types/Users';
 import { ILesson, LessonTest } from '../types/Lessons';
-import { Classes } from '../types/Classes';
+import { Group } from '../types/Group';
 
 type UseDataReturn = {
   getData: () => IInstituition,
@@ -15,8 +15,9 @@ type UseDataReturn = {
   createLesson: (lesson: ILesson) => void,
   removeLesson: (id: string) => void,
   saveStudentLesson: (answer: LessonTest) => void,
-  createClass: (newclass: Classes) => void,
-  removeClass: (classId: string) => void,
+  createGroup: (newgroup: Group) => void,
+  removeGroup: (id: string) => void,
+  editGroup: (groupid: string, updateGroup: Group) => void,
   createSubject: (subject: string) => void,
   removeSubject: (subject: string) => void,
   editDefaultPassword: (password: string) => void,
@@ -55,7 +56,7 @@ const useData = (): UseDataReturn => {
             lessons: [],
           }
         ],
-        classes: [{id: '1', name: 'Turma 1', status: 'active', students: ['2']}],
+        groups: [{id: '1', name: 'Turma 1', status: 'active', students: ['2']}],
         lessons: [{
           classes: ['1'], 
           createdBy: 'admin', 
@@ -180,16 +181,30 @@ const useData = (): UseDataReturn => {
     setData(updateData);
   }
 
-  function createClass(newclass: Classes): void {
+  function createGroup(newgroup: Group): void {
     const updateData = getData();
-    updateData.classes.push(newclass);
+    updateData.groups.push(newgroup);
     localStorage.setItem('data', JSON.stringify(updateData));
     setData(updateData);
   }
 
-  function removeClass(classId: string): void {
+  function removeGroup(groupid: string): void {
     const updateData = getData();
-    updateData.classes = updateData.classes.filter((c) => c.id !== classId);
+    updateData.groups = updateData.groups.filter((c) => c.id !== groupid);
+    localStorage.setItem('data', JSON.stringify(updateData));
+    setData(updateData);
+  }
+
+  function editGroup(id: string, updateGroup: Group):void {
+    const updateData = getData();
+    updateData.groups = updateData.groups.map((group) => {
+      if (group.id === id) {
+        return {...updateGroup}
+      }
+
+      return group;
+    })
+
     localStorage.setItem('data', JSON.stringify(updateData));
     setData(updateData);
   }
@@ -245,8 +260,9 @@ const useData = (): UseDataReturn => {
     createLesson,
     removeLesson,
     saveStudentLesson,
-    createClass,
-    removeClass,
+    createGroup,
+    removeGroup,
+    editGroup,
     createSubject,
     removeSubject,
     editDefaultPassword,

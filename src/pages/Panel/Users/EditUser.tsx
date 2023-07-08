@@ -1,18 +1,17 @@
 import React from 'react';
 import Input from '../../../components/Inputs/Input';
 import useForm, { UseFormType } from '../../../hooks/useForm';
-import { Link } from 'react-router-dom';
 import Modal from '../../../components/Modal';
 import { GlobalContext } from '../../../GlobalContext';
 import useData from '../../../hooks/useData';
 
 
-type NewuserProps = {
+type EditUserProps = {
   setToggle: React.Dispatch<React.SetStateAction<boolean>>,
   userID: string,
 }
 
-const EditUser = ({ setToggle, userID }: NewuserProps) => {
+const EditUser = ({ setToggle, userID }: EditUserProps) => {
   const { data } = React.useContext(GlobalContext);
   const { editUser } = useData();
   const user = data.users.find((user) => user.id === userID);
@@ -34,16 +33,14 @@ const EditUser = ({ setToggle, userID }: NewuserProps) => {
   return (
     <Modal setToggle={setToggle}>
       <div>
-        <h2>Criar novo usuário</h2>
+        <h2>Atualizar usuário</h2>
         <form onSubmit={handleSubmit}>
           <Input type='text' label='Nome' {...name} />
           <Input type='text' label='Login' {...login} />
           <Input type='email' label='Email' {...email} />
           <Input type='text' label='Senha' {...password} />
-          <button>Cadastrar</button>
+          <button>Atualizar</button>
         </form>
-
-        <span>Será gerado uma senha padrão, veja em <Link to='/painel/preferencias'>Preferencias</Link></span>
       </div>
     </Modal>
   )
