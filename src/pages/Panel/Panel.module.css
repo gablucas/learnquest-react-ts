@@ -53,7 +53,7 @@
 /* Componente Users, Classes e Lessons*/
 
 .users_container,
-.classes_container,
+.groups_container,
 .lessons_container {
   display: grid;
   align-content: start;
@@ -61,7 +61,7 @@
 }
 
 .users,
-.classes,
+.groups,
 .lessons {
   display: grid;
   border-radius: 7px;
@@ -69,13 +69,13 @@
 }
 
 .users_options,
-.classes_options,
+.groups_options,
 .lessons_options {
   display: grid;
 }
 
 .users_options button,
-.classes_options button,
+.groups_options button,
 .lessons_options a {
   justify-self: start;
   padding: 8px;
@@ -85,13 +85,13 @@
 }
 
 .users_options button:hover,
-.classes_options button:hover,
+.groups_options button:hover,
 .lessons_options a:hover {
   background-color: #464149;
 }
 
 .users div,
-.classes div,
+.groups div,
 .lessons div {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -105,33 +105,33 @@
 }
 
 .users div + div,
-.classes div + div,
+.groups div + div,
 .lessons div + div {
   border-top: 1px solid #121214;
 }
 
 .user button,
-.classes button,
+.groups button,
 .lesson button {
   padding: 8px;
   border-radius: 7px;
 }
 
 .user button:hover,
-.classes button:hover,
+.groups button:hover,
 .lesson button:hover {
   background-color: #464149;
 }
 
 /* Componente Newclass */
-.newclass form {
+.newgroup form {
   width: 400px;
   height: 600px;
   display: grid;
   grid-template-rows: auto 1fr auto;
 }
 
-.newclass_students {
+.newgroup_students {
   height: 90%;
   padding: 12px;
   border-radius: 7px;
@@ -139,7 +139,7 @@
   overflow-y: scroll;
 }
 
-.newclass_students > div {
+.newgroup_students > div {
   display: flex;
   gap: 10px;
 }

@@ -2,13 +2,13 @@ import Styles from './Modal.module.css';
 
 type ModalProps = {
   children: React.ReactNode,
-  setToggle: React.Dispatch<React.SetStateAction<boolean>>;
+  setToggle?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const Modal = ({children, setToggle}: ModalProps) => {
 
   function handleToggle(e: React.MouseEvent<HTMLDivElement>): void {
-    if (e.target === e.currentTarget) setToggle(false)
+    if (e.target === e.currentTarget) setToggle?.(false);
   }
 
   return (

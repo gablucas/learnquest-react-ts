@@ -12,8 +12,8 @@ const Login = () => {
   const { getUser } = useData();
 
   const navigate: NavigateFunction = useNavigate();
-  const login: UseFormType = useForm();
-  const password: UseFormType = useForm();
+  const login: UseFormType = useForm('');
+  const password: UseFormType = useForm('');
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault();

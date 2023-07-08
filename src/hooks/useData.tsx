@@ -1,23 +1,27 @@
 import React from 'react';
 import { GlobalContext } from "../GlobalContext";
 import { IInstituition, IUser, IStudent } from '../types/Users';
-import { ILesson, LessonTest, Questions } from '../types/Lessons';
-import { Classes } from '../types/Classes';
+import { ILesson, LessonTest } from '../types/Lessons';
+import { Group } from '../types/Group';
 
 type UseDataReturn = {
   getData: () => IInstituition,
   createInitialUser: () => void,
   createUser: (user: IUser | IStudent) => void,
   removeUser: (email: string) => void,
+  editUser: (id: string, nome: string, login: string, email: string, password: string) => void,
   getUser: () => IUser | IStudent | undefined,
   logoutUser: () => void,
   createLesson: (lesson: ILesson) => void,
   removeLesson: (id: string) => void,
   saveStudentLesson: (answer: LessonTest) => void,
-  createClass: (newclass: Classes) => void,
-  removeClass: (classId: string) => void,
+  createGroup: (newgroup: Group) => void,
+  removeGroup: (id: string) => void,
+  editGroup: (groupid: string, updateGroup: Group) => void,
   createSubject: (subject: string) => void,
   removeSubject: (subject: string) => void,
+  editDefaultPassword: (password: string) => void,
+  editPassword: (password: string) => void,
 }
 
 const useData = (): UseDataReturn => {
@@ -52,7 +56,7 @@ const useData = (): UseDataReturn => {
             lessons: [],
           }
         ],
-        classes: [{id: '1', name: 'Turma 1', status: 'active', students: ['2']}],
+        groups: [{id: '1', name: 'Turma 1', status: 'active', students: ['2']}],
         lessons: [{
           classes: ['1'], 
           createdBy: 'admin', 
@@ -92,6 +96,20 @@ const useData = (): UseDataReturn => {
   function removeUser(email: string): void {
     let updateData = getData();
     updateData = {...updateData, users: updateData.users.filter((user) => user.email !== email)};
+    localStorage.setItem('data', JSON.stringify(updateData));
+    setData(updateData);
+  }
+
+  function editUser(id: string, nome: string, login: string, email: string, password: string): void {
+    const updateData = getData();
+    updateData.users = updateData.users.map((user) => {
+      if (user.id === id) {
+        return {...user, nome, login, email, password}
+      }
+
+      return user;
+    })
+
     localStorage.setItem('data', JSON.stringify(updateData));
     setData(updateData);
   }
@@ -163,16 +181,30 @@ const useData = (): UseDataReturn => {
     setData(updateData);
   }
 
-  function createClass(newclass: Classes): void {
+  function createGroup(newgroup: Group): void {
     const updateData = getData();
-    updateData.classes.push(newclass);
+    updateData.groups.push(newgroup);
     localStorage.setItem('data', JSON.stringify(updateData));
     setData(updateData);
   }
 
-  function removeClass(classId: string): void {
+  function removeGroup(groupid: string): void {
     const updateData = getData();
-    updateData.classes = updateData.classes.filter((c) => c.id !== classId);
+    updateData.groups = updateData.groups.filter((c) => c.id !== groupid);
+    localStorage.setItem('data', JSON.stringify(updateData));
+    setData(updateData);
+  }
+
+  function editGroup(id: string, updateGroup: Group):void {
+    const updateData = getData();
+    updateData.groups = updateData.groups.map((group) => {
+      if (group.id === id) {
+        return {...updateGroup}
+      }
+
+      return group;
+    })
+
     localStorage.setItem('data', JSON.stringify(updateData));
     setData(updateData);
   }
@@ -191,20 +223,50 @@ const useData = (): UseDataReturn => {
     setData(updateData);
   }
 
+  function editDefaultPassword(password: string): void {
+    const updateData = getData();
+    updateData.preferences.defaultPassword = password;
+    localStorage.setItem('data', JSON.stringify(updateData));
+    setData(updateData);
+  }
+
+  function editPassword(password: string): void {
+    const updateData = getData();
+    const updateUser = getUser();
+
+    updateData.users = updateData.users.map((user) => {
+      if (user.id === updateUser?.id) {
+        return {...user, password}
+      }
+
+      return user;
+    })
+    
+    
+
+
+    localStorage.setItem('data', JSON.stringify(updateData));
+    setData(updateData);
+  }
+
   return {
     createInitialUser,
     getData,
     createUser,
     removeUser,
+    editUser,
     getUser,
     logoutUser,
     createLesson,
     removeLesson,
     saveStudentLesson,
-    createClass,
-    removeClass,
+    createGroup,
+    removeGroup,
+    editGroup,
     createSubject,
     removeSubject,
+    editDefaultPassword,
+    editPassword,
   }
 }
 

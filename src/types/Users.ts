@@ -1,4 +1,4 @@
-import { Classes } from "./Classes";
+import { Group } from "./Group";
 import { Status } from "./Commom";
 import { ILesson, LessonTest } from "./Lessons";
 
@@ -7,7 +7,7 @@ export interface IInstituition {
   nome: string,
   email: string,
   users: Array<IUser | IStudent>,
-  classes: Classes[],
+  groups: Group[],
   lessons: ILesson[],
   subjects: string[],
   preferences: {

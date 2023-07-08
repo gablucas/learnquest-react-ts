@@ -1,5 +1,4 @@
 import React from 'react';
-import Styles from '../Panel.module.css';
 import Input from '../../../components/Inputs/Input';
 import Select from '../../../components/Inputs/Select';
 import useForm, { UseFormType } from '../../../hooks/useForm';
@@ -19,10 +18,11 @@ const Newuser = ({ setToggle }: NewuserProps) => {
   const { data } = React.useContext(GlobalContext);
   const { createUser } = useData();
   const { getRandomId } = useRandom();
-  const access: UseFormType = useForm();
-  const name: UseFormType = useForm();
-  const login: UseFormType = useForm();
-  const email: UseFormType = useForm();
+  const access: UseFormType = useForm('');
+  const name: UseFormType = useForm('');
+  const login: UseFormType = useForm('');
+  const email: UseFormType = useForm('');
+
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault();
@@ -69,7 +69,7 @@ const Newuser = ({ setToggle }: NewuserProps) => {
           <button>Cadastrar</button>
         </form>
 
-        <span>Será gerado uma senha padrão, veja em <Link to='preferencias'>Preferencias</Link></span>
+        <span>Será gerado uma senha padrão, veja em <Link to='/painel/preferencias'>Preferencias</Link></span>
       </div>
     </Modal>
   )

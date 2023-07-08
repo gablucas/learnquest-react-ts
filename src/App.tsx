@@ -10,12 +10,12 @@ import Dashboard from './pages/Panel/Dashboard/Dashboard';
 import Preferences from './pages/Panel/Preferences/Preferences';
 import Lessons from './pages/Panel/Lessons/Lessons';
 import Student from './pages/Student';
-import Classes from './pages/Panel/Classes/Classes';
 import CreateLesson from './pages/Panel/Lessons/components/CreateLesson';
 import StudentLessons from './pages/Student/StudentLessons/StudentLessons';
 import StudentInfo from './pages/Student/StudendInfo/StudentInfo';
 import StudentLesson from './pages/Student/StudentLesson/StudentLesson';
 import Subjects from './pages/Panel/Subjects/Subjects';
+import Groups from './pages/Panel/Classes/Groups';
 
 function App() {
 
@@ -29,10 +29,10 @@ function App() {
             <Route element={<ProtectedRoutes allowedAccess={['admin', 'teacher']}/>}>
               <Route path='/painel' element={<Panel />}>
                 <Route path='' element={<Dashboard />} />
-                <Route path='usuarios' element={<ProtectedRoutes allowedAccess={['admin']}><Users /></ProtectedRoutes>} />
-                <Route path='turmas' element={<ProtectedRoutes allowedAccess={['admin']}><Classes /></ProtectedRoutes>} />
-                <Route path='materias' element={<ProtectedRoutes allowedAccess={['admin']}><Subjects /></ProtectedRoutes>} />
-                <Route path='preferencias' element={<ProtectedRoutes allowedAccess={['admin']}><Preferences /></ProtectedRoutes>} />
+                <Route path='usuarios' element={<Users />}/>
+                <Route path='turmas' element={<Groups />} />
+                <Route path='materias' element={<Subjects />} />
+                <Route path='preferencias' element={<Preferences />} />
                 <Route path='aulas' element={<Lessons />}/>
                 <Route path='aulas/criar' element={<CreateLesson />} />
               </Route>

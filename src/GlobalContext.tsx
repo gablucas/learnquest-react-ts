@@ -3,14 +3,25 @@ import useData from './hooks/useData';
 import { IInstituition } from './types/Users';
 
 type GlobalContextProps = {
-  data: IInstituition | null,
+  data: IInstituition,
   setData: React.Dispatch<React.SetStateAction<IInstituition>>,
   user: string | null,
   setUser: React.Dispatch<React.SetStateAction<string | null>>,
 };
 
 const intialValue: GlobalContextProps = { 
-  data: null,
+  data: {
+    id: '',
+    nome: '',
+    email: '',
+    users: [],
+    classes: [],
+    lessons: [],
+    subjects: [],
+    preferences: {
+      defaultPassword: '',
+    }
+  },
   setData: () => null,
   user: null,
   setUser: () => null,
@@ -24,12 +35,11 @@ type GlobalProviderProps = {
 export const GlobalContext = React.createContext<GlobalContextProps>(intialValue);
 
 export const GlobalProvider = ({ children }: GlobalProviderProps) => {
-  const { createInitialUser, getData, getUser } = useData();
+  const { createInitialUser, getData } = useData();
   createInitialUser();
 
   const [data, setData] = React.useState(getData);
   const [user, setUser] = React.useState(localStorage.getItem('logged'));
-  console.log(getUser())
 
   return (
     <GlobalContext.Provider value={{ data, setData, user, setUser }}>
