@@ -3,6 +3,7 @@ import { GlobalContext } from "../GlobalContext";
 import { IInstituition, IUser, IStudent } from '../types/Users';
 import { ILesson, LessonTest } from '../types/Lessons';
 import { Group } from '../types/Group';
+import { Subjects } from '../types/Commom';
 
 type UseDataReturn = {
   getData: () => IInstituition,
@@ -41,7 +42,7 @@ const useData = (): UseDataReturn => {
             login: 'admin',
             email: 'instituicao@edu.com.br',
             password: '123',
-            status: 'active' 
+            status: true, 
           },
           {
             id: '2',
@@ -50,13 +51,13 @@ const useData = (): UseDataReturn => {
             login: 'estudante',
             email: 'estudante@edu.com.br',
             password: '123',
-            status: 'active',
+            status: true,
             level: 1,
             xp: 0,
             lessons: [],
           }
         ],
-        groups: [{id: '1', name: 'Turma 1', status: 'active', students: ['2']}],
+        groups: [{id: '1', name: 'Turma 1', status: true, students: ['2']}],
         lessons: [{
           classes: ['1'], 
           createdBy: 'admin', 
@@ -67,12 +68,12 @@ const useData = (): UseDataReturn => {
             {id: "3", question: "Quanto é 3 + 3?", answer: "6", xp: 75, needEvaluation: false}, 
             {id: "4", question: "Quanto é 4 + 4?", answer: "8", xp: 100, needEvaluation: false}
           ], 
-          subject: 'Matemática', 
+          subject: '1', 
           text: 'Nessa aula você aprenderá a somar', 
           title: 'Aprendendo a somar', 
           video: ''
         }],
-        subjects: ['Matemática'],
+        subjects: [{id: '1', name: 'Matemática', status: true}],
         preferences: {
           defaultPassword: '123',
         }
@@ -209,7 +210,7 @@ const useData = (): UseDataReturn => {
     setData(updateData);
   }
 
-  function createSubject(subject: string): void {
+  function createSubject(subject: Subjects): void {
     const updateData = getData();
     updateData.subjects.push(subject);
     localStorage.setItem('data', JSON.stringify(updateData));

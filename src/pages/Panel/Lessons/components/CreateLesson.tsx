@@ -106,7 +106,7 @@ const CreateLesson = () => {
         <div>
           <h2>Turmas</h2>
           <div className={Styles.createlesson_classes}>
-            {data?.classes.map((c) => (
+            {data?.groups.map((c) => (
               <div key={c.id}>
                 <input type='checkbox' onChange={(e) => handleClasses(e, c.id)}/>
                 <label>{c.name}</label>
@@ -120,7 +120,7 @@ const CreateLesson = () => {
           <select onChange={handleSubject}>
             <option value=''>Selecione uma matéria</option>
             {data?.subjects.map((subject) => (
-              <option value={subject}>{subject}</option>
+              <option value={subject.id}>{subject.name}</option>
             ))}
           </select>
         </div>

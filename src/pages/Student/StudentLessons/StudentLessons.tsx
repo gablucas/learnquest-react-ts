@@ -10,7 +10,7 @@ const StudentLessons = () => {
   const { getUser } = useData();
   const student = getUser() as IStudent;
 
-  const studentClass = data?.classes.find((f) => f.students.some((id) => id === student?.id));
+  const studentClass = data?.groups.find((f) => f.students.some((id) => id === student?.id));
   const lessons = data?.lessons.filter((lesson) => lesson.classes.some((id) => id === studentClass?.id && !student.lessons.some((s) => s.id === lesson.id)));
 
   return (
@@ -31,7 +31,7 @@ const StudentLessons = () => {
             <li className={Styles.student_lessons}>
               <Link to={`/estudante/aula/${lesson.id}`}  key={lesson.id}>
                 <span>{lesson.title}</span>
-                <span>{lesson.subject}</span>
+                <span>{data.subjects.find((subject) => subject.id === lesson.subject)?.name}</span>
                 <span>{lesson.questions.length}</span>
                 <span>{lesson.questions.map((m) => m.xp).reduce((acc, cur) => acc + cur)}</span>
               </Link>

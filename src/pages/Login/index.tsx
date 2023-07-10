@@ -23,10 +23,10 @@ const Login = () => {
         localStorage.setItem('logged', login.value);
         setUser(login.value);
 
-        if (getUser()?.access !== "student") {
-          navigate('/painel');
-        } else {
+        if (getUser()?.access === "student") {
           navigate('/estudante');
+        } else {
+          navigate('/painel');
         }
 
       } else {
@@ -35,7 +35,7 @@ const Login = () => {
     }
   }
 
-  if (localStorage.getItem('logged')) return <Navigate to='/estudante' />
+  if (localStorage.getItem('logged')) return <Navigate to='/' />
   return(
     <Container>
       <div className={Styles.login}>

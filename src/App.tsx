@@ -16,6 +16,7 @@ import StudentInfo from './pages/Student/StudendInfo/StudentInfo';
 import StudentLesson from './pages/Student/StudentLesson/StudentLesson';
 import Subjects from './pages/Panel/Subjects/Subjects';
 import Groups from './pages/Panel/Classes/Groups';
+import Home from './pages/Home';
 
 function App() {
 
@@ -25,7 +26,8 @@ function App() {
         <GlobalProvider>
           <Header />
           <Routes>
-            <Route path='/' element={<Login />} />
+            <Route path='/' element={<Home />} />
+            <Route path='/login' element={<Login />} />
             <Route element={<ProtectedRoutes allowedAccess={['admin', 'teacher']}/>}>
               <Route path='/painel' element={<Panel />}>
                 <Route path='' element={<Dashboard />} />

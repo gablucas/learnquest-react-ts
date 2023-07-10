@@ -65,7 +65,7 @@ const StudentInfo = () => {
           {student.lessons.map((lesson, index) => (
             <div>
               <span>{data?.lessons.find((dataLesson) => dataLesson.id === lesson.id)?.title}</span>
-              <span>{data?.lessons.find((dataLesson) => dataLesson.id === lesson.id)?.subject}</span>
+              <span>{data.subjects.find((subject) => subject.id === data?.lessons.find((dataLesson) => dataLesson.id === lesson.id)?.subject)?.name }</span>
               <span>{lesson.answers.length}</span>
               <span>{student.lessons[index].answers.filter((f) => f.isCorrect === true).length}</span>
               <span>{student.lessons[index].answers.filter((f) => f.isCorrect === false).length}</span>
