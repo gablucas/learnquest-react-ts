@@ -40,7 +40,7 @@ const Users = () => {
             <span>{m.nome}</span>
             <span>{m.email}</span>
             <span>{m.access}</span>
-            <span>{m.status === 'active' ? 'Ativado' : 'Desativado'}</span>
+            <span>{m.status ? 'Ativado' : 'Desativado'}</span>
             {index !== 0 && (
               <>
                 <button onClick={() => handleEdit(m.id)}>Editar</button>

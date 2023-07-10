@@ -1,5 +1,5 @@
+import { Subjects } from "./Commom";
 import { Group } from "./Group";
-import { Status } from "./Commom";
 import { ILesson, LessonTest } from "./Lessons";
 
 export interface IInstituition {
@@ -9,7 +9,7 @@ export interface IInstituition {
   users: Array<IUser | IStudent>,
   groups: Group[],
   lessons: ILesson[],
-  subjects: string[],
+  subjects: Subjects[],
   preferences: {
     defaultPassword: string,
   }
@@ -22,7 +22,7 @@ export interface IUser {
   login: string,
   email: string,
   password: string,
-  status: Status,
+  status: boolean,
 }
 
 export interface IStudent extends IUser {

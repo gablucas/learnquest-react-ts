@@ -1,15 +1,18 @@
 import React, { useContext } from 'react';
 import Styles from '../../Panel.module.css';
 import useData from '../../../../hooks/useData';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { GlobalContext } from '../../../../GlobalContext';
 import { ILesson } from '../../../../types/Lessons';
 import { IInstituition } from '../../../../types/Users';
 
 const CreateLesson = () => {
   const { data } = useContext(GlobalContext);
-  const { getUser, createLesson} = useData();
+  const { getUser, createLesson, editLesson } = useData();
   const navigate = useNavigate();
+  const { id } = useParams();
+
+  const LessonToEdit = data.lessons.find((lesson) => lesson.id === id);
 
   const [lesson, setLesson] = React.useState<ILesson>({
     id: ((data as IInstituition).lessons.length + 1).toString(),
@@ -19,8 +22,23 @@ const CreateLesson = () => {
     text: '',
     subject: '',
     questions: [{id: '1' ,question: '', answer: '', xp: 25, needEvaluation: false}],
-    classes: []
+    groups: []
   })
+
+  React.useEffect(() => {
+    if (id && LessonToEdit) {
+      setLesson({
+        id: LessonToEdit.id,
+        createdBy: LessonToEdit?.createdBy,
+        title: LessonToEdit.title,
+        video: LessonToEdit.video,
+        text: LessonToEdit.text,
+        subject: LessonToEdit.subject,
+        questions: LessonToEdit.questions,
+        groups: LessonToEdit.groups,
+      })
+    }
+  }, [id, LessonToEdit])
 
   function handleCreateQuestion(e: React.MouseEvent<HTMLButtonElement>): void {
     e.stopPropagation();
@@ -29,12 +47,12 @@ const CreateLesson = () => {
     setLesson(addNewQuestion);
   }
 
-  function handleClasses(e: React.ChangeEvent<HTMLInputElement>, classId: string): void {
+  function handlegroups(e: React.ChangeEvent<HTMLInputElement>, classId: string): void {
     if (e.target.checked) {
-      setLesson({...lesson, classes: [...lesson.classes, classId]})
+      setLesson({...lesson, groups: [...lesson.groups, classId]})
     } else {
       const updateLesson = {...lesson};
-      updateLesson.classes = updateLesson.classes.filter((f) => f !== classId);
+      updateLesson.groups = updateLesson.groups.filter((f) => f !== classId);
       setLesson(updateLesson)
     }
   }
@@ -77,9 +95,13 @@ const CreateLesson = () => {
     e.preventDefault();
     
     console.log(lesson.questions[0].question !== '')
-    if (lesson.title && lesson.text && lesson.classes.length > 0 && lesson.subject && lesson.questions.every((question) => question.question && question.answer)) {
+    if (lesson.title && lesson.text && lesson.groups.length > 0 && lesson.subject && lesson.questions.every((question) => question.question && question.answer)) {
 
-      createLesson(lesson);
+      if (id) {
+        editLesson(id, lesson);
+      } else {
+        createLesson(lesson);
+      }
       navigate('/painel/aulas');
     }
   }
@@ -105,10 +127,10 @@ const CreateLesson = () => {
 
         <div>
           <h2>Turmas</h2>
-          <div className={Styles.createlesson_classes}>
-            {data?.classes.map((c) => (
+          <div className={Styles.createlesson_groups}>
+            {data?.groups.map((c) => (
               <div key={c.id}>
-                <input type='checkbox' onChange={(e) => handleClasses(e, c.id)}/>
+                <input type='checkbox' onChange={(e) => handlegroups(e, c.id)}/>
                 <label>{c.name}</label>
               </div>
             ))}
@@ -120,7 +142,7 @@ const CreateLesson = () => {
           <select onChange={handleSubject}>
             <option value=''>Selecione uma matéria</option>
             {data?.subjects.map((subject) => (
-              <option value={subject}>{subject}</option>
+              <option key={subject.id} value={subject.id}>{subject.name}</option>
             ))}
           </select>
         </div>

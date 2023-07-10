@@ -53,6 +53,7 @@
 /* Componente Users, Classes e Lessons*/
 
 .users_container,
+.subjects_container,
 .groups_container,
 .lessons_container {
   display: grid;
@@ -61,6 +62,7 @@
 }
 
 .users,
+.subjects,
 .groups,
 .lessons {
   display: grid;
@@ -69,12 +71,14 @@
 }
 
 .users_options,
+.subjects_options,
 .groups_options,
 .lessons_options {
   display: grid;
 }
 
 .users_options button,
+.subjects_options button,
 .groups_options button,
 .lessons_options a {
   justify-self: start;
@@ -85,12 +89,14 @@
 }
 
 .users_options button:hover,
+.subjects_options button:hover,
 .groups_options button:hover,
 .lessons_options a:hover {
   background-color: #464149;
 }
 
 .users div,
+.subjects div,
 .groups div,
 .lessons div {
   display: grid;
@@ -105,12 +111,14 @@
 }
 
 .users div + div,
+.subjects div + div,
 .groups div + div,
 .lessons div + div {
   border-top: 1px solid #121214;
 }
 
 .user button,
+.subjects button,
 .groups button,
 .lesson button {
   padding: 8px;
@@ -118,6 +126,7 @@
 }
 
 .user button:hover,
+.subjects button:hover,
 .groups button:hover,
 .lesson button:hover {
   background-color: #464149;
@@ -166,7 +175,7 @@
   gap: 10px;
 }
 
-.createlesson_classes {
+.createlesson_groups {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
@@ -174,7 +183,7 @@
   background-color: #121214; 
 }
 
-.createlesson_classes > div {
+.createlesson_groups > div {
   display: flex;
   gap: 4px;
 }

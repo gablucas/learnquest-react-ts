@@ -10,27 +10,29 @@ const Subjects = () => {
   const { removeSubject } = useData();
 
   return (
-    <section className={Styles.users_container}>
+    <section className={Styles.subjects_container}>
 
-      <div className={Styles.users_options}>
+      <div className={Styles.subjects_options}>
         <button onClick={() => setToggle(!toggle)}>Criar matéria +</button>
       </div>
 
-      <div className={Styles.users}>
+      <div className={Styles.subjects}>
 
         <div>
           <span>Nome</span>
+          <span>Estado</span>
           <span>Editar</span>
           <span>Excluir</span>
           <span>Aulas</span>
         </div>
 
         {data?.subjects.map((m) => (
-          <div key={m} className={Styles.user}>
-            <span>{m}</span>
+          <div key={m.id} className={Styles.subject}>
+            <span>{m.name}</span>
+            <span>{m.status ? 'Ativado' : 'Desativado'}</span>
             <button>Editar</button>
-            <button onClick={() => removeSubject(m)}>Excluir</button>
-            <span>{data.lessons.map((lesson) => lesson.subject === m).length}</span>
+            <button onClick={() => removeSubject(m.id)}>Excluir</button>
+            <span>{data.lessons.map((lesson) => lesson.subject === m.id).length}</span>
           </div>
         ))}
       </div>

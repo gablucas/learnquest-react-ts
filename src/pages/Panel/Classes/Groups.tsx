@@ -40,7 +40,7 @@ const Groups = () => {
           <div key={m.id} className={Styles.class}>
             <span>{m.name}</span>
             <span>{m.students.length}</span>
-            <span>{m.status === 'active' ? 'Ativado' : 'Desativado'}</span>
+            <span>{m.status ? 'Ativado' : 'Desativado'}</span>
             <button onClick={() => handleEdit(m.id)}>Editar</button>
             <button onClick={() => removeGroup(m.id)}>Excluir</button>
           </div>

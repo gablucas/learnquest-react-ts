@@ -15,7 +15,7 @@ const intialValue: GlobalContextProps = {
     nome: '',
     email: '',
     users: [],
-    classes: [],
+    groups: [],
     lessons: [],
     subjects: [],
     preferences: {

@@ -10,8 +10,9 @@ const StudentInfo = () => {
   const student = getUser() as IStudent;
 
   const studentClass = data?.groups.find((f) => f.students.some((id) => id === student?.id));
-  const todoLessons = data?.lessons.filter((lesson) => lesson.classes.some((id) => id === studentClass?.id && !student.lessons.some((s) => s.id === lesson.id)));
+  const todoLessons = data?.lessons.filter((lesson) => lesson.groups.some((id) => id === studentClass?.id && !student.lessons.some((s) => s.id === lesson.id)));
 
+  if (data)
   return (
     <div className={Styles.student_info_container}>
       <h1>Suas informações</h1>
@@ -64,8 +65,8 @@ const StudentInfo = () => {
 
           {student.lessons.map((lesson, index) => (
             <div>
-              <span>{data?.lessons.find((dataLesson) => dataLesson.id === lesson.id)?.title}</span>
-              <span>{data?.lessons.find((dataLesson) => dataLesson.id === lesson.id)?.subject}</span>
+              <span>{data.lessons.find((dataLesson) => dataLesson.id === lesson.id)?.title}</span>
+              <span>{data.subjects.find((subject) => subject.id === data?.lessons.find((dataLesson) => dataLesson.id === lesson.id)?.subject)?.name }</span>
               <span>{lesson.answers.length}</span>
               <span>{student.lessons[index].answers.filter((f) => f.isCorrect === true).length}</span>
               <span>{student.lessons[index].answers.filter((f) => f.isCorrect === false).length}</span>
