@@ -19,7 +19,7 @@ type UseDataReturn = {
   createGroup: (newgroup: Group) => void,
   removeGroup: (id: string) => void,
   editGroup: (groupid: string, updateGroup: Group) => void,
-  createSubject: (subject: string) => void,
+  createSubject: (subject: Subjects) => void,
   removeSubject: (subject: string) => void,
   editDefaultPassword: (password: string) => void,
   editPassword: (password: string) => void,
@@ -219,7 +219,7 @@ const useData = (): UseDataReturn => {
 
   function removeSubject(subject: string): void {
     const updateData = getData();
-    updateData.subjects = updateData.subjects.filter((f) => f !== subject)
+    updateData.subjects = updateData.subjects.filter((f) => f.id !== subject)
     localStorage.setItem('data', JSON.stringify(updateData));
     setData(updateData);
   }
