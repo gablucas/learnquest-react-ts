@@ -141,6 +141,26 @@ const useData = (): UseDataReturn => {
   function removeLesson(id: string) {
     const updateData = getData();
     updateData.lessons = updateData.lessons.filter((lesson) => lesson.id !== id);
+
+    updateData.users.forEach((user) => {
+      if (user.access === 'student' && (user as IStudent).lessons.some((lesson) => lesson.id === id)) {
+
+        const userLesson = (user as IStudent).lessons.filter((lesson) => lesson.id === id);
+        let totalXP = userLesson[0].answers.filter((answer) => answer.isCorrect).map((answer2) => answer2.xp).reduce((prev, cur) => prev + cur);
+
+        while (totalXP > (user as IStudent).xp) {
+          console.log('oi')
+          totalXP -= (user as IStudent).xp;
+          (user as IStudent).level -= 1;
+          (user as IStudent).xp = (user as IStudent).level  * 125;
+        }
+
+        (user as IStudent).xp -= totalXP;
+
+        (user as IStudent).lessons = (user as IStudent).lessons.filter((lesson) => lesson.id !== id);
+      }
+    });
+    
     localStorage.setItem('data', JSON.stringify(updateData));
     setData(updateData);
   }
