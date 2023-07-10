@@ -3,3 +3,9 @@ export type Subjects = {
   name: string, 
   status: boolean
 }
+
+export type ConfirmStateProps = {
+  toggle: boolean,
+  text: string,
+  action: () => void,
+}

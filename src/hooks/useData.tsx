@@ -15,6 +15,7 @@ type UseDataReturn = {
   logoutUser: () => void,
   createLesson: (lesson: ILesson) => void,
   removeLesson: (id: string) => void,
+  editLesson: (id: string, lesson: ILesson) => void,
   saveStudentLesson: (answer: LessonTest) => void,
   createGroup: (newgroup: Group) => void,
   removeGroup: (id: string) => void,
@@ -59,7 +60,7 @@ const useData = (): UseDataReturn => {
         ],
         groups: [{id: '1', name: 'Turma 1', status: true, students: ['2']}],
         lessons: [{
-          classes: ['1'], 
+          groups: ['1'], 
           createdBy: 'admin', 
           id: '1', 
           questions: [
@@ -163,6 +164,20 @@ const useData = (): UseDataReturn => {
     
     localStorage.setItem('data', JSON.stringify(updateData));
     setData(updateData);
+  }
+
+  function editLesson(id: string, updateLesson: ILesson): void {
+    const updateData = getData();
+    updateData.lessons = updateData.lessons.map((lesson) => {
+      if (lesson.id === id) {
+        return updateLesson
+      }
+
+      return lesson;
+    });
+
+    localStorage.setItem('data', JSON.stringify(updateData));
+    setData(updateData);  
   }
 
   function saveStudentLesson(answer: LessonTest): void {
@@ -280,6 +295,7 @@ const useData = (): UseDataReturn => {
     logoutUser,
     createLesson,
     removeLesson,
+    editLesson,
     saveStudentLesson,
     createGroup,
     removeGroup,

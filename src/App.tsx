@@ -10,13 +10,13 @@ import Dashboard from './pages/Panel/Dashboard/Dashboard';
 import Preferences from './pages/Panel/Preferences/Preferences';
 import Lessons from './pages/Panel/Lessons/Lessons';
 import Student from './pages/Student';
-import CreateLesson from './pages/Panel/Lessons/components/CreateLesson';
 import StudentLessons from './pages/Student/StudentLessons/StudentLessons';
 import StudentInfo from './pages/Student/StudendInfo/StudentInfo';
 import StudentLesson from './pages/Student/StudentLesson/StudentLesson';
 import Subjects from './pages/Panel/Subjects/Subjects';
 import Groups from './pages/Panel/Classes/Groups';
 import Home from './pages/Home';
+import CreateLesson from './pages/Panel/Lessons/components/CreateLesson';
 
 function App() {
 
@@ -37,6 +37,7 @@ function App() {
                 <Route path='preferencias' element={<Preferences />} />
                 <Route path='aulas' element={<Lessons />}/>
                 <Route path='aulas/criar' element={<CreateLesson />} />
+                <Route path='aulas/editar/:id' element={<CreateLesson />} />
               </Route>
             </Route>
 

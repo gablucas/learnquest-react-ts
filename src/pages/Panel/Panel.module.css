@@ -175,7 +175,7 @@
   gap: 10px;
 }
 
-.createlesson_classes {
+.createlesson_groups {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
@@ -183,7 +183,7 @@
   background-color: #121214; 
 }
 
-.createlesson_classes > div {
+.createlesson_groups > div {
   display: flex;
   gap: 4px;
 }

@@ -19,5 +19,5 @@ export interface ILesson {
   text: string,
   subject: string,
   questions: Questions[],
-  classes: string[],
+  groups: string[],
 }
