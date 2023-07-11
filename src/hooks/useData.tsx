@@ -22,6 +22,7 @@ type UseDataReturn = {
   editGroup: (groupid: string, updateGroup: Group) => void,
   createSubject: (subject: Subjects) => void,
   removeSubject: (subject: string) => void,
+  editSubject: (id: string, updateSubject: Subjects) => void,
   editDefaultPassword: (password: string) => void,
   editPassword: (password: string) => void,
 }
@@ -259,6 +260,20 @@ const useData = (): UseDataReturn => {
     setData(updateData);
   }
 
+  function editSubject(id: string, updateSubject: Subjects): void {
+    const updateData = getData();
+    updateData.subjects = updateData.groups.map((subject) => {
+      if (subject.id === id) {
+        return {...updateSubject}
+      }
+
+      return subject;
+    })
+
+    localStorage.setItem('data', JSON.stringify(updateData));
+    setData(updateData);
+  }
+
   function editDefaultPassword(password: string): void {
     const updateData = getData();
     updateData.preferences.defaultPassword = password;
@@ -302,6 +317,7 @@ const useData = (): UseDataReturn => {
     editGroup,
     createSubject,
     removeSubject,
+    editSubject,
     editDefaultPassword,
     editPassword,
   }

@@ -10,24 +10,29 @@ import { IInstituition, IStudent, IUser } from '../../../types/Users';
 import Modal from '../../../components/Modal';
 
 
-type NewuserProps = {
-  setToggle: React.Dispatch<React.SetStateAction<boolean>>
+type HandleUserProps = {
+  setToggle: React.Dispatch<React.SetStateAction<boolean>>,
+  userID?: string,
 }
 
-const Newuser = ({ setToggle }: NewuserProps) => {
+const HandleUser = ({ setToggle, userID }: HandleUserProps) => {
   const { data } = React.useContext(GlobalContext);
-  const { createUser } = useData();
+  const { createUser, editUser } = useData();
+  const user = data.users.find((user) => user.id === userID);
   const { getRandomId } = useRandom();
+
   const access: UseFormType = useForm('');
-  const name: UseFormType = useForm('');
-  const login: UseFormType = useForm('');
-  const email: UseFormType = useForm('');
+  const name: UseFormType = useForm(user ? user.nome : '');
+  const login: UseFormType = useForm(user ? user.login : '');
+  const email: UseFormType = useForm(user ? user.email: '');
+
+  const password: UseFormType = useForm(user ? user.password : '');
 
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault();
 
-    if (access.validate() && login.validate() && access.validate() && name.validate() && email.validate()) {
+    if (!userID && access.validate() && login.validate() && access.validate() && name.validate() && email.validate()) {
 
       const user: IUser = {
         id: getRandomId(),
@@ -36,7 +41,7 @@ const Newuser = ({ setToggle }: NewuserProps) => {
         email: email.value,
         nome: name.value,
         password: (data as IInstituition).preferences.defaultPassword,
-        status: 'active',
+        status: true,
       }
 
       if(access.value === 'student') {
@@ -51,8 +56,12 @@ const Newuser = ({ setToggle }: NewuserProps) => {
         createUser(user);
       }
       
-      setToggle(false);
+
+    } else if (userID && name.validate() && login.validate() && email.validate() && password.validate()) {
+      editUser(userID, name.value, login.value, email.value, password.value);
     }
+
+    setToggle(false);
   }
 
   
@@ -62,11 +71,12 @@ const Newuser = ({ setToggle }: NewuserProps) => {
       <div>
         <h2>Criar novo usuário</h2>
         <form onSubmit={handleSubmit}>
-          <Select options={[{option: 'admin', label: 'Administrador'}, {option: 'teacher', label: 'Professor'}, {option: 'student', label: 'Estudante'}]} {...access} />
+         {!userID && (<Select options={[{option: 'admin', label: 'Administrador'}, {option: 'teacher', label: 'Professor'}, {option: 'student', label: 'Estudante'}]} {...access} />)}
           <Input type='text' label='Nome' {...name} />
           <Input type='text' label='Login' {...login} />
           <Input type='email' label='Email' {...email} />
-          <button>Cadastrar</button>
+          {userID && (<Input type='text' label='Senha' {...password} />)}
+          <button>{!userID ? 'Cadastrar' : 'Atualizar'}</button>
         </form>
 
         <span>Será gerado uma senha padrão, veja em <Link to='/painel/preferencias'>Preferencias</Link></span>
@@ -75,4 +85,4 @@ const Newuser = ({ setToggle }: NewuserProps) => {
   )
 }
 
-export default Newuser;
+export default HandleUser;

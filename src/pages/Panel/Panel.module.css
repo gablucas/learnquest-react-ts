@@ -133,14 +133,14 @@
 }
 
 /* Componente Newclass */
-.newgroup form {
+.handlegroup form {
   width: 400px;
   height: 600px;
   display: grid;
   grid-template-rows: auto 1fr auto;
 }
 
-.newgroup_students {
+.handlegroup_students {
   height: 90%;
   padding: 12px;
   border-radius: 7px;
@@ -148,7 +148,7 @@
   overflow-y: scroll;
 }
 
-.newgroup_students > div {
+.handlegroup_students > div {
   display: flex;
   gap: 10px;
 }

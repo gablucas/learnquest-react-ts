@@ -6,7 +6,7 @@ import { GlobalContext } from '../../../../GlobalContext';
 import { ILesson } from '../../../../types/Lessons';
 import { IInstituition } from '../../../../types/Users';
 
-const CreateLesson = () => {
+const HandleLesson = () => {
   const { data } = useContext(GlobalContext);
   const { getUser, createLesson, editLesson } = useData();
   const navigate = useNavigate();
@@ -190,4 +190,4 @@ const CreateLesson = () => {
   )
 }
 
-export default CreateLesson;
+export default HandleLesson;

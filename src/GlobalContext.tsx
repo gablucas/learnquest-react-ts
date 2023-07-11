@@ -28,7 +28,7 @@ const intialValue: GlobalContextProps = {
   setData: () => null,
   user: null,
   setUser: () => null,
-  confirm: {toggle: false, text: '', action: () => ''},
+  confirm: {toggle: false, type: 'message', text: '', action: () => ''},
   setConfirm: () => '',
 };
 
@@ -44,7 +44,7 @@ export const GlobalProvider = ({ children }: GlobalProviderProps) => {
 
   const [data, setData] = React.useState(getData);
   const [user, setUser] = React.useState(localStorage.getItem('logged'));
-  const [confirm, setConfirm] = React.useState<ConfirmStateProps>({toggle: false, text: '', action: () => ''});
+  const [confirm, setConfirm] = React.useState<ConfirmStateProps>({toggle: false, type: 'message', text: '', action: () => ''});
 
   return (
     <GlobalContext.Provider value={{ data, setData, user, setUser, confirm, setConfirm }}>

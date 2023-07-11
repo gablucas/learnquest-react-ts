@@ -4,7 +4,7 @@ import { GlobalContext } from '../../../GlobalContext';
 import { Link, useNavigate } from "react-router-dom";
 import useData from '../../../hooks/useData';
 import { IStudent } from '../../../types/Users';
-import Confirm from '../../../components/Confirm/Confirm';
+import Message from '../../../components/Message/Message';
 
 const Lessons = () => {
   const { confirm, setConfirm } = React.useContext(GlobalContext);
@@ -14,7 +14,7 @@ const Lessons = () => {
 
   function handleEdit(id: string): void {
     if (data.users.some((user) => user.access === 'student' && (user as IStudent).lessons.some((lesson) => lesson.id === id))) {
-      console.log('Barrou');
+      setConfirm({toggle: true, type: 'message', text: 'Não é mais possível editar essa aula, pois ela já foi finalizada por um ou mais alunos'})
     } else {
       navigate(`editar/${id}`);
     }
@@ -50,12 +50,12 @@ const Lessons = () => {
             <span>{lesson.subject}</span>
             <span>{lesson.questions.length}</span>
             <button onClick={() => handleEdit(lesson.id)}>Editar</button>
-            <button onClick={() => setConfirm({toggle: true, text: 'A exclusão desta aula também removerá de todos os alunos que já a concluíram, incluindo a XP ganha também. Deseja excluir mesmo assim?', action: () => handleRemove(lesson.id)})}>Deletar</button>
+            <button onClick={() => setConfirm({toggle: true, type: 'confirm', text: 'A exclusão desta aula também removerá de todos os alunos que já a concluíram, incluindo a XP ganha também. Deseja excluir mesmo assim?', action: () => handleRemove(lesson.id)})}>Deletar</button>
           </div>
         ))}
       </div>
 
-      {confirm?.toggle && <Confirm />}
+      {confirm?.toggle && <Message />}
       
     </section>
   )

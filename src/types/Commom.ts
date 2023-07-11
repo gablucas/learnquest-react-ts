@@ -7,5 +7,6 @@ export type Subjects = {
 export type ConfirmStateProps = {
   toggle: boolean,
   text: string,
-  action: () => void,
+  type: 'confirm' | 'message',
+  action?: () => void,
 }

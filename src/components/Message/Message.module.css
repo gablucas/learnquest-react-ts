@@ -1,27 +1,27 @@
-.confirm {
+.message {
   padding: 40px;
   border-radius: 7px;
   text-align: center;
   background-color: #302B33; 
 }
 
-.confirm button {
+.message button {
   font-weight: 700;
   border-radius: 7px;
   padding: 8px;
 }
 
-.confirm button:hover {
+.message button:hover {
   filter: brightness(1.1);
 }
 
-.confirm button:first-of-type {
+.message button:first-of-type {
   margin-right: 12px;
   margin-top: 12px;
   color: #121214;
   background-color: red;
 }
 
-.confirm button:last-of-type {
+.message button:last-of-type {
   background-color: #464149;
 }
