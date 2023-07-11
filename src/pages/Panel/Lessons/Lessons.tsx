@@ -5,17 +5,16 @@ import { Link, useNavigate } from "react-router-dom";
 import useData from '../../../hooks/useData';
 import { IStudent } from '../../../types/Users';
 import Confirm from '../../../components/Confirm/Confirm';
-import { ConfirmStateProps } from '../../../types/Commom';
 
 const Lessons = () => {
-  const [confirm, setConfirm] = React.useState<ConfirmStateProps>({toggle: false, text: '', action: () => ''})
+  const { confirm, setConfirm } = React.useContext(GlobalContext);
   const { data } = React.useContext(GlobalContext);
   const { removeLesson } = useData();
   const navigate = useNavigate();
 
   function handleEdit(id: string): void {
     if (data.users.some((user) => user.access === 'student' && (user as IStudent).lessons.some((lesson) => lesson.id === id))) {
-      console.log('Barrou')
+      console.log('Barrou');
     } else {
       navigate(`editar/${id}`);
     }
@@ -56,7 +55,7 @@ const Lessons = () => {
         ))}
       </div>
 
-      {confirm?.toggle && <Confirm confirm={confirm} setConfirm={setConfirm} />}
+      {confirm?.toggle && <Confirm />}
       
     </section>
   )

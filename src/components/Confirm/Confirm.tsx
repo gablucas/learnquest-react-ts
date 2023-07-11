@@ -1,15 +1,10 @@
 import React from 'react';
 import Styles from './Confirm.module.css';
-import { ConfirmStateProps } from "../../types/Commom";
 import Modal from "../Modal";
+import { GlobalContext } from '../../GlobalContext';
 
-type ConfirmProps = {
-  confirm: ConfirmStateProps,
-  setConfirm: React.Dispatch<React.SetStateAction<ConfirmStateProps>>,
-}
-
-
-const Confirm = ({confirm, setConfirm}: ConfirmProps) => {
+const Confirm = () => {
+  const { confirm, setConfirm } = React.useContext(GlobalContext);
 
   function handleClick(choice: boolean): void {
     if (choice) {

@@ -4,8 +4,11 @@ import { GlobalContext } from '../../../GlobalContext';
 import NewGroup from './components/NewGroup';
 import useData from '../../../hooks/useData';
 import EditGroup from './components/EditGroup';
+import Confirm from '../../../components/Confirm/Confirm';
 
 const Groups = () => {
+  const { data, confirm, setConfirm } = React.useContext(GlobalContext);
+  const { removeGroup } = useData();
   const [toggle, setToggle] = React.useState<boolean>(false);
   const [toggleEdit, setToggleEdit] = React.useState<boolean>(false);
   const [groupID, setGroupID] = React.useState<string>('');
@@ -15,9 +18,12 @@ const Groups = () => {
     setToggleEdit(true);
   }
 
+  function handleRemoveGroup(id: string): void {
+    removeGroup(id);
+  }
 
-  const { data } = React.useContext(GlobalContext)
-  const { removeGroup } = useData();
+
+
 
   return (
     <section className={Styles.groups_container}>
@@ -42,13 +48,14 @@ const Groups = () => {
             <span>{m.students.length}</span>
             <span>{m.status ? 'Ativado' : 'Desativado'}</span>
             <button onClick={() => handleEdit(m.id)}>Editar</button>
-            <button onClick={() => removeGroup(m.id)}>Excluir</button>
+            <button onClick={() => setConfirm({toggle: true, text: 'Deseja realmente excluir essa turma?', action: () => handleRemoveGroup(m.id)})}>Excluir</button>
           </div>
         ))}
       </div>
 
       {toggle && <NewGroup setToggle={setToggle} />}
       {toggleEdit && (<EditGroup setToggle={setToggleEdit} groupID={groupID} />)}
+      {confirm.toggle && <Confirm />}
     </section>
   )
 }
