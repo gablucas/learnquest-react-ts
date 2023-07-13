@@ -31,6 +31,14 @@
   width: 100%;
 }
 
+.sidebar .active,
+.sidebar li:hover.active {
+  font-weight: 600;
+  color: #302B33;
+  background-color: #FFA700;
+}
+
+
 /* Componente Dashboard */
 
 .dashboard_container {
@@ -252,6 +260,14 @@
   background-color: #302B33;
 }
 
+.evaluatelesson .question_wrapper.wrong {
+  border: 2px solid red;
+}
+
+.evaluatelesson .question_wrapper.correct {
+  border: 2px solid green;
+}
+
 
 .evaluatelesson .buttons {
   align-self: center;
@@ -281,6 +297,17 @@
 
 .evaluatelesson .buttons button:hover {
   filter: brightness(1.2);
+}
+
+.evaluatelesson .btn_donevaluate {
+  margin-top: 20px;
+  padding: 16px;
+  background: #FFA700;
+  color: #2b2b2b;
+  font-weight: 700;
+  border-radius: 7px;
+  text-transform: uppercase;
+  cursor: pointer;
 }
 
 

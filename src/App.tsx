@@ -31,7 +31,7 @@ function App() {
             <Route path='/' element={<Home />} />
             <Route path='/login' element={<Login />} />
             <Route element={<ProtectedRoutes allowedAccess={['admin', 'teacher']}/>}>
-              <Route path='/painel' element={<Panel />}>
+              <Route path='/painel/*' element={<Panel />}>
                 <Route path='' element={<Dashboard />} />
                 <Route path='usuarios' element={<Users />}/>
                 <Route path='turmas' element={<Groups />} />
@@ -46,7 +46,7 @@ function App() {
             </Route>
 
             <Route element={<ProtectedRoutes allowedAccess={['student']}/>}>
-              <Route path='/estudante' element={<Student />}>
+              <Route path='/estudante/*' element={<Student />}>
                 <Route path='' element={<StudentInfo />} />
                 <Route path='aulas' element={<StudentLessons />} />
                 <Route path='aula/:id' element={<StudentLesson />} />

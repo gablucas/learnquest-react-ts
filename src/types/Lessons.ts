@@ -1,6 +1,6 @@
 export type LessonStudent = {
   id: string,
-  answers: {id: string, value: string, isCorrect: boolean, xp: number}[]
+  answers: {id: string, value: string, isCorrect: boolean | undefined, xp: number}[]
 }
 
 export interface IEvaluateLesson extends LessonStudent {

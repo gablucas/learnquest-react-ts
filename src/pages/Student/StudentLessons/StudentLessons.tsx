@@ -10,8 +10,8 @@ const StudentLessons = () => {
   const { getUser } = useData();
   const student = getUser() as IStudent;
 
-  const studentClass = data?.groups.find((f) => f.students.some((id) => id === student?.id));
-  const lessons = data?.lessons.filter((lesson) => lesson.groups.some((id) => id === studentClass?.id && !student.lessons.some((s) => s.id === lesson.id)));
+  const studentGroup = data?.groups.find((f) => f.students.some((id) => id === student?.id));
+  const lessons = data?.lessons.filter((lesson) => lesson.groups.some((id) => id === studentGroup?.id && student.lessons.some((s) => s.id === lesson.id)));
 
   return (
     <div className={Styles.student_lessons_container}>

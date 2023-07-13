@@ -39,13 +39,11 @@ const StudentInfo = () => {
           <span>{student.nome}</span>
           <span>{studentClass?.name}</span>
           <span>Rank 1</span>
-          <span>XP {student.xp + (student.level - 1) * 125}</span>
+          <span>XP Total {student.xp + (student.level - 1) * 125}</span>
         </div>
 
         <div className={Styles.student_info_messages}>
-          <span>Mensagem 1</span>
-          <span>Mensagem 2</span>
-          <span>Mensagem 3</span>
+          <span>Sem mensagens</span>
         </div>
 
       </div>
