@@ -16,7 +16,9 @@ import StudentLesson from './pages/Student/StudentLesson/StudentLesson';
 import Subjects from './pages/Panel/Subjects/Subjects';
 import Groups from './pages/Panel/Classes/Groups';
 import Home from './pages/Home';
-import CreateLesson from './pages/Panel/Lessons/components/CreateLesson';
+import HandleLesson from './pages/Panel/Lessons/components/HandleLesson';
+import Evaluate from './pages/Panel/Evaluate/Evaluate';
+import EvaluateLesson from './pages/Panel/Evaluate/components/EvaluateLesson';
 
 function App() {
 
@@ -36,8 +38,10 @@ function App() {
                 <Route path='materias' element={<Subjects />} />
                 <Route path='preferencias' element={<Preferences />} />
                 <Route path='aulas' element={<Lessons />}/>
-                <Route path='aulas/criar' element={<CreateLesson />} />
-                <Route path='aulas/editar/:id' element={<CreateLesson />} />
+                <Route path='aulas/criar' element={<HandleLesson />} />
+                <Route path='aulas/editar/:id' element={<HandleLesson />} />
+                <Route path='avaliar' element={<Evaluate />} />
+                <Route path='avaliar/:id' element={<EvaluateLesson />} />
               </Route>
             </Route>
 

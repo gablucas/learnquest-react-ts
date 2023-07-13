@@ -1,3 +1,5 @@
+export type Role = 'admin' | 'teacher'| 'student';
+
 export type Subjects = {
   id: string, 
   name: string, 
@@ -7,5 +9,6 @@ export type Subjects = {
 export type ConfirmStateProps = {
   toggle: boolean,
   text: string,
-  action: () => void,
+  type: 'confirm' | 'message',
+  action?: () => void,
 }

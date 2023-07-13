@@ -1,6 +1,12 @@
-export type LessonTest = {
+export type LessonStudent = {
   id: string,
   answers: {id: string, value: string, isCorrect: boolean, xp: number}[]
+}
+
+export interface IEvaluateLesson extends LessonStudent {
+  evaluateID: string,
+  student: string,
+  subject: string,
 }
 
 export type Questions = {
@@ -8,7 +14,6 @@ export type Questions = {
   question: string,
   answer: string,
   xp: number,
-  needEvaluation: boolean,
 }
 
 export interface ILesson {

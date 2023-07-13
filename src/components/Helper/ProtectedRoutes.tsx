@@ -1,8 +1,7 @@
 import React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 import useData from '../../hooks/useData';
-
-type Role = 'admin' | 'teacher'| 'student';
+import { Role } from '../../types/Commom';
 
 type RoutesProps = {
   children?: React.ReactNode,

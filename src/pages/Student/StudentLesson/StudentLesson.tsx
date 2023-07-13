@@ -3,25 +3,28 @@ import Styles from '../Student.module.css';
 import { GlobalContext } from '../../../GlobalContext';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import useData from '../../../hooks/useData';
-import { LessonTest } from '../../../types/Lessons';
+import { IEvaluateLesson } from '../../../types/Lessons';
 import { IInstituition, IStudent } from '../../../types/Users';
+import useRandom from '../../../hooks/useRandom';
 
 const StudentLesson = () => {
   const { data } = React.useContext(GlobalContext);
   const { id } = useParams();
-  const [answer, setAnswer] = React.useState<LessonTest>();
+  const [answer, setAnswer] = React.useState<IEvaluateLesson>();
   const { saveStudentLesson, getUser } = useData();
+  const { getRandomID } = useRandom();
   const navigate = useNavigate();
 
   // Analisar se utilizar variavel local afeta o desempenho a cada renderizacao
   const student = getUser() as IStudent;
   const lesson = (data as IInstituition).lessons.find((f) => f.id === id);
 
+
   React.useEffect(() => {
     if (lesson) {
-      setAnswer({id: lesson.id, answers: lesson.questions.map((question) => ({id: question.id, value: '', isCorrect: false, xp: 0}))})
+      setAnswer({evaluateID: getRandomID(), id: lesson.id, student: student.id, subject: lesson.subject, answers: lesson.questions.map((question) => ({id: question.id, value: '', isCorrect: false, xp: 0}))});
     }
-  }, [lesson])
+  }, [lesson, student.id, getRandomID])
 
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>, index: number): void {

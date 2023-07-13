@@ -1,7 +1,7 @@
 import React from 'react';
 import { GlobalContext } from "../GlobalContext";
 import { IInstituition, IUser, IStudent } from '../types/Users';
-import { ILesson, LessonTest } from '../types/Lessons';
+import { IEvaluateLesson, ILesson, LessonStudent } from '../types/Lessons';
 import { Group } from '../types/Group';
 import { Subjects } from '../types/Commom';
 
@@ -13,15 +13,18 @@ type UseDataReturn = {
   editUser: (id: string, nome: string, login: string, email: string, password: string) => void,
   getUser: () => IUser | IStudent | undefined,
   logoutUser: () => void,
+  checkUser: (type: 'login' | 'email', value: string) => boolean,
   createLesson: (lesson: ILesson) => void,
   removeLesson: (id: string) => void,
   editLesson: (id: string, lesson: ILesson) => void,
-  saveStudentLesson: (answer: LessonTest) => void,
+  saveStudentLesson: (answer: IEvaluateLesson) => void,
+  evaluateLesson: (studentID: string, evaluateID: string, lesson: LessonStudent) => void,
   createGroup: (newgroup: Group) => void,
   removeGroup: (id: string) => void,
   editGroup: (groupid: string, updateGroup: Group) => void,
   createSubject: (subject: Subjects) => void,
   removeSubject: (subject: string) => void,
+  editSubject: (id: string, updateSubject: Subjects) => void,
   editDefaultPassword: (password: string) => void,
   editPassword: (password: string) => void,
 }
@@ -39,7 +42,7 @@ const useData = (): UseDataReturn => {
           {
             id: '1',
             access: 'admin',
-            nome: 'Admnistrador',
+            nome: 'Administrador',
             login: 'admin',
             email: 'instituicao@edu.com.br',
             password: '123',
@@ -48,9 +51,9 @@ const useData = (): UseDataReturn => {
           {
             id: '2',
             access: 'student',
-            nome: 'Estudante',
-            login: 'estudante',
-            email: 'estudante@edu.com.br',
+            nome: 'Aluno',
+            login: 'aluno',
+            email: 'aluno@edu.com.br',
             password: '123',
             status: true,
             level: 1,
@@ -64,17 +67,18 @@ const useData = (): UseDataReturn => {
           createdBy: 'admin', 
           id: '1', 
           questions: [
-            {id: "1", question: "Quanto é 1 + 1?", answer: "2", xp: 25, needEvaluation: false}, 
-            {id: "2", question: "Quanto é 2 + 2?", answer: "4", xp: 50, needEvaluation: false}, 
-            {id: "3", question: "Quanto é 3 + 3?", answer: "6", xp: 75, needEvaluation: false}, 
-            {id: "4", question: "Quanto é 4 + 4?", answer: "8", xp: 100, needEvaluation: false}
+            {id: "1", question: "Quanto é 1 + 1?", answer: "2", xp: 25}, 
+            {id: "2", question: "Quanto é 2 + 2?", answer: "4", xp: 50}, 
+            {id: "3", question: "Quanto é 3 + 3?", answer: "6", xp: 75}, 
+            {id: "4", question: "Quanto é 4 + 4?", answer: "8", xp: 100},
           ], 
-          subject: '1', 
+          subject: '1',
           text: 'Nessa aula você aprenderá a somar', 
           title: 'Aprendendo a somar', 
           video: ''
         }],
         subjects: [{id: '1', name: 'Matemática', status: true}],
+        evaluate: [],
         preferences: {
           defaultPassword: '123',
         }
@@ -132,6 +136,12 @@ const useData = (): UseDataReturn => {
     setUser(null);
   }
 
+  function checkUser(type: 'login' | 'email', value: string): boolean {
+    const checkData = getData();
+
+    return checkData.users.some((user) => user[type] === value);
+  }
+
   function createLesson(lesson: ILesson): void {
     const updateData = getData();
     updateData.lessons.unshift(lesson);
@@ -180,39 +190,41 @@ const useData = (): UseDataReturn => {
     setData(updateData);  
   }
 
-  function saveStudentLesson(answer: LessonTest): void {
+  function saveStudentLesson(answer: IEvaluateLesson): void {
     const updateData = getData();
-    const user = getUser() as IStudent;
+    
+    updateData.evaluate.unshift(answer);
+    localStorage.setItem('data', JSON.stringify(updateData));
+    setData(updateData);
+  }
 
-    // Verifica as questões acertadas e calcula o xp ganho
-    const questions = updateData.lessons.find((lesson) => lesson.id === answer.id)?.questions;
-    let xp = 0;
+  function evaluateLesson(studentID: string, evaluateID: string, lesson: LessonStudent): void {
+    const updateData = getData();
+    const user = updateData.users.find((user) => user.id === studentID) as IStudent;
+    let totalXP = lesson.answers.map((answer) => answer.xp).reduce((pre, cur) => pre + cur);
 
-    questions?.forEach((question, index) => {
-      if (question.answer === answer.answers[index].value) {
-        answer.answers[index].isCorrect = true;
-        answer.answers[index].xp = question.xp;
-        xp += question.xp;
-      }
-    })
+    updateData.evaluate = updateData.evaluate.filter((lesson) => lesson.evaluateID !== evaluateID);
 
-    if (user.xp + xp >= user.level * 125) {
-      const restXP = (user.xp + xp) - (user.level * 125);
+    user.lessons.push(lesson);
+
+    while (totalXP >= user.level * 125 - user.xp) {
+      totalXP -= user.level * 125 + user.xp;
+      user.xp = 0;
       user.level += 1;
-      user.xp = restXP;
-    } else {
-      user.xp += xp;
+      console.log(totalXP)
     }
 
-    user.lessons.push(answer)
+    user.xp += totalXP;
 
-    updateData.users = updateData.users.map((u) => {
-      if (u.login.toLowerCase() === localStorage.getItem('logged')?.toLowerCase()) {
+    updateData.users = updateData.users.map((userMap) => {
+      if (userMap.id === studentID) {
         return {...user}
       }
-      return u;
+
+      return userMap;
     })
 
+    console.log(updateData)
     localStorage.setItem('data', JSON.stringify(updateData));
     setData(updateData);
   }
@@ -259,6 +271,20 @@ const useData = (): UseDataReturn => {
     setData(updateData);
   }
 
+  function editSubject(id: string, updateSubject: Subjects): void {
+    const updateData = getData();
+    updateData.subjects = updateData.groups.map((subject) => {
+      if (subject.id === id) {
+        return {...updateSubject}
+      }
+
+      return subject;
+    })
+
+    localStorage.setItem('data', JSON.stringify(updateData));
+    setData(updateData);
+  }
+
   function editDefaultPassword(password: string): void {
     const updateData = getData();
     updateData.preferences.defaultPassword = password;
@@ -293,15 +319,18 @@ const useData = (): UseDataReturn => {
     editUser,
     getUser,
     logoutUser,
+    checkUser,
     createLesson,
     removeLesson,
     editLesson,
     saveStudentLesson,
+    evaluateLesson,
     createGroup,
     removeGroup,
     editGroup,
     createSubject,
     removeSubject,
+    editSubject,
     editDefaultPassword,
     editPassword,
   }

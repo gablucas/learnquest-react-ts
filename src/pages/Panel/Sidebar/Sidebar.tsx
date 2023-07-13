@@ -5,8 +5,6 @@ import useData from '../../../hooks/useData';
 const Sidebar = () => {
   const { getUser, logoutUser } = useData();
   
-
-
   return (
     <nav className={Styles.sidebar}>
       <ul>
@@ -15,6 +13,7 @@ const Sidebar = () => {
         {getUser()?.access === 'admin' && <li><Link to='turmas'>Turmas</Link></li>}
         {getUser()?.access === 'admin' && <li><Link to='materias'>Matérias</Link></li>}
         <li><Link to='aulas'>Aulas</Link></li>
+        <li><Link to='avaliar'>Avaliar</Link></li>
         {getUser()?.access === 'admin' && <li><Link to='preferencias'>Preferências</Link></li>}
         <li><button onClick={logoutUser}>Sair</button></li>
       </ul>

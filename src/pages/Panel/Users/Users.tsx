@@ -1,20 +1,26 @@
 import React from 'react';
 import Styles from '../Panel.module.css';
-import Newuser from "./Newuser";
 import useData from '../../../hooks/useData';
 import { GlobalContext } from '../../../GlobalContext';
-import EditUser from './EditUser';
+import Message from '../../../components/Message/Message';
+import HandleUser from './HandleUser';
 
 const Users = () => {
+  const { confirm, setConfirm } = React.useContext(GlobalContext);
   const [toggle, setToggle] = React.useState<boolean>(false);
   const [toggleEdit, setToggleEdit] = React.useState<boolean>(false);
+  
   const [userID, setUserID] = React.useState<string>('');
-  const { data } = React.useContext(GlobalContext)
+  const { data } = React.useContext(GlobalContext);
   const { removeUser } = useData();
 
   function handleEdit(userid: string): void {
     setUserID(userid);
     setToggleEdit(true);
+  }
+
+  function handleRemove(email: string): void {
+    removeUser(email);
   }
 
   return (
@@ -44,7 +50,7 @@ const Users = () => {
             {index !== 0 && (
               <>
                 <button onClick={() => handleEdit(m.id)}>Editar</button>
-                <button onClick={() => removeUser(m.email)}>Excluir</button>
+                <button onClick={() => setConfirm({toggle: true, type: 'confirm', text: 'Deseja realmente excluir este usuário?', action: () => handleRemove(m.email)})}>Excluir</button>
               </>
             )}
           </div>
@@ -52,8 +58,9 @@ const Users = () => {
       </div>
 
 
-      {toggle && (<Newuser setToggle={setToggle} />)}
-      {toggleEdit && (<EditUser setToggle={setToggleEdit} userID={userID} />)}
+      {toggle && (<HandleUser setToggle={setToggle} />)}
+      {toggleEdit && (<HandleUser setToggle={setToggleEdit} userID={userID} />)}
+      {confirm.toggle && <Message />}
     </section>
   )
 }
