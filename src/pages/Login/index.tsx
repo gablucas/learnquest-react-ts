@@ -10,10 +10,11 @@ import useData from '../../hooks/useData';
 const Login = () => {
   const { data, setUser } = React.useContext(GlobalContext);
   const { getUser } = useData();
+  const user = getUser();
 
   const navigate: NavigateFunction = useNavigate();
-  const login: UseFormType = useForm('');
-  const password: UseFormType = useForm('');
+  const login: UseFormType = useForm({type: 'user', initialValue: ''});
+  const password: UseFormType = useForm({type: 'password', initialValue: ''});
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault();
@@ -35,7 +36,9 @@ const Login = () => {
     }
   }
 
-  if (localStorage.getItem('logged')) return <Navigate to='/' />
+  if (user && user.access === 'student') return <Navigate to='/estudante' />
+  if (user && user.access !== 'student') return <Navigate to='/painel' />
+  else
   return(
     <Container>
       <div className={Styles.login}>

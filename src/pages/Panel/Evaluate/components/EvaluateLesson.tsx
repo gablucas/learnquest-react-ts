@@ -25,10 +25,10 @@ const EvaluateLesson = () => {
 
   function handleEvaluate(index: number, isCorrect: boolean): void {
 
-    if (isCorrect && teste && lessonInfo) {
+    if (teste && lessonInfo) {
       setTeste({...teste, answers: teste.answers.map((answer, indexMap) => {
         if (indexMap === index) {
-          return {...answer, isCorrect, xp: lessonInfo.questions[index].xp}
+          return {...answer, isCorrect, xp: isCorrect ? lessonInfo.questions[index].xp : 0}
         }
 
         return answer;
@@ -37,7 +37,7 @@ const EvaluateLesson = () => {
   }
   
   function handleDoneEvaluate(): void {
-    if (teste?.answers.every((answer) => answer.isCorrect !== null) && userInfo && id) {
+    if (teste?.answers.every((answer) => answer.isCorrect !== undefined) && userInfo && id) {
       evaluateLesson(userInfo.id, id, teste);
       navigate('/painel/avaliar');
     }
@@ -52,7 +52,7 @@ const EvaluateLesson = () => {
 
       <div>
         {lessonInfo.questions.map((question, index) => (
-          <div key={question.id} className={Styles.question_wrapper}>
+          <div key={question.id} className={`${Styles.question_wrapper} ${teste?.answers[index].isCorrect === true ? Styles.correct : teste?.answers[index].isCorrect === false ? Styles.wrong : ' '}`}>
 
             <div>
               <span>Questão {index + 1}</span>
@@ -77,7 +77,7 @@ const EvaluateLesson = () => {
         ))}
       </div>
 
-      <button onClick={handleDoneEvaluate}>Finalizar avaliação</button>
+      <button className={Styles.btn_donevaluate} onClick={handleDoneEvaluate}>Finalizar avaliação</button>
 
     </div>
   )

@@ -15,7 +15,6 @@ import StudentInfo from './pages/Student/StudendInfo/StudentInfo';
 import StudentLesson from './pages/Student/StudentLesson/StudentLesson';
 import Subjects from './pages/Panel/Subjects/Subjects';
 import Groups from './pages/Panel/Classes/Groups';
-import Home from './pages/Home';
 import HandleLesson from './pages/Panel/Lessons/components/HandleLesson';
 import Evaluate from './pages/Panel/Evaluate/Evaluate';
 import EvaluateLesson from './pages/Panel/Evaluate/components/EvaluateLesson';
@@ -28,10 +27,9 @@ function App() {
         <GlobalProvider>
           <Header />
           <Routes>
-            <Route path='/' element={<Home />} />
-            <Route path='/login' element={<Login />} />
+            <Route path='/' element={<Login />} />
             <Route element={<ProtectedRoutes allowedAccess={['admin', 'teacher']}/>}>
-              <Route path='/painel' element={<Panel />}>
+              <Route path='/painel/*' element={<Panel />}>
                 <Route path='' element={<Dashboard />} />
                 <Route path='usuarios' element={<Users />}/>
                 <Route path='turmas' element={<Groups />} />
@@ -46,7 +44,7 @@ function App() {
             </Route>
 
             <Route element={<ProtectedRoutes allowedAccess={['student']}/>}>
-              <Route path='/estudante' element={<Student />}>
+              <Route path='/estudante/*' element={<Student />}>
                 <Route path='' element={<StudentInfo />} />
                 <Route path='aulas' element={<StudentLessons />} />
                 <Route path='aula/:id' element={<StudentLesson />} />
