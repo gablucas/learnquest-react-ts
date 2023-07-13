@@ -1,5 +1,7 @@
 export type Role = 'admin' | 'teacher'| 'student';
 
+export type ValidateOptions = 'login' | 'email'
+
 export type Subjects = {
   id: string, 
   name: string, 

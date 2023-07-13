@@ -3,7 +3,7 @@ import { GlobalContext } from "../GlobalContext";
 import { IInstituition, IUser, IStudent } from '../types/Users';
 import { IEvaluateLesson, ILesson, LessonStudent } from '../types/Lessons';
 import { Group } from '../types/Group';
-import { Subjects } from '../types/Commom';
+import { Subjects, ValidateOptions } from '../types/Commom';
 
 type UseDataReturn = {
   getData: () => IInstituition,
@@ -13,7 +13,7 @@ type UseDataReturn = {
   editUser: (id: string, nome: string, login: string, email: string, password: string) => void,
   getUser: () => IUser | IStudent | undefined,
   logoutUser: () => void,
-  checkUser: (type: 'login' | 'email', value: string) => boolean,
+  checkUser: (type: ValidateOptions, value: string) => boolean,
   createLesson: (lesson: ILesson) => void,
   removeLesson: (id: string) => void,
   editLesson: (id: string, lesson: ILesson) => void,
@@ -136,7 +136,7 @@ const useData = (): UseDataReturn => {
     setUser(null);
   }
 
-  function checkUser(type: 'login' | 'email', value: string): boolean {
+  function checkUser(type: ValidateOptions, value: string): boolean {
     const checkData = getData();
 
     return checkData.users.some((user) => user[type] === value);

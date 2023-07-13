@@ -19,10 +19,10 @@ const HandleUser = ({ setToggle, userID }: HandleUserProps) => {
   const { data } = React.useContext(GlobalContext);
   const { createUser, editUser } = useData();
   const user = data.users.find((user) => user.id === userID);
-  const { getRandomId } = useRandom();
+  const { getRandomID } = useRandom();
 
-  const access: UseFormType = useForm({type: 'acess', initialValue: ''});
-  const name: UseFormType = useForm({type: 'name', initialValue: user ? user.nome : ''});
+  const access: UseFormType = useForm({type: 'newuser_access', initialValue: ''});
+  const name: UseFormType = useForm({type: 'newuser_name', initialValue: user ? user.nome : ''});
   const login: UseFormType = useForm({type: 'login', initialValue: user ? user.login : ''});
   const email: UseFormType = useForm({type: 'email', initialValue: user ? user.email: ''});
 
@@ -35,7 +35,7 @@ const HandleUser = ({ setToggle, userID }: HandleUserProps) => {
     if (!userID && access.validate() && login.validate() && access.validate() && name.validate() && email.validate()) {
 
       const user: IUser = {
-        id: getRandomId(),
+        id: getRandomID(),
         access: access.value as 'admin' | 'teacher' | 'student',
         login: login.value.toLowerCase(),
         email: email.value.toLowerCase(),

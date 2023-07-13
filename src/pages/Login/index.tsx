@@ -13,8 +13,8 @@ const Login = () => {
   const user = getUser();
 
   const navigate: NavigateFunction = useNavigate();
-  const login: UseFormType = useForm('');
-  const password: UseFormType = useForm('');
+  const login: UseFormType = useForm({type: 'user', initialValue: ''});
+  const password: UseFormType = useForm({type: 'password', initialValue: ''});
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault();

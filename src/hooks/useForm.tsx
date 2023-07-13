@@ -25,7 +25,7 @@ const useForm = ({type, initialValue}: UseFormProps): UseFormType => {
     if (value.length === 0) {
       setError('Campo vazio');
       return false;
-    } else if ((type === 'email' || type === 'login') && checkUser(type, value)) {
+    } else if ((type === 'login' || type === 'email') && checkUser(type, value)) {
       setError(`Já existe um ${type} registrado`)
       return false;
     } else {
