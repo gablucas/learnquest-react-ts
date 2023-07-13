@@ -21,6 +21,7 @@ const intialValue: GlobalContextProps = {
     groups: [],
     lessons: [],
     subjects: [],
+    evaluate: [],
     preferences: {
       defaultPassword: '',
     }

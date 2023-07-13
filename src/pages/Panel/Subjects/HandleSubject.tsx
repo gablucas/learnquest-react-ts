@@ -13,9 +13,9 @@ type HandleSubjectProps = {
 
 const HandleSubject = ({ setToggle, subjectID }: HandleSubjectProps) => {
   const { data } = React.useContext(GlobalContext);
-  const { getRandomId } = useRandom();
+  const { getRandomID } = useRandom();
   const { createSubject, editSubject } = useData();
-  const subject: UseFormType = useForm(data.subjects.find((subject) => subject.id === subjectID)?.name || '');
+  const subject: UseFormType = useForm({type: 'subject', initialValue: data.subjects.find((subject) => subject.id === subjectID)?.name || ''});
 
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>): void {
@@ -23,7 +23,7 @@ const HandleSubject = ({ setToggle, subjectID }: HandleSubjectProps) => {
 
     if (subject.validate()) {
       if(!subjectID && data) {
-        createSubject({id: getRandomId(), name: subject.value, status: true})
+        createSubject({id: getRandomID(), name: subject.value, status: true})
       } else if (subjectID) {
         editSubject(subjectID, {id: subjectID, name: subject.value, status: true})
       }
