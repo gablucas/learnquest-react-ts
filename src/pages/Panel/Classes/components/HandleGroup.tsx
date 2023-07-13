@@ -51,8 +51,6 @@ const HandleGroup = ({ setToggle, groupID }: HandleUserProps) => {
       }
     }
 
-
-
   function handleSubmit(e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault();
 
@@ -65,8 +63,6 @@ const HandleGroup = ({ setToggle, groupID }: HandleUserProps) => {
 
     setToggle(false);
   }
-
-
 
   if (data)
   return (

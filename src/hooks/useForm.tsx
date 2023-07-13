@@ -1,4 +1,5 @@
 import React, { Dispatch, SetStateAction } from 'react';
+import useData from './useData';
 
 export type UseFormType = {
   onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void,
@@ -9,17 +10,27 @@ export type UseFormType = {
   setError: Dispatch<SetStateAction<string | null>>
 }
 
-const useForm = (initialValue: string): UseFormType => {
+type UseFormProps = {
+  type: string,
+  initialValue: string,
+}
+
+const useForm = ({type, initialValue}: UseFormProps): UseFormType => {
   const [value, setValue] = React.useState<string>(initialValue);
   const [error, setError] = React.useState<string | null>(null);
+  const { checkUser } = useData();
 
   function validate(): boolean {
-    if (value) {
-      setError(null);
-      return true;
-    } else {
+
+    if (value.length === 0) {
       setError('Campo vazio');
       return false;
+    } else if ((type === 'email' || type === 'login') && checkUser(type, value)) {
+      setError(`Já existe um ${type} registrado`)
+      return false;
+    } else {
+      setError(null);
+      return true;
     }
   }
   

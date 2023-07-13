@@ -21,12 +21,12 @@ const HandleUser = ({ setToggle, userID }: HandleUserProps) => {
   const user = data.users.find((user) => user.id === userID);
   const { getRandomId } = useRandom();
 
-  const access: UseFormType = useForm('');
-  const name: UseFormType = useForm(user ? user.nome : '');
-  const login: UseFormType = useForm(user ? user.login : '');
-  const email: UseFormType = useForm(user ? user.email: '');
+  const access: UseFormType = useForm({type: 'acess', initialValue: ''});
+  const name: UseFormType = useForm({type: 'name', initialValue: user ? user.nome : ''});
+  const login: UseFormType = useForm({type: 'login', initialValue: user ? user.login : ''});
+  const email: UseFormType = useForm({type: 'email', initialValue: user ? user.email: ''});
 
-  const password: UseFormType = useForm(user ? user.password : '');
+  const password: UseFormType = useForm({type: 'password', initialValue: user ? user.password : ''});
 
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>): void {
@@ -37,8 +37,8 @@ const HandleUser = ({ setToggle, userID }: HandleUserProps) => {
       const user: IUser = {
         id: getRandomId(),
         access: access.value as 'admin' | 'teacher' | 'student',
-        login: login.value,
-        email: email.value,
+        login: login.value.toLowerCase(),
+        email: email.value.toLowerCase(),
         nome: name.value,
         password: (data as IInstituition).preferences.defaultPassword,
         status: true,
@@ -56,15 +56,12 @@ const HandleUser = ({ setToggle, userID }: HandleUserProps) => {
         createUser(user);
       }
       
-
+      setToggle(false);
     } else if (userID && name.validate() && login.validate() && email.validate() && password.validate()) {
       editUser(userID, name.value, login.value, email.value, password.value);
+      setToggle(false);
     }
-
-    setToggle(false);
   }
-
-  
 
   return (
     <Modal setToggle={setToggle}>

@@ -21,7 +21,7 @@ const HandleLesson = () => {
     video: '',
     text: '',
     subject: '',
-    questions: [{id: '1' ,question: '', answer: '', xp: 25, needEvaluation: false}],
+    questions: [{id: '1' ,question: '', answer: '', xp: 25}],
     groups: []
   })
 
@@ -43,7 +43,7 @@ const HandleLesson = () => {
   function handleCreateQuestion(e: React.MouseEvent<HTMLButtonElement>): void {
     e.stopPropagation();
     const addNewQuestion = {...lesson};
-    addNewQuestion.questions.push({id: (lesson.questions.length + 1).toString(), question: '', answer: '', xp: 25, needEvaluation: false});
+    addNewQuestion.questions.push({id: (lesson.questions.length + 1).toString(), question: '', answer: '', xp: 25});
     setLesson(addNewQuestion);
   }
 
@@ -80,9 +80,6 @@ const HandleLesson = () => {
       case 'answer':
         updateLesson.questions[index as number].answer = e.target.value;
         break;
-      case 'evaluate':
-        updateLesson.questions[index as number].needEvaluation = (e as React.ChangeEvent<HTMLInputElement>).target.checked;
-        break;
       case 'xp':
         updateLesson.questions[index as number].xp = Number(e.target.value);
         break;
@@ -111,18 +108,18 @@ const HandleLesson = () => {
       <form onSubmit={handleSubmit}>
 
         <div>
-          <label>Título da aula</label>
-          <input type='text' value={lesson.title} onChange={(e) => handleChange(e, 'title')}/>
-        </div>
-
-        <div>
-          <label>Link do vídeo</label>
-          <input type='text' value={lesson.video} onChange={(e) => handleChange(e, 'video')}/>
-        </div>
-
-        <div>
-          <label>Descrição da aula</label>
-          <input type='text' value={lesson.text} onChange={(e) => handleChange(e, 'text')}/>
+          <div>
+            <label>Título da aula</label>
+            <input type='text' value={lesson.title} onChange={(e) => handleChange(e, 'title')}/>
+          </div>
+          <div>
+            <label>Link do vídeo</label>
+            <input type='text' value={lesson.video} onChange={(e) => handleChange(e, 'video')}/>
+          </div>
+          <div>
+            <label>Descrição da aula</label>
+            <input type='text' value={lesson.text} onChange={(e) => handleChange(e, 'text')}/>
+          </div>
         </div>
 
         <div>
@@ -137,7 +134,7 @@ const HandleLesson = () => {
           </div>
         </div>
 
-        <div>
+        <div className={Styles.createlesson_subjects}>
           <h2>Matéria</h2>
           <select onChange={handleSubject}>
             <option value=''>Selecione uma matéria</option>
@@ -151,37 +148,32 @@ const HandleLesson = () => {
           <h2>Avaliação</h2>
 
           {lesson?.questions.map((question, index) => (
-            <div key={question.id} className={Styles.question}>
+            <div key={question.id} className={Styles.question_container}>
 
-              <div>
-                <label>Questão</label>
+              <div className={Styles.question}>
+                <label>Questão {index + 1}</label>
                 <input type='text' value={question.question} onChange={(e) => handleChange(e, 'question', index)}/>
               </div>
 
               <div>
-                <label>Essa questão precisa ser avaliada</label>
-                <input type="checkbox" onChange={(e) => handleChange(e, 'evaluate', index)}/>
+                <label>Resposta  {index + 1}</label>
+                <input type='text' value={question.answer} onChange={(e) => handleChange(e, 'answer', index)}/>
               </div>
+              
 
-              {!question.needEvaluation &&
-                <div>
-                  <label>Resposta</label>
-                  <input type='text' value={question.answer} onChange={(e) => handleChange(e, 'answer', index)}/>
-                </div>
-              }
-
-              <label>XP</label>
-              <select name='xp' value={question.xp} onChange={(e)=> handleChange(e, 'xp', index)}>
-                <option value="25">25 XP</option>
-                <option value="50">50 XP</option>
-                <option value="75">75 XP</option>
-                <option value="100">100 XP</option>
-              </select>
+              <div>
+                <label>XP</label>
+                <select name='xp' value={question.xp} onChange={(e)=> handleChange(e, 'xp', index)}>
+                  <option value="25">25 XP</option>
+                  <option value="50">50 XP</option>
+                  <option value="75">75 XP</option>
+                  <option value="100">100 XP</option>
+                </select>
+              </div>
               
             </div>
           ))}
-          <button onClick={handleCreateQuestion}>Criar questão</button>
-
+          <button className={Styles.newquestion} onClick={handleCreateQuestion}>Criar nova questão</button>
         </div>
 
       <button>Salvar aula</button>
