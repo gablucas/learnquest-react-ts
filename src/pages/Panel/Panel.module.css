@@ -116,7 +116,7 @@
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   place-items: center;
-  height: 40px;
+  height: 46px;
 }
 
 .lessons div {
@@ -140,21 +140,23 @@
   border-top: 1px solid #121214;
 }
 
-.user button,
-.subjects button,
-.groups button,
-.lesson button,
-.evaluate button {
-  padding: 8px;
+.user button svg,
+.subjects button svg,
+.groups button svg,
+.lesson button svg,
+.evaluate a svg {
   border-radius: 7px;
+  fill: #E4E4E5;
 }
 
-.user button:hover,
-.subjects button:hover,
-.groups button:hover,
-.lesson button:hover,
-.evaluate button:hover {
-  background-color: #464149;
+.user button svg:hover,
+.subjects button svg:hover,
+.groups button svg:hover,
+.lesson button svg:hover,
+.evaluate a svg:hover {
+  border-radius: 7px;
+  fill: #302B33;
+  background-color: #FFA700;
 }
 
 /* Componente Newclass */
@@ -228,7 +230,7 @@
   background-color: #302B33;
 }
 
-/* Componente Evaluate */
+/* Componente EvaluateLesson */
 
 .evaluatelesson {
   margin-left: 40px;
@@ -259,7 +261,6 @@
   gap: 4px;
 }
 
-
 .evaluatelesson .question_wrapper > div span:nth-of-type(1) {
   font-size: .75rem;
   padding: 4px;
@@ -275,7 +276,6 @@
 .evaluatelesson .question_wrapper.correct {
   border: 2px solid green;
 }
-
 
 .evaluatelesson .buttons {
   align-self: center;

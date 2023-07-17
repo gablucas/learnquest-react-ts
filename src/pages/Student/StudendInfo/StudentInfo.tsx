@@ -9,8 +9,8 @@ const StudentInfo = () => {
   const { getLoggedUser } = useData();
   const student = getLoggedUser() as IStudent;
 
-  const studentClass = data?.groups.find((f) => f.students.some((id) => id === student?.id));
-  const todoLessons = data?.lessons.filter((lesson) => lesson.groups.some((id) => id === studentClass?.id && !student.lessons.some((s) => s.id === lesson.id)));
+  const studentGroup = data?.groups.find((f) => f.students.some((id) => id === student?.id));
+  const todoLessons = data?.lessons.filter((lesson) => lesson.groups.some((id) => id === studentGroup?.id && !student.lessons.some((l) => l.id === lesson.id) && !data.evaluate.some((e) => e.id === lesson.id)));
 
   if (data)
   return (
@@ -37,7 +37,7 @@ const StudentInfo = () => {
 
         <div className={Styles.student_info_data}>
           <span>{student.name}</span>
-          <span>{studentClass?.name}</span>
+          <span>{studentGroup?.name}</span>
           <span>Rank 1</span>
           <span>XP Total {student.xp + (student.level - 1) * 125}</span>
         </div>

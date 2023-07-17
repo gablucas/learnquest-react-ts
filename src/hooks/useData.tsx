@@ -1,7 +1,7 @@
 import React from 'react';
 import { GlobalContext } from "../GlobalContext";
 import { IInstituition, ITeacher, IStudent } from '../types/Users';
-import { IEvaluateLesson, ILesson, LessonStudent } from '../types/Lessons';
+import { IEvaluateTask, ILesson, TaskStudent } from '../types/Lessons';
 import { Group } from '../types/Group';
 import { Subject, ValidateOptions } from '../types/Commom';
 
@@ -18,8 +18,8 @@ type UseDataReturn = {
   createLesson: (lesson: ILesson) => void,
   removeLesson: (id: string) => void,
   editLesson: (id: string, lesson: ILesson) => void,
-  saveStudentLesson: (answer: IEvaluateLesson) => void,
-  evaluateLesson: (studentID: string, evaluateID: string, lesson: LessonStudent) => void,
+  saveStudentLesson: (answer: IEvaluateTask) => void,
+  evaluateLesson: (id: string, studentID: string, lesson: TaskStudent) => void,
   createGroup: (newgroup: Group) => void,
   removeGroup: (id: string) => void,
   editGroup: (groupid: string, updateGroup: Group) => void,
@@ -77,7 +77,7 @@ const useData = (): UseDataReturn => {
           groups: ['1'], 
           createdBy: '1', 
           id: '1', 
-          questions: [
+          task: [
             {id: "1", question: "Quanto é 1 + 1?", answer: "2", xp: 25}, 
             {id: "2", question: "Quanto é 2 + 2?", answer: "4", xp: 50}, 
             {id: "3", question: "Quanto é 3 + 3?", answer: "6", xp: 75}, 
@@ -209,7 +209,7 @@ const useData = (): UseDataReturn => {
     setData(updateData);  
   }
 
-  function saveStudentLesson(answer: IEvaluateLesson): void {
+  function saveStudentLesson(answer: IEvaluateTask): void {
     const updateData = getData();
     
     updateData.evaluate.unshift(answer);
@@ -217,12 +217,12 @@ const useData = (): UseDataReturn => {
     setData(updateData);
   }
 
-  function evaluateLesson(studentID: string, evaluateID: string, lesson: LessonStudent): void {
+  function evaluateLesson(id: string, studentID: string, lesson: TaskStudent): void {
     const updateData = getData();
     const user = updateData.users.find((user) => user.id === studentID) as IStudent;
     let totalXP = lesson.answers.map((answer) => answer.xp).reduce((pre, cur) => pre + cur);
 
-    updateData.evaluate = updateData.evaluate.filter((lesson) => lesson.evaluateID !== evaluateID);
+    updateData.evaluate = updateData.evaluate.filter((lesson) => lesson.id !== id);
 
     user.lessons.push(lesson);
 

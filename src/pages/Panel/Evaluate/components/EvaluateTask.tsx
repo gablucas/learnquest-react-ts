@@ -1,34 +1,36 @@
 import React from 'react';
 import Styles from '../../Panel.module.css';
-import { useNavigate, useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { GlobalContext } from '../../../../GlobalContext';
-import { LessonStudent } from '../../../../types/Lessons';
+import { TaskStudent } from '../../../../types/Lessons';
 import useData from '../../../../hooks/useData';
 
-const EvaluateLesson = () => {
+const EvaluateTask = () => {
   const { data } = React.useContext(GlobalContext);
   const { id } = useParams();
-  const { evaluateLesson } = useData();
-  const [teste, setTeste] = React.useState<LessonStudent>();
+  const { getLoggedUser, evaluateLesson } = useData();
+  const [task, setTask] = React.useState<TaskStudent>();
   const navigate = useNavigate();
+  const loggedUser = getLoggedUser();
 
-  const lessonToEvaluate = data.evaluate.find((lesson) => lesson.evaluateID === id);
+
+  const lessonToEvaluate = data.evaluate.find((lesson) => lesson.id === id);
   const lessonInfo = data.lessons.find((lesson) => lesson.id === lessonToEvaluate?.id);
   const userInfo =  data.users.find((user) => user.id === lessonToEvaluate?.student);
   
   React.useEffect(() => {
     if (lessonToEvaluate) {
-      setTeste({id: lessonToEvaluate.id, answers: [...lessonToEvaluate.answers]})
+      setTask({id: lessonToEvaluate.id, answers: [...lessonToEvaluate.answers]})
     }
   }, [lessonToEvaluate])
 
 
   function handleEvaluate(index: number, isCorrect: boolean): void {
 
-    if (teste && lessonInfo) {
-      setTeste({...teste, answers: teste.answers.map((answer, indexMap) => {
+    if (task && lessonInfo) {
+      setTask({...task, answers: task.answers.map((answer, indexMap) => {
         if (indexMap === index) {
-          return {...answer, isCorrect, xp: isCorrect ? lessonInfo.questions[index].xp : 0}
+          return {...answer, isCorrect, xp: isCorrect ? lessonInfo.task[index].xp : 0}
         }
 
         return answer;
@@ -37,12 +39,14 @@ const EvaluateLesson = () => {
   }
   
   function handleDoneEvaluate(): void {
-    if (teste?.answers.every((answer) => answer.isCorrect !== undefined) && userInfo && id) {
-      evaluateLesson(userInfo.id, id, teste);
+    if (task?.answers.every((answer) => answer.isCorrect !== undefined) && userInfo && id) {
+      evaluateLesson(id, userInfo.id, task);
       navigate('/painel/avaliar');
     }
   }
 
+  if (loggedUser?.access !== 'admin' && loggedUser?.id !== lessonToEvaluate?.createdBy)
+  return <Navigate to='/painel/avaliar' />
 
   if (lessonToEvaluate && lessonInfo && userInfo)
   return (
@@ -51,8 +55,8 @@ const EvaluateLesson = () => {
       <h2>Avaliação feita por: {userInfo?.name} - {data.groups.find((group) => group.students.some((student) => student === userInfo.id))?.name}</h2>
 
       <div>
-        {lessonInfo.questions.map((question, index) => (
-          <div key={question.id} className={`${Styles.question_wrapper} ${teste?.answers[index].isCorrect === true ? Styles.correct : teste?.answers[index].isCorrect === false ? Styles.wrong : ' '}`}>
+        {lessonInfo.task.map((question, index) => (
+          <div key={question.id} className={`${Styles.question_wrapper} ${task?.answers[index].isCorrect === true ? Styles.correct : task?.answers[index].isCorrect === false ? Styles.wrong : ' '}`}>
 
             <div>
               <span>Questão {index + 1}</span>
@@ -83,4 +87,4 @@ const EvaluateLesson = () => {
   )
 }
 
-export default EvaluateLesson;
+export default EvaluateTask;

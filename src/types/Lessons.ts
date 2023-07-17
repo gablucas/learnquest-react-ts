@@ -1,16 +1,17 @@
-export type LessonStudent = {
+export type TaskStudent = {
   id: string,
   answers: {id: string, value: string, isCorrect: boolean | undefined, xp: number}[]
 }
 
-export interface IEvaluateLesson extends LessonStudent {
-  evaluateID: string,
+export interface IEvaluateTask extends TaskStudent {
+  id: string,
+  lessonID: string,
   createdBy: string,
   student: string,
   subject: string,
 }
 
-export type Questions = {
+export type Task = {
   id: string,
   question: string,
   answer: string,
@@ -24,6 +25,6 @@ export interface ILesson {
   video: string,
   text: string,
   subject: string,
-  questions: Questions[],
+  task: Task[],
   groups: string[],
 }
