@@ -4,17 +4,33 @@
   margin-top: 40px;
 }
 
+.test > span {
+  display: block;
+  font-size: .85rem;
+  line-height: 1;
+  text-align: center;
+  margin-bottom: 4px;
+  color: #a3a3a3;
+}
+
 .test div {
   display: grid;
   background-color: #302B33;
-  margin-bottom: 20px;
+  margin-bottom: 12px;
   padding: 12px;
   border-radius: 7px;
-} 
+  border: 1px solid #121214;
+  transition: border .3s;
+}
 
 .test div span:first-of-type {
   font-weight: 600;
   text-transform: uppercase;
+}
+
+.test div:hover {
+  border: 1px solid #a3a3a3;
+  cursor: pointer;
 }
 
 .login {

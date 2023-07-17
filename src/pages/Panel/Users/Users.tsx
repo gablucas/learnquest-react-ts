@@ -33,7 +33,7 @@ const Users = () => {
       <div className={Styles.users}>
 
         <div>
-          <span>name</span>
+          <span>Nome</span>
           <span>Email</span>
           <span>Acesso</span>
           <span>Estado</span>

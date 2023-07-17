@@ -116,12 +116,20 @@
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   place-items: center;
-  padding: 6px;
+  height: 40px;
 }
 
-.lessons div,
-.users div {
+.lessons div {
   grid-template-columns: repeat(6, 1fr);
+}
+
+.users div,
+.lessons div {
+  grid-template-columns: 2fr 2fr repeat(4, 1fr);
+}
+
+.evaluate div {
+  grid-template-columns: 2fr repeat(4, 1fr);
 }
 
 .users div + div,

@@ -47,7 +47,7 @@ const useData = (): UseDataReturn => {
             name: 'Administrador',
             login: 'admin',
             email: 'instituicao@edu.com.br',
-            password: '123',
+            password: 'teste',
             status: true, 
           },
           {
@@ -56,7 +56,7 @@ const useData = (): UseDataReturn => {
             name: 'Professor',
             login: 'professor',
             email: 'professor@edu.com.br',
-            password: '123',
+            password: 'teste',
             status: true,
           },
           {
@@ -65,7 +65,7 @@ const useData = (): UseDataReturn => {
             name: 'Aluno',
             login: 'aluno',
             email: 'aluno@edu.com.br',
-            password: '123',
+            password: 'teste',
             status: true,
             level: 1,
             xp: 0,

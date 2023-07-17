@@ -5,7 +5,7 @@ import { Outlet } from 'react-router-dom';
 import StudentMenu from './StudentMenu/StudentMenu';
 import { GlobalContext } from '../../GlobalContext';
 import useData from '../../hooks/useData';
-import ChangePassword from '../../components/ChangePassword/ChangePassword';
+import ChangeDefaultPassword from '../../components/ChangeDefaultPassword/ChangeDefaultPassword';
 
 const Student = () => {
   const { data } = React.useContext(GlobalContext);
@@ -16,7 +16,7 @@ const Student = () => {
       <div className={Styles.student_container}>
         <StudentMenu />
         <Outlet />
-        {getLoggedUser()?.password == data?.preferences.defaultPassword && (<ChangePassword />)}
+        {getLoggedUser()?.password == data?.preferences.defaultPassword && (<ChangeDefaultPassword />)}
       </div>
     </Container>
   )
