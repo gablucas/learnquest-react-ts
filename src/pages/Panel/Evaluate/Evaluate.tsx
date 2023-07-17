@@ -6,7 +6,7 @@ import useData from '../../../hooks/useData';
 
 const Evaluate = () => {
   const { data } = React.useContext(GlobalContext);
-  const { getLoggedUser } = useData();
+  const { getLoggedUser, getUser } = useData();
   const loggedUser = getLoggedUser();
   const evaluate = loggedUser?.access === 'admin' ? data.evaluate : data.evaluate.filter((e) => e.createdBy === loggedUser?.id);
 
@@ -29,8 +29,8 @@ const Evaluate = () => {
      {evaluate.map((lesson, index) => (
       <div key={index}>
         <span>{data.lessons.find((l) => l.id === lesson.id)?.title}</span>
-        <span>{data.users.find((u) => u.id === lesson.student)?.name}</span>
-        <span>{data.lessons.find((l) => l.id === lesson.id)?.createdBy}</span>
+        <span>{getUser(lesson.student)?.name}</span>
+        <span>{getUser(lesson.createdBy)?.name}</span>
         <span>{data.subjects.find((s) => s.id === lesson.subject)?.name}</span>
         <Link to={`/painel/avaliar/${lesson.evaluateID}`}>Avaliar</Link>
       </div>

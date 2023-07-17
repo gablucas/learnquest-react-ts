@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Styles from './Login.module.css';
 import Container from '../../components/Container';
 import Input from '../../components/Inputs/Input';
@@ -6,6 +6,11 @@ import useForm, { UseFormType } from '../../hooks/useForm';
 import { Navigate, NavigateFunction, useNavigate } from 'react-router-dom';
 import { GlobalContext } from '../../GlobalContext';
 import useData from '../../hooks/useData';
+
+type TestAccount = {
+  loginTest: string,
+  passwordTest: string,
+}
 
 const Login = () => {
   const { data, setUser } = React.useContext(GlobalContext);
@@ -15,6 +20,13 @@ const Login = () => {
   const navigate: NavigateFunction = useNavigate();
   const login: UseFormType = useForm({type: 'user', initialValue: ''});
   const password: UseFormType = useForm({type: 'password', initialValue: ''});
+
+  function testAccount({loginTest, passwordTest}: TestAccount): void {
+    login.setValue(loginTest);
+    password.setValue(passwordTest);
+  }
+
+
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault();
@@ -44,20 +56,24 @@ const Login = () => {
       <div className={Styles.login_container}>
         <div className={Styles.test}>
           <h2>Contas para teste</h2>
-          <div>
+          <span>Clique para preencher automaticamente</span>
+
+          <div onClick={() => testAccount({loginTest: 'admin', passwordTest: 'teste'})}>
             <span>Administrador</span>
             <span>Login: admin</span>
-            <span>Senha: 123</span>
+            <span>Senha: teste</span>
           </div>
-          <div>
+
+          <div onClick={() => testAccount({loginTest: 'professor', passwordTest: 'teste'})}>
             <span>Professor</span>
             <span>Login: professor </span>
-            <span>Senha: 123</span>
+            <span>Senha: teste</span>
           </div>
-          <div>
+
+          <div onClick={() => testAccount({loginTest: 'aluno', passwordTest: 'teste'})}>
             <span>Aluno</span>
             <span>Login: aluno</span>
-            <span>Senha: 123</span>
+            <span>Senha: teste</span>
           </div>
         </div>
         <div className={Styles.login}>

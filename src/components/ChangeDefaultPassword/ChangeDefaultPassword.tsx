@@ -1,10 +1,13 @@
+import React from 'react';
+import { GlobalContext } from "../../GlobalContext";
 import useData from "../../hooks/useData";
 import useForm from "../../hooks/useForm";
 import Input from "../Inputs/Input";
 import Modal from "../Modal";
 
-const ChangePassword = () => {
-  const { editPassword } = useData();
+const ChangeDefaultPassword = () => {
+  const { data } = React.useContext(GlobalContext)
+  const { getLoggedUser, editPassword } = useData();
   const password = useForm({type: 'password', initialValue: ''});
   const confirmPassword = useForm({type: 'confirmPassword', initialValue: ''});
 
@@ -17,6 +20,7 @@ const ChangePassword = () => {
     }
   }
 
+  if (getLoggedUser()?.password == data?.preferences.defaultPassword)
   return (
     <Modal>
       <h2>Defina uma nova senha</h2>
@@ -29,4 +33,4 @@ const ChangePassword = () => {
   )
 }
 
-export default ChangePassword;
+export default ChangeDefaultPassword;

@@ -156,7 +156,7 @@ const HandleLesson = () => {
               </div>
 
               <div>
-                <label>Resposta  {index + 1}</label>
+                <label>Resposta (Para comparar com a resposta do aluno)</label>
                 <input type='text' value={question.answer} onChange={(e) => handleChange(e, 'answer', index)}/>
               </div>
               
