@@ -4,7 +4,7 @@
 **<a href='https://gablucas.github.io/learnquest-react-ts/' >CLIQUE AQUI PARA ACESSAR (PROJETO EM DESENVOLVIMENTO)</a>**
 
 ## Sobre
-A LearnQuest é uma plataforma para instituições de ensino que gamifica o processo de aprendizado do aluno, baseado em jogos de RPG, o aluno possui 
+A LearnQuest é uma plataforma para instituições de ensino que gamifica o processo de aprendizado do aluno, baseado em jogos de RPG, o aluno possui level e xp que progride a medida que vai realizando as aulas e tarefas.
 
 ## Acessos para testar
 
