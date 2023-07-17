@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import Styles from '../../Panel.module.css';
 import useData from '../../../../hooks/useData';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { GlobalContext } from '../../../../GlobalContext';
 import { ILesson } from '../../../../types/Lessons';
 import { IInstituition } from '../../../../types/Users';
@@ -9,6 +9,7 @@ import { IInstituition } from '../../../../types/Users';
 const HandleLesson = () => {
   const { data } = useContext(GlobalContext);
   const { getLoggedUser, createLesson, editLesson } = useData();
+  const loggedUser = getLoggedUser();
   const navigate = useNavigate();
   const { id } = useParams();
 
@@ -16,12 +17,12 @@ const HandleLesson = () => {
 
   const [lesson, setLesson] = React.useState<ILesson>({
     id: ((data as IInstituition).lessons.length + 1).toString(),
-    createdBy: getLoggedUser()?.id as string,
+    createdBy: loggedUser?.id as string,
     title: '',
     video: '',
     text: '',
     subject: '',
-    questions: [{id: '1' ,question: '', answer: '', xp: 25}],
+    task: [{id: '1' ,question: '', answer: '', xp: 25}],
     groups: []
   })
 
@@ -34,7 +35,7 @@ const HandleLesson = () => {
         video: LessonToEdit.video,
         text: LessonToEdit.text,
         subject: LessonToEdit.subject,
-        questions: LessonToEdit.questions,
+        task: LessonToEdit.task,
         groups: LessonToEdit.groups,
       })
     }
@@ -43,7 +44,7 @@ const HandleLesson = () => {
   function handleCreateQuestion(e: React.MouseEvent<HTMLButtonElement>): void {
     e.stopPropagation();
     const addNewQuestion = {...lesson};
-    addNewQuestion.questions.push({id: (lesson.questions.length + 1).toString(), question: '', answer: '', xp: 25});
+    addNewQuestion.task.push({id: (lesson.task.length + 1).toString(), question: '', answer: '', xp: 25});
     setLesson(addNewQuestion);
   }
 
@@ -75,13 +76,13 @@ const HandleLesson = () => {
         updateLesson.text = e.target.value;
         break;
       case 'question':
-        updateLesson.questions[index as number].question = e.target.value;
+        updateLesson.task[index as number].question = e.target.value;
         break;
       case 'answer':
-        updateLesson.questions[index as number].answer = e.target.value;
+        updateLesson.task[index as number].answer = e.target.value;
         break;
       case 'xp':
-        updateLesson.questions[index as number].xp = Number(e.target.value);
+        updateLesson.task[index as number].xp = Number(e.target.value);
         break;
     }
     setLesson({...updateLesson});
@@ -91,8 +92,8 @@ const HandleLesson = () => {
 
     e.preventDefault();
     
-    console.log(lesson.questions[0].question !== '')
-    if (lesson.title && lesson.text && lesson.groups.length > 0 && lesson.subject && lesson.questions.every((question) => question.question && question.answer)) {
+    console.log(lesson.task[0].question !== '')
+    if (lesson.title && lesson.text && lesson.groups.length > 0 && lesson.subject && lesson.task.every((question) => question.question && question.answer)) {
 
       if (id) {
         editLesson(id, lesson);
@@ -102,6 +103,9 @@ const HandleLesson = () => {
       navigate('/painel/aulas');
     }
   }
+
+  if (loggedUser?.access !== 'admin' && loggedUser?.id !== LessonToEdit?.createdBy)
+  return <Navigate to='/painel/aulas' />
 
   return (
     <div className={Styles.createlesson} >
@@ -145,9 +149,9 @@ const HandleLesson = () => {
         </div>
 
         <div>
-          <h2>Avaliação</h2>
+          <h2>Tarefa</h2>
 
-          {lesson?.questions.map((question, index) => (
+          {lesson?.task.map((question, index) => (
             <div key={question.id} className={Styles.question_container}>
 
               <div className={Styles.question}>

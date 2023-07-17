@@ -3,14 +3,14 @@ import Styles from '../Student.module.css';
 import { GlobalContext } from '../../../GlobalContext';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import useData from '../../../hooks/useData';
-import { IEvaluateLesson } from '../../../types/Lessons';
+import { IEvaluateTask } from '../../../types/Lessons';
 import { IInstituition, IStudent } from '../../../types/Users';
 import useRandom from '../../../hooks/useRandom';
 
 const StudentLesson = () => {
   const { data } = React.useContext(GlobalContext);
   const { id } = useParams();
-  const [answer, setAnswer] = React.useState<IEvaluateLesson>();
+  const [answer, setAnswer] = React.useState<IEvaluateTask>();
   const { saveStudentLesson, getLoggedUser } = useData();
   const { getRandomID } = useRandom();
   const navigate = useNavigate();
@@ -22,7 +22,7 @@ const StudentLesson = () => {
 
   React.useEffect(() => {
     if (lesson) {
-      setAnswer({evaluateID: getRandomID(), createdBy: lesson.createdBy, id: lesson.id, student: student.id, subject: lesson.subject, answers: lesson.questions.map((question) => ({id: question.id, value: '', isCorrect: undefined, xp: 0}))});
+      setAnswer({id: getRandomID(), createdBy: lesson.createdBy, lessonID: lesson.id, student: student.id, subject: lesson.subject, answers: lesson.task.map((question) => ({id: question.id, value: '', isCorrect: undefined, xp: 0}))});
     }
   }, [lesson, student.id, getRandomID])
 
@@ -59,9 +59,9 @@ const StudentLesson = () => {
       <h1>{lesson.title}</h1>
       <p>{lesson.text}</p>
 
-      <form className={Styles.student_lesson_questions} onSubmit={handleSubmit}>
+      <form className={Styles.student_lesson_task} onSubmit={handleSubmit}>
         <h2>Avaliação</h2>
-        {lesson.questions.map((question, index) => (
+        {lesson.task.map((question, index) => (
           <div key={question.id}>
             <label>{question.question}</label>
             <input type='text' value={answer.answers[index].value} onChange={(e) => handleChange(e, index)} />

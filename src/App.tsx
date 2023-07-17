@@ -16,8 +16,9 @@ import StudentLesson from './pages/Student/StudentLesson/StudentLesson';
 import Subjects from './pages/Panel/Subjects/Subjects';
 import Groups from './pages/Panel/Classes/Groups';
 import HandleLesson from './pages/Panel/Lessons/components/HandleLesson';
-import Evaluate from './pages/Panel/Evaluate/Evaluate';
-import EvaluateLesson from './pages/Panel/Evaluate/components/EvaluateLesson';
+import EvaluateTasks from './pages/Panel/Evaluate/EvaluateTasks';
+import EvaluateTask from './pages/Panel/Evaluate/components/EvaluateTask';
+
 
 function App() {
 
@@ -31,15 +32,18 @@ function App() {
             <Route element={<ProtectedRoutes allowedAccess={['admin', 'teacher']}/>}>
               <Route path='/painel/*' element={<Panel />}>
                 <Route path='' element={<Dashboard />} />
-                <Route path='usuarios' element={<Users />}/>
-                <Route path='turmas' element={<Groups />} />
-                <Route path='materias' element={<Subjects />} />
-                <Route path='preferencias' element={<Preferences />} />
                 <Route path='aulas' element={<Lessons />}/>
                 <Route path='aulas/criar' element={<HandleLesson />} />
                 <Route path='aulas/editar/:id' element={<HandleLesson />} />
-                <Route path='avaliar' element={<Evaluate />} />
-                <Route path='avaliar/:id' element={<EvaluateLesson />} />
+                <Route path='avaliar' element={<EvaluateTasks />} />
+                <Route path='avaliar/:id' element={<EvaluateTask />} />
+                
+                <Route element={<ProtectedRoutes allowedAccess={['admin']} />}>
+                  <Route path='usuarios' element={<Users />}/>
+                  <Route path='turmas' element={<Groups />} />
+                  <Route path='materias' element={<Subjects />} />
+                  <Route path='preferencias' element={<Preferences />} />
+                </Route>
               </Route>
             </Route>
 

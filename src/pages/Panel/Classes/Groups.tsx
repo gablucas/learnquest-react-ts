@@ -4,6 +4,8 @@ import { GlobalContext } from '../../../GlobalContext';
 import useData from '../../../hooks/useData';
 import Message from '../../../components/Message/Message';
 import HandleGroup from './components/HandleGroup';
+import EditIcon from '../../../components/Icons/EditIcon';
+import DeleteIcon from '../../../components/Icons/DeleteIcon';
 
 const Groups = () => {
   const { data, confirm, setConfirm } = React.useContext(GlobalContext);
@@ -43,8 +45,8 @@ const Groups = () => {
             <span>{m.name}</span>
             <span>{m.students.length}</span>
             <span>{m.status ? 'Ativado' : 'Desativado'}</span>
-            <button onClick={() => handleEdit(m.id)}>Editar</button>
-            <button onClick={() => setConfirm({toggle: true, type: 'confirm', text: 'Deseja realmente excluir essa turma?', action: () => handleRemoveGroup(m.id)})}>Excluir</button>
+            <button onClick={() => handleEdit(m.id)}><EditIcon /></button>
+            <button onClick={() => setConfirm({toggle: true, type: 'confirm', text: 'Deseja realmente excluir essa turma?', action: () => handleRemoveGroup(m.id)})}><DeleteIcon /></button>
           </div>
         ))}
       </div>

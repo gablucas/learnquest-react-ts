@@ -4,6 +4,8 @@ import useData from '../../../hooks/useData';
 import { GlobalContext } from '../../../GlobalContext';
 import Message from '../../../components/Message/Message';
 import HandleSubject from './HandleSubject';
+import EditIcon from '../../../components/Icons/EditIcon';
+import DeleteIcon from '../../../components/Icons/DeleteIcon';
 
 const Subjects = () => {
   const { data, confirm, setConfirm } = React.useContext(GlobalContext)
@@ -43,8 +45,8 @@ const Subjects = () => {
             <span>{m.name}</span>
             <span>{data.lessons.map((lesson) => lesson.subject === m.id).length}</span>
             <span>{m.status ? 'Ativado' : 'Desativado'}</span>
-            <button onClick={() => handleEdit(m.id)}>Editar</button>
-            <button onClick={() => setConfirm({toggle: true, type: 'confirm', text: 'Deseja realmente excluir está matéria?', action: () => handleRemoveSubject(m.id)})}>Excluir</button>
+            <button onClick={() => handleEdit(m.id)}><EditIcon /></button>
+            <button onClick={() => setConfirm({toggle: true, type: 'confirm', text: 'Deseja realmente excluir está matéria?', action: () => handleRemoveSubject(m.id)})}><DeleteIcon /></button>
           </div>
         ))}
       </div>

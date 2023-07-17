@@ -15,7 +15,7 @@ const Sidebar = () => {
         {getLoggedUser()?.access === 'admin' && <li className={route?.includes('turmas') ? Styles.active : ''}><Link to='turmas'>Turmas</Link></li>}
         {getLoggedUser()?.access === 'admin' && <li className={route?.includes('materias') ? Styles.active : ''}><Link to='materias'>Matérias</Link></li>}
         <li className={route?.includes('aulas') ? Styles.active : ''}><Link to='aulas'>Aulas</Link></li>
-        <li className={route?.includes('avaliar') ? Styles.active : ''}><Link to='avaliar'>Avaliar</Link></li>
+        <li className={route?.includes('avaliar') ? Styles.active : ''}><Link to='avaliar'>Avaliar tarefas</Link></li>
         {getLoggedUser()?.access === 'admin' && <li className={route?.includes('preferencias') ? Styles.active : ''}><Link to='preferencias'>Preferências</Link></li>}
         <li><button onClick={logoutUser}>Sair</button></li>
       </ul>

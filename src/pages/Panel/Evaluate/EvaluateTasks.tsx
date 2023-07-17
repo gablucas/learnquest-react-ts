@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom';
 import Styles from '../Panel.module.css';
 import { GlobalContext } from '../../../GlobalContext';
 import useData from '../../../hooks/useData';
+import EvaluateIcon from '../../../components/Icons/EvaluateIcon';
 
-const Evaluate = () => {
+const EvaluateTasks = () => {
   const { data } = React.useContext(GlobalContext);
   const { getLoggedUser, getUser } = useData();
   const loggedUser = getLoggedUser();
@@ -32,7 +33,7 @@ const Evaluate = () => {
         <span>{getUser(lesson.student)?.name}</span>
         <span>{getUser(lesson.createdBy)?.name}</span>
         <span>{data.subjects.find((s) => s.id === lesson.subject)?.name}</span>
-        <Link to={`/painel/avaliar/${lesson.evaluateID}`}>Avaliar</Link>
+        <Link className={Styles.action} to={`/painel/avaliar/${lesson.id}`}><EvaluateIcon /></Link>
       </div>
      ))}
     </div>
@@ -42,4 +43,4 @@ const Evaluate = () => {
   )
 }
 
-export default Evaluate;
+export default EvaluateTasks;

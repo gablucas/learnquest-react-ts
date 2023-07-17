@@ -5,6 +5,8 @@ import { Link, useNavigate } from "react-router-dom";
 import useData from '../../../hooks/useData';
 import { IStudent } from '../../../types/Users';
 import Message from '../../../components/Message/Message';
+import EditIcon from '../../../components/Icons/EditIcon';
+import DeleteIcon from '../../../components/Icons/DeleteIcon';
 
 const Lessons = () => {
   const { confirm, setConfirm } = React.useContext(GlobalContext);
@@ -25,8 +27,6 @@ const Lessons = () => {
   function handleRemove(id: string): void {
     removeLesson(id);
   }
-
-
 
   return (
     <section className={Styles.lessons_container}>
@@ -50,9 +50,9 @@ const Lessons = () => {
             <span>{lesson.title}</span>
             <span>{getUser(lesson.createdBy)?.name}</span>
             <span>{getSubject(lesson.subject)?.name}</span>
-            <span>{lesson.questions.length}</span>
-            <button onClick={() => handleEdit(lesson.id)}>Editar</button>
-            <button onClick={() => setConfirm({toggle: true, type: 'confirm', text: 'A exclusão desta aula também removerá de todos os alunos que já a concluíram, incluindo a XP ganha também. Deseja excluir mesmo assim?', action: () => handleRemove(lesson.id)})}>Deletar</button>
+            <span>{lesson.task.length}</span>
+            <button onClick={() => handleEdit(lesson.id)}><EditIcon /></button>
+            <button onClick={() => setConfirm({toggle: true, type: 'confirm', text: 'A exclusão desta aula também removerá de todos os alunos que já a concluíram, incluindo a XP ganha também. Deseja excluir mesmo assim?', action: () => handleRemove(lesson.id)})}><DeleteIcon /></button>
           </div>
         ))}
       </div>

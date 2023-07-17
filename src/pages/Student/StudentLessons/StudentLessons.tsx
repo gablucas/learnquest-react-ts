@@ -32,8 +32,8 @@ const StudentLessons = () => {
               <Link to={`/estudante/aula/${lesson.id}`}  key={lesson.id}>
                 <span>{lesson.title}</span>
                 <span>{data.subjects.find((subject) => subject.id === lesson.subject)?.name}</span>
-                <span>{lesson.questions.length}</span>
-                <span>{lesson.questions.map((m) => m.xp).reduce((acc, cur) => acc + cur)}</span>
+                <span>{lesson.task.length}</span>
+                <span>{lesson.task.map((m) => m.xp).reduce((acc, cur) => acc + cur)}</span>
               </Link>
             </li>
           ))}

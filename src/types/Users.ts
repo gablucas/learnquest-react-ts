@@ -1,6 +1,6 @@
 import { Subject } from "./Commom";
 import { Group } from "./Group";
-import { IEvaluateLesson, ILesson, LessonStudent } from "./Lessons";
+import { IEvaluateTask, ILesson, TaskStudent } from "./Lessons";
 
 export interface IInstituition {
   id: string,
@@ -10,7 +10,7 @@ export interface IInstituition {
   groups: Group[],
   lessons: ILesson[],
   subjects: Subject[],
-  evaluate: IEvaluateLesson[],
+  evaluate: IEvaluateTask[],
   preferences: {
     defaultPassword: string,
   }
@@ -29,5 +29,5 @@ export interface ITeacher {
 export interface IStudent extends ITeacher {
   level: number,
   xp: number,
-  lessons: LessonStudent[];
+  lessons: TaskStudent[];
 }

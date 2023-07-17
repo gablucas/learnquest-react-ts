@@ -4,6 +4,8 @@ import useData from '../../../hooks/useData';
 import { GlobalContext } from '../../../GlobalContext';
 import Message from '../../../components/Message/Message';
 import HandleUser from './HandleUser';
+import DeleteIcon from '../../../components/Icons/DeleteIcon';
+import EditIcon from '../../../components/Icons/EditIcon';
 
 const Users = () => {
   const { confirm, setConfirm } = React.useContext(GlobalContext);
@@ -49,8 +51,8 @@ const Users = () => {
             <span>{m.status ? 'Ativado' : 'Desativado'}</span>
             {index !== 0 && (
               <>
-                <button onClick={() => handleEdit(m.id)}>Editar</button>
-                <button onClick={() => setConfirm({toggle: true, type: 'confirm', text: 'Deseja realmente excluir este usuário?', action: () => handleRemove(m.email)})}>Excluir</button>
+                <button onClick={() => handleEdit(m.id)}><EditIcon /></button>
+                <button onClick={() => setConfirm({toggle: true, type: 'confirm', text: 'Deseja realmente excluir este usuário?', action: () => handleRemove(m.email)})}><DeleteIcon /></button>
               </>
             )}
           </div>
