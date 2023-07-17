@@ -5,6 +5,7 @@ export type LessonStudent = {
 
 export interface IEvaluateLesson extends LessonStudent {
   evaluateID: string,
+  createdBy: string,
   student: string,
   subject: string,
 }

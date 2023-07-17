@@ -9,8 +9,8 @@ type RoutesProps = {
 } 
 
 const ProtectedRoutes = ({ children, allowedAccess }: RoutesProps) => {
-  const { getUser } = useData();
-  const user = getUser();
+  const { getLoggedUser } = useData();
+  const user = getLoggedUser();
   
   if (user) {
     if (allowedAccess.some((access) => access === user.access)) {

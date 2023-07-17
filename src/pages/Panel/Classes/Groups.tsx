@@ -31,7 +31,7 @@ const Groups = () => {
       <div className={Styles.groups}>
 
         <div>
-          <span>Nome</span>
+          <span>name</span>
           <span>Alunos</span>
           <span>Estado</span>
           <span>Editar</span>

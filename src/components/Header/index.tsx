@@ -5,8 +5,8 @@ import Logo from '../../assets/logo.svg';
 import useData from '../../hooks/useData';
 
 const Header = () => {
-  const { getUser } = useData();
-  const user = getUser();
+  const { getLoggedUser } = useData();
+  const user = getLoggedUser();
 
   return (
     <header className={styles.header}>
@@ -18,7 +18,7 @@ const Header = () => {
               <Link to='/' className={styles.login}>Entrar</Link>
             </>
           ) : (
-            <Link to={getUser()?.access !== 'student' ? '/painel' : '/estudante'}>{getUser()?.nome}</Link>
+            <Link to={getLoggedUser()?.access !== 'student' ? '/painel' : '/estudante'}>{getLoggedUser()?.name}</Link>
           )}
         </nav>
       </Container>

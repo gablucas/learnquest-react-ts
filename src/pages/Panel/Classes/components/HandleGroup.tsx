@@ -73,7 +73,7 @@ const HandleGroup = ({ setToggle, groupID }: HandleUserProps) => {
         <form onSubmit={handleSubmit}>
 
           <div>
-            <label>Nome da turma</label>
+            <label>name da turma</label>
             <input type='text' value={newGroup.name} onChange={(e) => handleGroupName(e)} />
           </div>
 
@@ -84,7 +84,7 @@ const HandleGroup = ({ setToggle, groupID }: HandleUserProps) => {
                 <div key={user.id}>
                   {(studentHasGroup(user.id) || onStudentGroup(user.id)) && (<input type='checkbox' checked={newGroup.students.some((student) => student === user.id)} onChange={(e) => handleStudent(e, user.id)}/>)}
 
-                  {studentHasGroup(user.id) ? (<label>{user.nome}</label>) : (<label>{`${user.nome} - ${data.groups.find((f) => f.students.some((id) => id === user.id))?.name}`}</label>)}
+                  {studentHasGroup(user.id) ? (<label>{user.name}</label>) : (<label>{`${user.name} - ${data.groups.find((f) => f.students.some((id) => id === user.id))?.name}`}</label>)}
                 </div>
               ))}
             </div>

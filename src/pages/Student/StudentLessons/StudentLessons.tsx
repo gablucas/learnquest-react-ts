@@ -7,11 +7,11 @@ import { IStudent } from '../../../types/Users';
 
 const StudentLessons = () => {
   const { data } = React.useContext(GlobalContext);
-  const { getUser } = useData();
-  const student = getUser() as IStudent;
+  const { getLoggedUser } = useData();
+  const student = getLoggedUser() as IStudent;
 
   const studentGroup = data?.groups.find((f) => f.students.some((id) => id === student?.id));
-  const lessons = data?.lessons.filter((lesson) => lesson.groups.some((id) => id === studentGroup?.id && student.lessons.some((s) => s.id === lesson.id)));
+  const lessons = data?.lessons.filter((lesson) => lesson.groups.some((id) => id === studentGroup?.id && !student.lessons.some((l) => l.id === lesson.id) && !data.evaluate.some((e) => e.id === lesson.id)));
 
   return (
     <div className={Styles.student_lessons_container}>

@@ -9,14 +9,14 @@ import ChangePassword from '../../components/ChangePassword/ChangePassword';
 
 const Student = () => {
   const { data } = React.useContext(GlobalContext);
-  const { getUser } = useData();
+  const { getLoggedUser } = useData();
 
   return (
     <Container>
       <div className={Styles.student_container}>
         <StudentMenu />
         <Outlet />
-        {getUser()?.password == data?.preferences.defaultPassword && (<ChangePassword />)}
+        {getLoggedUser()?.password == data?.preferences.defaultPassword && (<ChangePassword />)}
       </div>
     </Container>
   )

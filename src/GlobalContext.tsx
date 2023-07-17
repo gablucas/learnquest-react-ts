@@ -15,7 +15,7 @@ type GlobalContextProps = {
 const intialValue: GlobalContextProps = { 
   data: {
     id: '',
-    nome: '',
+    name: '',
     email: '',
     users: [],
     groups: [],

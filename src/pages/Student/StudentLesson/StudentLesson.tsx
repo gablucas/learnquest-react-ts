@@ -11,18 +11,18 @@ const StudentLesson = () => {
   const { data } = React.useContext(GlobalContext);
   const { id } = useParams();
   const [answer, setAnswer] = React.useState<IEvaluateLesson>();
-  const { saveStudentLesson, getUser } = useData();
+  const { saveStudentLesson, getLoggedUser } = useData();
   const { getRandomID } = useRandom();
   const navigate = useNavigate();
 
   // Analisar se utilizar variavel local afeta o desempenho a cada renderizacao
-  const student = getUser() as IStudent;
+  const student = getLoggedUser() as IStudent;
   const lesson = (data as IInstituition).lessons.find((f) => f.id === id);
 
 
   React.useEffect(() => {
     if (lesson) {
-      setAnswer({evaluateID: getRandomID(), id: lesson.id, student: student.id, subject: lesson.subject, answers: lesson.questions.map((question) => ({id: question.id, value: '', isCorrect: undefined, xp: 0}))});
+      setAnswer({evaluateID: getRandomID(), createdBy: lesson.createdBy, id: lesson.id, student: student.id, subject: lesson.subject, answers: lesson.questions.map((question) => ({id: question.id, value: '', isCorrect: undefined, xp: 0}))});
     }
   }, [lesson, student.id, getRandomID])
 

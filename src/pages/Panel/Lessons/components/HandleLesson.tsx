@@ -8,7 +8,7 @@ import { IInstituition } from '../../../../types/Users';
 
 const HandleLesson = () => {
   const { data } = useContext(GlobalContext);
-  const { getUser, createLesson, editLesson } = useData();
+  const { getLoggedUser, createLesson, editLesson } = useData();
   const navigate = useNavigate();
   const { id } = useParams();
 
@@ -16,7 +16,7 @@ const HandleLesson = () => {
 
   const [lesson, setLesson] = React.useState<ILesson>({
     id: ((data as IInstituition).lessons.length + 1).toString(),
-    createdBy: getUser()?.login as string,
+    createdBy: getLoggedUser()?.id as string,
     title: '',
     video: '',
     text: '',

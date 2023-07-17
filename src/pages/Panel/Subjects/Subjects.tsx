@@ -31,7 +31,7 @@ const Subjects = () => {
       <div className={Styles.subjects}>
 
         <div>
-          <span>Nome</span>
+          <span>name</span>
           <span>Aulas</span>
           <span>Estado</span>
           <span>Editar</span>

@@ -33,7 +33,7 @@ const Users = () => {
       <div className={Styles.users}>
 
         <div>
-          <span>Nome</span>
+          <span>name</span>
           <span>Email</span>
           <span>Acesso</span>
           <span>Estado</span>
@@ -43,7 +43,7 @@ const Users = () => {
 
         {data?.users.map((m, index) => (
           <div key={m.id} className={Styles.user}>
-            <span>{m.nome}</span>
+            <span>{m.name}</span>
             <span>{m.email}</span>
             <span>{m.access}</span>
             <span>{m.status ? 'Ativado' : 'Desativado'}</span>
