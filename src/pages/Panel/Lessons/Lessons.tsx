@@ -9,8 +9,10 @@ import Message from '../../../components/Message/Message';
 const Lessons = () => {
   const { confirm, setConfirm } = React.useContext(GlobalContext);
   const { data } = React.useContext(GlobalContext);
-  const { removeLesson } = useData();
+  const { getUser, getLoggedUser, removeLesson, getSubject } = useData();
   const navigate = useNavigate();
+  const loggedUser = getLoggedUser();
+  const lessons = loggedUser?.access === 'admin' ? data.lessons : data.lessons.filter((lesson) => lesson.createdBy === loggedUser?.id)
 
   function handleEdit(id: string): void {
     if (data.users.some((user) => user.access === 'student' && (user as IStudent).lessons.some((lesson) => lesson.id === id))) {
@@ -43,11 +45,11 @@ const Lessons = () => {
           <span>Excluir</span>
         </div>
 
-        {data?.lessons.map((lesson) => (
+        {lessons.map((lesson) => (
           <div key={lesson.id} className={Styles.lesson}>
             <span>{lesson.title}</span>
-            <span>{lesson.createdBy}</span>
-            <span>{lesson.subject}</span>
+            <span>{getUser(lesson.createdBy)?.name}</span>
+            <span>{getSubject(lesson.subject)?.name}</span>
             <span>{lesson.questions.length}</span>
             <button onClick={() => handleEdit(lesson.id)}>Editar</button>
             <button onClick={() => setConfirm({toggle: true, type: 'confirm', text: 'A exclusão desta aula também removerá de todos os alunos que já a concluíram, incluindo a XP ganha também. Deseja excluir mesmo assim?', action: () => handleRemove(lesson.id)})}>Deletar</button>

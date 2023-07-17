@@ -6,8 +6,8 @@ import { GlobalContext } from '../../../GlobalContext';
 
 const StudentInfo = () => {
   const { data } = React.useContext(GlobalContext);
-  const { getUser } = useData();
-  const student = getUser() as IStudent;
+  const { getLoggedUser } = useData();
+  const student = getLoggedUser() as IStudent;
 
   const studentClass = data?.groups.find((f) => f.students.some((id) => id === student?.id));
   const todoLessons = data?.lessons.filter((lesson) => lesson.groups.some((id) => id === studentClass?.id && !student.lessons.some((s) => s.id === lesson.id)));
@@ -36,7 +36,7 @@ const StudentInfo = () => {
         </div>
 
         <div className={Styles.student_info_data}>
-          <span>{student.nome}</span>
+          <span>{student.name}</span>
           <span>{studentClass?.name}</span>
           <span>Rank 1</span>
           <span>XP Total {student.xp + (student.level - 1) * 125}</span>

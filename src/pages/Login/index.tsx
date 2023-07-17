@@ -9,8 +9,8 @@ import useData from '../../hooks/useData';
 
 const Login = () => {
   const { data, setUser } = React.useContext(GlobalContext);
-  const { getUser } = useData();
-  const user = getUser();
+  const { getLoggedUser } = useData();
+  const user = getLoggedUser();
 
   const navigate: NavigateFunction = useNavigate();
   const login: UseFormType = useForm({type: 'user', initialValue: ''});
@@ -24,7 +24,7 @@ const Login = () => {
         localStorage.setItem('logged', login.value);
         setUser(login.value);
 
-        if (getUser()?.access === "student") {
+        if (getLoggedUser()?.access === "student") {
           navigate('/estudante');
         } else {
           navigate('/painel');
@@ -41,13 +41,33 @@ const Login = () => {
   else
   return(
     <Container>
-      <div className={Styles.login}>
-        <h1>Faça o login</h1>
-        <form onSubmit={handleSubmit}>
-          <Input type='text' label='Login' {...login} />
-          <Input type='password' label='Senha' {...password} />
-          <button>Entrar</button>
-        </form>
+      <div className={Styles.login_container}>
+        <div className={Styles.test}>
+          <h2>Contas para teste</h2>
+          <div>
+            <span>Administrador</span>
+            <span>Login: admin</span>
+            <span>Senha: 123</span>
+          </div>
+          <div>
+            <span>Professor</span>
+            <span>Login: professor </span>
+            <span>Senha: 123</span>
+          </div>
+          <div>
+            <span>Aluno</span>
+            <span>Login: aluno</span>
+            <span>Senha: 123</span>
+          </div>
+        </div>
+        <div className={Styles.login}>
+          <h1>Faça o login</h1>
+          <form onSubmit={handleSubmit}>
+            <Input type='text' label='Login' {...login} />
+            <Input type='password' label='Senha' {...password} />
+            <button>Entrar</button>
+          </form>
+        </div>
       </div>
     </Container>
   )

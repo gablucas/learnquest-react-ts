@@ -9,14 +9,14 @@ import { GlobalContext } from '../../GlobalContext';
 
 const Panel = () => {
   const { data } = React.useContext(GlobalContext)
-  const { getUser } = useData();
+  const { getLoggedUser } = useData();
 
   return (
     <Container>
       <div className={styles.panel}>
         <Sidebar />
         <Outlet />
-        {getUser()?.password == data?.preferences.defaultPassword && (<ChangePassword />)}
+        {getLoggedUser()?.password == data?.preferences.defaultPassword && (<ChangePassword />)}
       </div>
     </Container>
   )

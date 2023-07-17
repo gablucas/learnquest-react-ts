@@ -48,7 +48,7 @@ const EvaluateLesson = () => {
   return (
     <div className={Styles.evaluatelesson}>
       <h1>{lessonInfo.title}</h1>
-      <h2>Avaliação feita por: {userInfo?.nome} - {data.groups.find((group) => group.students.some((student) => student === userInfo.id))?.name}</h2>
+      <h2>Avaliação feita por: {userInfo?.name} - {data.groups.find((group) => group.students.some((student) => student === userInfo.id))?.name}</h2>
 
       <div>
         {lessonInfo.questions.map((question, index) => (

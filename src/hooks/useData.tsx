@@ -1,17 +1,18 @@
 import React from 'react';
 import { GlobalContext } from "../GlobalContext";
-import { IInstituition, IUser, IStudent } from '../types/Users';
+import { IInstituition, ITeacher, IStudent } from '../types/Users';
 import { IEvaluateLesson, ILesson, LessonStudent } from '../types/Lessons';
 import { Group } from '../types/Group';
-import { Subjects, ValidateOptions } from '../types/Commom';
+import { Subject, ValidateOptions } from '../types/Commom';
 
 type UseDataReturn = {
   getData: () => IInstituition,
   createInitialUser: () => void,
-  createUser: (user: IUser | IStudent) => void,
+  getUser: (id: string) => ITeacher | IStudent | undefined,
+  createUser: (user: ITeacher | IStudent) => void,
   removeUser: (email: string) => void,
-  editUser: (id: string, nome: string, login: string, email: string, password: string) => void,
-  getUser: () => IUser | IStudent | undefined,
+  editUser: (id: string, name: string, login: string, email: string, password: string) => void,
+  getLoggedUser: () => ITeacher | IStudent | undefined,
   logoutUser: () => void,
   checkUser: (type: ValidateOptions, value: string) => boolean,
   createLesson: (lesson: ILesson) => void,
@@ -22,9 +23,10 @@ type UseDataReturn = {
   createGroup: (newgroup: Group) => void,
   removeGroup: (id: string) => void,
   editGroup: (groupid: string, updateGroup: Group) => void,
-  createSubject: (subject: Subjects) => void,
+  getSubject: (id: string) => Subject | undefined,
+  createSubject: (subject: Subject) => void,
   removeSubject: (subject: string) => void,
-  editSubject: (id: string, updateSubject: Subjects) => void,
+  editSubject: (id: string, updateSubject: Subject) => void,
   editDefaultPassword: (password: string) => void,
   editPassword: (password: string) => void,
 }
@@ -36,13 +38,13 @@ const useData = (): UseDataReturn => {
     if (!localStorage.getItem('data')) {
       const data: IInstituition = {
         id: '1',
-        nome: 'Instituição',
+        name: 'Instituição',
         email: 'instituicao@edu.com.br',
         users: [
           {
             id: '1',
             access: 'admin',
-            nome: 'Administrador',
+            name: 'Administrador',
             login: 'admin',
             email: 'instituicao@edu.com.br',
             password: '123',
@@ -50,8 +52,17 @@ const useData = (): UseDataReturn => {
           },
           {
             id: '2',
+            access: 'teacher',
+            name: 'Professor',
+            login: 'professor',
+            email: 'professor@edu.com.br',
+            password: '123',
+            status: true,
+          },
+          {
+            id: '3',
             access: 'student',
-            nome: 'Aluno',
+            name: 'Aluno',
             login: 'aluno',
             email: 'aluno@edu.com.br',
             password: '123',
@@ -61,10 +72,10 @@ const useData = (): UseDataReturn => {
             lessons: [],
           }
         ],
-        groups: [{id: '1', name: 'Turma 1', status: true, students: ['2']}],
+        groups: [{id: '1', name: 'Turma 1', status: true, students: ['3']}],
         lessons: [{
           groups: ['1'], 
-          createdBy: 'admin', 
+          createdBy: '1', 
           id: '1', 
           questions: [
             {id: "1", question: "Quanto é 1 + 1?", answer: "2", xp: 25}, 
@@ -92,7 +103,15 @@ const useData = (): UseDataReturn => {
     return JSON.parse(localStorage.getItem('data') as string);
   }
 
-  function createUser(user: IUser | IStudent): void {
+  function getUser(id: string): ITeacher | IStudent | undefined {
+    const data = getData();
+
+    if (data) {
+      return data.users.find((user) => user.id === id);
+    }
+  }
+
+  function createUser(user: ITeacher | IStudent): void {
     const updateData = getData();
     updateData.users.push(user);
     localStorage.setItem('data', JSON.stringify(updateData));
@@ -106,11 +125,11 @@ const useData = (): UseDataReturn => {
     setData(updateData);
   }
 
-  function editUser(id: string, nome: string, login: string, email: string, password: string): void {
+  function editUser(id: string, name: string, login: string, email: string, password: string): void {
     const updateData = getData();
     updateData.users = updateData.users.map((user) => {
       if (user.id === id) {
-        return {...user, nome, login, email, password}
+        return {...user, name, login, email, password}
       }
 
       return user;
@@ -120,7 +139,7 @@ const useData = (): UseDataReturn => {
     setData(updateData);
   }
 
-  function getUser(): IUser | IStudent | undefined {
+  function getLoggedUser(): ITeacher | IStudent | undefined {
     const data = getData();
     const userLogin = localStorage.getItem('logged');
 
@@ -243,7 +262,7 @@ const useData = (): UseDataReturn => {
     setData(updateData);
   }
 
-  function editGroup(id: string, updateGroup: Group):void {
+  function editGroup(id: string, updateGroup: Group): void {
     const updateData = getData();
     updateData.groups = updateData.groups.map((group) => {
       if (group.id === id) {
@@ -257,7 +276,16 @@ const useData = (): UseDataReturn => {
     setData(updateData);
   }
 
-  function createSubject(subject: Subjects): void {
+  function getSubject(id: string): Subject | undefined {
+    const data = getData();
+    const subject = data.subjects.find((subject) => subject.id === id);
+
+    if (subject) {
+      return subject;
+    }
+  }
+
+  function createSubject(subject: Subject): void {
     const updateData = getData();
     updateData.subjects.push(subject);
     localStorage.setItem('data', JSON.stringify(updateData));
@@ -271,7 +299,7 @@ const useData = (): UseDataReturn => {
     setData(updateData);
   }
 
-  function editSubject(id: string, updateSubject: Subjects): void {
+  function editSubject(id: string, updateSubject: Subject): void {
     const updateData = getData();
     updateData.subjects = updateData.groups.map((subject) => {
       if (subject.id === id) {
@@ -294,7 +322,7 @@ const useData = (): UseDataReturn => {
 
   function editPassword(password: string): void {
     const updateData = getData();
-    const updateUser = getUser();
+    const updateUser = getLoggedUser();
 
     updateData.users = updateData.users.map((user) => {
       if (user.id === updateUser?.id) {
@@ -314,10 +342,11 @@ const useData = (): UseDataReturn => {
   return {
     createInitialUser,
     getData,
+    getUser,
     createUser,
     removeUser,
     editUser,
-    getUser,
+    getLoggedUser,
     logoutUser,
     checkUser,
     createLesson,
@@ -328,6 +357,7 @@ const useData = (): UseDataReturn => {
     createGroup,
     removeGroup,
     editGroup,
+    getSubject,
     createSubject,
     removeSubject,
     editSubject,
