@@ -1,9 +1,11 @@
 ## <h1 align='center'>![Logo](https://github.com/gablucas/learnquest-react-ts/assets/96196591/2d2ab046-7ebf-430d-974b-3c04b0c0866a)
 </h1>
 
-**<a href='https://gablucas.github.io/learnquest-react-ts/' >CLIQUE AQUI PARA ACESSAR</a>**
+**<a href='https://gablucas.github.io/learnquest-react-ts/' >CLIQUE AQUI PARA ACESSAR (PROJETO EM DESENVOLVIMENTO)</a>**
 
-# Projeto em desenvolvimento
+## Sobre
+A LearnQuest é uma plataforma para instituições de ensino que gamifica o processo de aprendizado do aluno, baseado em jogos de RPG, o aluno possui 
+
 ## Acessos para testar
 
 - Usuário Administrador
