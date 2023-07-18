@@ -11,7 +11,7 @@ const StudentLessons = () => {
   const student = getLoggedUser() as IStudent;
 
   const studentGroup = data?.groups.find((f) => f.students.some((id) => id === student?.id));
-  const lessons = data?.lessons.filter((lesson) => lesson.groups.some((id) => id === studentGroup?.id && !student.lessons.some((l) => l.id === lesson.id) && !data.evaluate.some((e) => e.id === lesson.id)));
+  const lessons = data?.lessons.filter((lesson) => lesson.groups.some((id) => id === studentGroup?.id && !student.lessons.some((l) => l.id === lesson.id) && !data.evaluate.some((e) => e.lessonID === lesson.id)));
 
   return (
     <div className={Styles.student_lessons_container}>
@@ -28,7 +28,7 @@ const StudentLessons = () => {
 
         <ul>
           {lessons?.map((lesson) => (
-            <li className={Styles.student_lessons}>
+            <li key={lesson.id} className={Styles.student_lessons}>
               <Link to={`/estudante/aula/${lesson.id}`}  key={lesson.id}>
                 <span>{lesson.title}</span>
                 <span>{data.subjects.find((subject) => subject.id === lesson.subject)?.name}</span>

@@ -23,7 +23,7 @@ const HandleSubject = ({ setToggle, subjectID }: HandleSubjectProps) => {
 
     if (subject.validate()) {
       if(!subjectID && data) {
-        createSubject({id: getRandomID(), name: subject.value, status: true})
+        createSubject({id: `S${getRandomID()}`, name: subject.value, status: true})
       } else if (subjectID) {
         editSubject(subjectID, {id: subjectID, name: subject.value, status: true})
       }

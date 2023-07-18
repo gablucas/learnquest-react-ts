@@ -2,9 +2,11 @@ import React from 'react';
 import Styles from '../../Panel.module.css';
 import { GlobalContext } from '../../../../GlobalContext';
 import useData from '../../../../hooks/useData';
-import { IInstituition } from '../../../../types/Users';
 import { Group } from '../../../../types/Group';
 import Modal from '../../../../components/Modal';
+import useValidate from '../../../../hooks/useValidate';
+import useRandom from '../../../../hooks/useRandom';
+import Error from '../../../../components/Helper/Error';
 
 type HandleUserProps = {
   setToggle: React.Dispatch<React.SetStateAction<boolean>>,
@@ -13,10 +15,12 @@ type HandleUserProps = {
 
 const HandleGroup = ({ setToggle, groupID }: HandleUserProps) => {
   const { createGroup, editGroup } = useData();
+  const { isEmpty, error } = useValidate();
+  const { getRandomID } = useRandom();
   const { data } = React.useContext(GlobalContext);
   const [newGroup, setNewGroup] = React.useState<Group>(
       {
-        id: ((data as IInstituition).groups.length + 1).toString(),
+        id: `G${getRandomID()}`,
         name: '',
         students: [],
         status: true,
@@ -54,14 +58,16 @@ const HandleGroup = ({ setToggle, groupID }: HandleUserProps) => {
   function handleSubmit(e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault();
 
-    if (!groupID && newGroup.name) {
-      createGroup(newGroup);
-      
-    } else if (groupID) {
-      editGroup(groupID, newGroup);
+    if (isEmpty('group' , newGroup.name)) {
+      if (!groupID && newGroup.name) {
+        createGroup(newGroup);
+        
+      } else if (groupID) {
+        editGroup(groupID, newGroup);
+      }
+  
+      setToggle(false);
     }
-
-    setToggle(false);
   }
 
   if (data)
@@ -73,8 +79,9 @@ const HandleGroup = ({ setToggle, groupID }: HandleUserProps) => {
         <form onSubmit={handleSubmit}>
 
           <div>
-            <label>name da turma</label>
+            <label>Nome da turma</label>
             <input type='text' value={newGroup.name} onChange={(e) => handleGroupName(e)} />
+            {error === 'group' && (<Error>Campo vazio</Error>)}
           </div>
 
           <div>

@@ -1,129 +1,109 @@
 import React, { useContext } from 'react';
 import Styles from '../../Panel.module.css';
 import useData from '../../../../hooks/useData';
-import { Navigate, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { GlobalContext } from '../../../../GlobalContext';
-import { ILesson } from '../../../../types/Lessons';
-import { IInstituition } from '../../../../types/Users';
+import { ILesson, Task } from '../../../../types/Lessons';
+import Input from '../../../../components/Inputs/Input';
+import useForm from '../../../../hooks/useForm';
+import Textarea from '../../../../components/Inputs/Textarea';
+import useRandom from '../../../../hooks/useRandom';
+import Error from '../../../../components/Helper/Error';
+import useValidate from '../../../../hooks/useValidate';
 
 const HandleLesson = () => {
   const { data } = useContext(GlobalContext);
+  const { id } = useParams();
   const { getLoggedUser, createLesson, editLesson } = useData();
+  const { getRandomID } = useRandom();
   const loggedUser = getLoggedUser();
   const navigate = useNavigate();
-  const { id } = useParams();
+  const { isEmpty, error } = useValidate();
+  console.log(id)
 
   const LessonToEdit = data.lessons.find((lesson) => lesson.id === id);
 
-  const [lesson, setLesson] = React.useState<ILesson>({
-    id: ((data as IInstituition).lessons.length + 1).toString(),
-    createdBy: loggedUser?.id as string,
-    title: '',
-    video: '',
-    text: '',
-    subject: '',
-    task: [{id: '1' ,question: '', answer: '', xp: 25}],
-    groups: []
-  })
+  const title =  useForm({type: 'title', initialValue: ''})
+  const video =  useForm({type: 'video', initialValue: ''})
+  const description =  useForm({type: 'video', initialValue: ''})
 
-  React.useEffect(() => {
-    if (id && LessonToEdit) {
-      setLesson({
-        id: LessonToEdit.id,
-        createdBy: LessonToEdit?.createdBy,
-        title: LessonToEdit.title,
-        video: LessonToEdit.video,
-        text: LessonToEdit.text,
-        subject: LessonToEdit.subject,
-        task: LessonToEdit.task,
-        groups: LessonToEdit.groups,
-      })
-    }
-  }, [id, LessonToEdit])
+  const [task, setTask] = React.useState<Task[]>([{id: `T${getRandomID()}`, answer: '', question: '', xp: 25}]);
+  const [group, setGroup] = React.useState<string[]>([])
+  const [subject, setsubject] = React.useState<string>('');
+  
 
   function handleCreateQuestion(e: React.MouseEvent<HTMLButtonElement>): void {
     e.stopPropagation();
-    const addNewQuestion = {...lesson};
-    addNewQuestion.task.push({id: (lesson.task.length + 1).toString(), question: '', answer: '', xp: 25});
-    setLesson(addNewQuestion);
+    const addNewQuestion = [...task];
+    addNewQuestion.push({id: `T${getRandomID()}`, question: '', answer: '', xp: 25});
+    setTask(addNewQuestion);
   }
 
-  function handlegroups(e: React.ChangeEvent<HTMLInputElement>, classId: string): void {
+  function handleGroups(e: React.ChangeEvent<HTMLInputElement>, groupID: string): void {
     if (e.target.checked) {
-      setLesson({...lesson, groups: [...lesson.groups, classId]})
+      setGroup([...group, groupID]);
     } else {
-      const updateLesson = {...lesson};
-      updateLesson.groups = updateLesson.groups.filter((f) => f !== classId);
-      setLesson(updateLesson)
+      setGroup(group.filter((f) => f !== groupID));
     }
   }
 
   function handleSubject(e: React.ChangeEvent<HTMLSelectElement>): void {
-    setLesson({...lesson, subject: e.target.value})
+    setsubject(e.target.value)
   }
 
-  function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>, propertie: string, index?: number): void {
-    const updateLesson = {...lesson};
+  function handleTask(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>, propertie: string, index?: number): void {
+    const updateTask = [...task];
 
     switch (propertie) {
-      case 'title':
-        updateLesson.title = e.target.value;
-        break;
-      case 'video':
-        updateLesson.video = e.target.value;
-        break;
-      case 'text':
-        updateLesson.text = e.target.value;
-        break;
       case 'question':
-        updateLesson.task[index as number].question = e.target.value;
+        updateTask[index as number].question = e.target.value;
         break;
       case 'answer':
-        updateLesson.task[index as number].answer = e.target.value;
+        updateTask[index as number].answer = e.target.value;
         break;
       case 'xp':
-        updateLesson.task[index as number].xp = Number(e.target.value);
+        updateTask[index as number].xp = Number(e.target.value);
         break;
     }
-    setLesson({...updateLesson});
+    setTask([...updateTask]);
   }
 
   function handleSubmit(e: React.FormEvent): void {
-
     e.preventDefault();
     
-    console.log(lesson.task[0].question !== '')
-    if (lesson.title && lesson.text && lesson.groups.length > 0 && lesson.subject && lesson.task.every((question) => question.question && question.answer)) {
+    if (title.validate() && description.validate() && isEmpty('group', group) && isEmpty('subject', subject) && loggedUser && task.every((t, i) => isEmpty(`question${i}`, t.question) && isEmpty(`answer${i}`, t.answer))) {
+
+      const newLesson: ILesson = {
+        id: LessonToEdit ? LessonToEdit.id : `L${getRandomID()}`,
+        createdBy: LessonToEdit ? LessonToEdit.createdBy : loggedUser.id,
+        title: title.value,
+        video: video.value,
+        text: description.value,
+        subject: subject,
+        task: [{id: '1' ,question: '', answer: '', xp: 25}],
+        groups: group,
+      }
 
       if (id) {
-        editLesson(id, lesson);
+        editLesson(id, newLesson);
       } else {
-        createLesson(lesson);
+        createLesson(newLesson);
       }
       navigate('/painel/aulas');
     }
   }
 
-  if (loggedUser?.access !== 'admin' && loggedUser?.id !== LessonToEdit?.createdBy)
-  return <Navigate to='/painel/aulas' />
+  // if (loggedUser?.access !== 'admin' && loggedUser?.id !== LessonToEdit?.createdBy && LessonToEdit)
+  // return <Navigate to='/painel/aulas' />
 
   return (
     <div className={Styles.createlesson} >
       <form onSubmit={handleSubmit}>
 
         <div>
-          <div>
-            <label>Título da aula</label>
-            <input type='text' value={lesson.title} onChange={(e) => handleChange(e, 'title')}/>
-          </div>
-          <div>
-            <label>Link do vídeo</label>
-            <input type='text' value={lesson.video} onChange={(e) => handleChange(e, 'video')}/>
-          </div>
-          <div>
-            <label>Descrição da aula</label>
-            <input type='text' value={lesson.text} onChange={(e) => handleChange(e, 'text')}/>
-          </div>
+          <Input type='text' label='Título da aula' {...title} />
+          <Input type='text' label='Link do youtube' {...video} />
+          <Textarea label='Descrição' rows={10} {...description} />
         </div>
 
         <div>
@@ -131,11 +111,12 @@ const HandleLesson = () => {
           <div className={Styles.createlesson_groups}>
             {data?.groups.map((c) => (
               <div key={c.id}>
-                <input type='checkbox' onChange={(e) => handlegroups(e, c.id)}/>
+                <input type='checkbox' onChange={(e) => handleGroups(e, c.id)}/>
                 <label>{c.name}</label>
               </div>
             ))}
           </div>
+          {error === 'group' && (<Error>Selecione pelo menos uma turma</Error>)}
         </div>
 
         <div className={Styles.createlesson_subjects}>
@@ -146,28 +127,30 @@ const HandleLesson = () => {
               <option key={subject.id} value={subject.id}>{subject.name}</option>
             ))}
           </select>
+          {error === 'subject' && (<Error>Selecione uma matéria</Error>)}
         </div>
 
         <div>
           <h2>Tarefa</h2>
 
-          {lesson?.task.map((question, index) => (
+          {task.map((question, index) => (
             <div key={question.id} className={Styles.question_container}>
 
               <div className={Styles.question}>
                 <label>Questão {index + 1}</label>
-                <input type='text' value={question.question} onChange={(e) => handleChange(e, 'question', index)}/>
+                <textarea rows={5} value={question.question} onChange={(e) => handleTask(e, 'question', index)}/>
+                {error === `question${index}` && (<Error>Campo vazio</Error>)}
               </div>
 
               <div>
                 <label>Resposta (Para comparar com a resposta do aluno)</label>
-                <input type='text' value={question.answer} onChange={(e) => handleChange(e, 'answer', index)}/>
+                <textarea rows={5} value={question.answer} onChange={(e) => handleTask(e, 'answer', index)}/>
+                {error === `answer${index}` && (<Error>Campo vazio</Error>)}
               </div>
-              
 
               <div>
                 <label>XP</label>
-                <select name='xp' value={question.xp} onChange={(e)=> handleChange(e, 'xp', index)}>
+                <select name='xp' value={question.xp} onChange={(e)=> handleTask(e, 'xp', index)}>
                   <option value="25">25 XP</option>
                   <option value="50">50 XP</option>
                   <option value="75">75 XP</option>

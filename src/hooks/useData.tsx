@@ -37,12 +37,12 @@ const useData = (): UseDataReturn => {
   function createInitialUser(): void {
     if (!localStorage.getItem('data')) {
       const data: IInstituition = {
-        id: '1',
+        id: 'I1',
         name: 'Instituição',
         email: 'instituicao@edu.com.br',
         users: [
           {
-            id: '1',
+            id: 'U1',
             access: 'admin',
             name: 'Administrador',
             login: 'admin',
@@ -51,7 +51,7 @@ const useData = (): UseDataReturn => {
             status: true, 
           },
           {
-            id: '2',
+            id: 'U2',
             access: 'teacher',
             name: 'Professor',
             login: 'professor',
@@ -60,7 +60,7 @@ const useData = (): UseDataReturn => {
             status: true,
           },
           {
-            id: '3',
+            id: 'U3',
             access: 'student',
             name: 'Aluno',
             login: 'aluno',
@@ -72,23 +72,23 @@ const useData = (): UseDataReturn => {
             lessons: [],
           }
         ],
-        groups: [{id: '1', name: 'Turma 1', status: true, students: ['3']}],
+        groups: [{id: 'G1', name: 'Turma 1', status: true, students: ['U3']}],
         lessons: [{
-          groups: ['1'], 
-          createdBy: '1', 
-          id: '1', 
+          groups: ['G1'], 
+          createdBy: 'U1', 
+          id: 'T1', 
           task: [
-            {id: "1", question: "Quanto é 1 + 1?", answer: "2", xp: 25}, 
-            {id: "2", question: "Quanto é 2 + 2?", answer: "4", xp: 50}, 
-            {id: "3", question: "Quanto é 3 + 3?", answer: "6", xp: 75}, 
-            {id: "4", question: "Quanto é 4 + 4?", answer: "8", xp: 100},
+            {id: "Q1", question: "Quanto é 1 + 1?", answer: "2", xp: 25}, 
+            {id: "Q2", question: "Quanto é 2 + 2?", answer: "4", xp: 50}, 
+            {id: "Q3", question: "Quanto é 3 + 3?", answer: "6", xp: 75}, 
+            {id: "Q4", question: "Quanto é 4 + 4?", answer: "8", xp: 100},
           ], 
-          subject: '1',
-          text: 'Nessa aula você aprenderá a somar', 
-          title: 'Aprendendo a somar', 
-          video: ''
+          subject: 'S1',
+          text: 'Nessa aula você aprenderá sobre adição', 
+          title: 'Matemática Básica - Adição', 
+          video: 'az6OYFS7AUA'
         }],
-        subjects: [{id: '1', name: 'Matemática', status: true}],
+        subjects: [{id: 'S1', name: 'Matemática', status: true}],
         evaluate: [],
         preferences: {
           defaultPassword: '123',

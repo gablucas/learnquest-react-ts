@@ -35,7 +35,7 @@ const HandleUser = ({ setToggle, userID }: HandleUserProps) => {
     if (!userID && access.validate() && login.validate() && access.validate() && name.validate() && email.validate()) {
 
       const user: ITeacher = {
-        id: getRandomID(),
+        id: `U${getRandomID()}`,
         access: access.value as 'admin' | 'teacher' | 'student',
         login: login.value.toLowerCase(),
         email: email.value.toLowerCase(),
