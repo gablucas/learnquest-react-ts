@@ -29,7 +29,7 @@ const EvaluateTasks = () => {
 
      {evaluate.map((lesson, index) => (
       <div key={index}>
-        <span>{data.lessons.find((l) => l.id === lesson.id)?.title}</span>
+        <span>{data.lessons.find((l) => l.id === lesson.lessonID)?.title}</span>
         <span>{getUser(lesson.student)?.name}</span>
         <span>{getUser(lesson.createdBy)?.name}</span>
         <span>{data.subjects.find((s) => s.id === lesson.subject)?.name}</span>

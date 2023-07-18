@@ -22,7 +22,7 @@ const StudentLesson = () => {
 
   React.useEffect(() => {
     if (lesson) {
-      setAnswer({id: getRandomID(), createdBy: lesson.createdBy, lessonID: lesson.id, student: student.id, subject: lesson.subject, answers: lesson.task.map((question) => ({id: question.id, value: '', isCorrect: undefined, xp: 0}))});
+      setAnswer({id: `E${getRandomID()}`, createdBy: lesson.createdBy, lessonID: lesson.id, student: student.id, subject: lesson.subject, answers: lesson.task.map((question) => ({id: question.id, value: '', isCorrect: undefined, xp: 0}))});
     }
   }, [lesson, student.id, getRandomID])
 
@@ -58,6 +58,7 @@ const StudentLesson = () => {
     <div className={Styles.student_lesson}>
       <h1>{lesson.title}</h1>
       <p>{lesson.text}</p>
+      {lesson.video && (<iframe width="1280" height="720" src={`https://www.youtube.com/embed/${lesson.video}`} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>)}
 
       <form className={Styles.student_lesson_task} onSubmit={handleSubmit}>
         <h2>Avaliação</h2>

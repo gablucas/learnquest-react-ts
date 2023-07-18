@@ -4,6 +4,8 @@ import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { GlobalContext } from '../../../../GlobalContext';
 import { TaskStudent } from '../../../../types/Lessons';
 import useData from '../../../../hooks/useData';
+import useValidate from '../../../../hooks/useValidate';
+import Error from '../../../../components/Helper/Error';
 
 const EvaluateTask = () => {
   const { data } = React.useContext(GlobalContext);
@@ -12,12 +14,13 @@ const EvaluateTask = () => {
   const [task, setTask] = React.useState<TaskStudent>();
   const navigate = useNavigate();
   const loggedUser = getLoggedUser();
+  const { isEmpty, error } = useValidate();
 
 
   const lessonToEvaluate = data.evaluate.find((lesson) => lesson.id === id);
-  const lessonInfo = data.lessons.find((lesson) => lesson.id === lessonToEvaluate?.id);
+  const lessonInfo = data.lessons.find((lesson) => lesson.id === lessonToEvaluate?.lessonID);
   const userInfo =  data.users.find((user) => user.id === lessonToEvaluate?.student);
-  
+
   React.useEffect(() => {
     if (lessonToEvaluate) {
       setTask({id: lessonToEvaluate.id, answers: [...lessonToEvaluate.answers]})
@@ -39,7 +42,7 @@ const EvaluateTask = () => {
   }
   
   function handleDoneEvaluate(): void {
-    if (task?.answers.every((answer) => answer.isCorrect !== undefined) && userInfo && id) {
+    if (task?.answers.every((answer, index) => isEmpty(`answer${index}` ,answer.isCorrect)) && userInfo && id) {
       evaluateLesson(id, userInfo.id, task);
       navigate('/painel/avaliar');
     }
@@ -77,6 +80,8 @@ const EvaluateTask = () => {
               <button onClick={() => handleEvaluate(index, true)}>Correto</button>
               <button onClick={() => handleEvaluate(index, false)}>Errado</button>
             </div>
+
+            {error === `answer${index}` && (<Error>Essa questão precisa ser avaliada</Error>)}
           </div>
         ))}
       </div>

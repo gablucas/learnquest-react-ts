@@ -1,5 +1,6 @@
 import { UseFormType } from '../../hooks/useForm';
 import Styles from './Inputs.module.css';
+import Error from '../Helper/Error';
 
 type InputProps = {
   label: string,
@@ -12,7 +13,7 @@ const Input = ({ label, type, error, value, onChange }: InputProps & UseFormType
     <div className={Styles.inputs}>
       <label>{label}</label>
       <input type={type} value={value} onChange={onChange}/>
-      {error && <span>{error}</span>}
+      {error && <Error>{error}</Error>}
     </div>
   )
 }

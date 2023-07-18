@@ -44,6 +44,7 @@ label {
 input[type='text'],
 input[type='password'],
 input[type='email'],
+textarea,
 select {
   padding: 8px;
   outline: none;
@@ -54,6 +55,10 @@ select {
   border-radius: 7px;
   background-color: #121214;
   transition: border .3s;
+}
+
+textarea {
+  height: inherit;
 }
 
 input:focus {

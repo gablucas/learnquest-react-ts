@@ -189,11 +189,10 @@
   width: 100%;
 }
 
-.createlesson textarea {
+/* .createlesson textarea {
   width: 100%;
   min-height: 200px;
-  height: max-content;
-}
+} */
 
 
 .createlesson .question_container {

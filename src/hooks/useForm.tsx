@@ -2,7 +2,7 @@ import React, { Dispatch, SetStateAction } from 'react';
 import useData from './useData';
 
 export type UseFormType = {
-  onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void,
+  onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => void,
   value: string,
   setValue: React.Dispatch<React.SetStateAction<string>>,
   validate: () => boolean,
@@ -34,7 +34,7 @@ const useForm = ({type, initialValue}: UseFormProps): UseFormType => {
     }
   }
   
-  function onChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>): void {
+  function onChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>): void {
     setValue(e.currentTarget.value);
   }
 
