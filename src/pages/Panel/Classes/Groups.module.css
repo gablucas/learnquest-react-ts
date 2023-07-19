@@ -1,0 +1,20 @@
+/* Componente Newclass */
+.handlegroup form {
+  width: 400px;
+  height: 600px;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+
+.handlegroup_students {
+  height: 90%;
+  padding: 12px;
+  border-radius: 7px;
+  background-color: #121214; 
+  overflow-y: scroll;
+}
+
+.handlegroup_students > div {
+  display: flex;
+  gap: 10px;
+}

@@ -1,5 +1,5 @@
 import React from 'react';
-import Styles from '../Panel.module.css';
+import Panel from '../Panel.module.css';
 import { GlobalContext } from '../../../GlobalContext';
 import useData from '../../../hooks/useData';
 import Message from '../../../components/Message/Message';
@@ -24,13 +24,13 @@ const Groups = () => {
   }
 
   return (
-    <section className={Styles.groups_container}>
+    <section className={Panel.container}>
 
-      <div className={Styles.groups_options}>
+      <div className={Panel.options}>
         <button onClick={() => setToggle(!toggle)}>Criar turma +</button>
       </div>
 
-      <div className={Styles.groups}>
+      <div className={`${Panel.info} ${Panel.groups}`}>
 
         <div>
           <span>Nome</span>
@@ -41,7 +41,7 @@ const Groups = () => {
         </div>
 
         {data?.groups.map((m) => (
-          <div key={m.id} className={Styles.class}>
+          <div key={m.id} className={Panel.class}>
             <span>{m.name}</span>
             <span>{m.students.length}</span>
             <span>{m.status ? 'Ativado' : 'Desativado'}</span>

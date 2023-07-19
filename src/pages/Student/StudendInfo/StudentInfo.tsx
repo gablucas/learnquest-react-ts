@@ -1,70 +1,74 @@
 import React from 'react';
-import Styles from '../Student.module.css';
+import Styles from './StudentInfo.module.css'
 import useData from "../../../hooks/useData";
 import { IStudent } from "../../../types/Users";
 import { GlobalContext } from '../../../GlobalContext';
+import Modal from '../../../components/Modal';
 
 const StudentInfo = () => {
   const { data } = React.useContext(GlobalContext);
   const { getLoggedUser } = useData();
   const student = getLoggedUser() as IStudent;
+  const [toggle, setToggle] = React.useState<boolean>(false)
 
   const studentGroup = data?.groups.find((f) => f.students.some((id) => id === student?.id));
   const todoLessons = data?.lessons.filter((lesson) => lesson.groups.some((id) => id === studentGroup?.id && !student.lessons.some((l) => l.id === lesson.id) && !data.evaluate.some((e) => e.id === lesson.id)));
 
   if (data)
   return (
-    <div className={Styles.student_info_container}>
+    <div className={Styles.container}>
       <h1>Suas informações</h1>
 
-      <div className={Styles.student_info_dashboard}>
-        <div className={Styles.student_info_level}>
+      <div className={Styles.dashboard}>
+        <div className={Styles.level}>
           <div style={{background: `radial-gradient(closest-side, #302B33 79%, transparent 80% 100%), conic-gradient(#FFA700 ${(student.xp * 100) / (student.level * 125)}%, #464149 0)`}}>
             <span>{student.level}</span>
             <span>{student.xp} / {student.level * 125}</span>
           </div>
         </div>
 
-        <div className={Styles.student_info_todolessons}>
+        <div className={Styles.todolessons}>
           <span>{todoLessons?.length}</span>
           <span>Aulas para fazer</span>
         </div>
 
-        <div className={Styles.student_info_donelessons}>
+        <div className={Styles.donelessons}>
           <span>{student.lessons.length}</span>
           <span>Aulas finalizadas</span>
         </div>
 
-        <div className={Styles.student_info_data}>
+        <div className={Styles.data}>
           <span>{student.name}</span>
           <span>{studentGroup?.name}</span>
           <span>Rank 1</span>
           <span>XP Total {student.xp + (student.level - 1) * 125}</span>
         </div>
 
-        <div className={Styles.student_info_messages}>
+        <div className={Styles.messages}>
           <span>Sem mensagens</span>
         </div>
 
       </div>
 
-      <div className={Styles.student_info_historic_container}>
+      <div className={Styles.historic_container}>
         <h2>Histórico de aulas</h2>
 
-        <div className={Styles.student_info_historic_list}>
+        <div className={Styles.historic_list}>
           <div>
             <span>Aula</span>
+            <span className={Styles.mobile}>Mais informações</span>
             <span>Matéria</span>
             <span>Questões</span>
             <span>Acertos</span>
             <span>Erros</span>
-            <span>XP Ganho</span>
+            <span>XP Ganho</span> 
           </div>
 
           {student.lessons.map((lesson, index) => (
-            <div>
+            <div key={lesson.id}>
               <span>{data.lessons.find((dataLesson) => dataLesson.id === lesson.id)?.title}</span>
-              <span>{data.subjects.find((subject) => subject.id === data?.lessons.find((dataLesson) => dataLesson.id === lesson.id)?.subject)?.name }</span>
+              <button className={Styles.mobile} onClick={() => setToggle(true)}>Teste</button>
+              <span>{data.subjects.find((subject) => subject.id === data?.lessons.find((dataLesson) => dataLesson.id === lesson.id)?.subject)?.name}</span>
               <span>{lesson.answers.length}</span>
               <span>{student.lessons[index].answers.filter((f) => f.isCorrect === true).length}</span>
               <span>{student.lessons[index].answers.filter((f) => f.isCorrect === false).length}</span>

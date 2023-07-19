@@ -1,5 +1,3 @@
-  /* Componente Panel */
-
 .panel {
   display: grid;
   grid-template-columns: 1fr 4fr;
@@ -7,92 +5,24 @@
   align-items: start;
 }
 
-/* Component Sidebar */
-
-.sidebar {
-  padding: 10px;
-  border: 1px solid #302B33;
-  border-radius: 7px;
-  background: linear-gradient(#302B33, #2B2F33);
-}
-
-.sidebar li {
-  border-radius: 7px;
-}
-
-.sidebar li:hover {
-  background-color: #464149;
-}
-
-.sidebar li a,
-.sidebar li button {
-  text-align: start;
-  padding: 10px;
-  width: 100%;
-}
-
-.sidebar .active,
-.sidebar li:hover.active {
-  font-weight: 600;
-  color: #302B33;
-  background-color: #FFA700;
-}
-
-
-/* Componente Dashboard */
-
-.dashboard_container {
-  display: flex;
-  align-items: start;
-  gap: 10px;
-
-}
-
-.dashboard_container div {
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  padding: 12px;
-  border: 1px solid #302B33;
-  border-radius: 7px;
-  background: linear-gradient(#302B33, #2B2F33);
-}
-
-/* Componente Users, Classes e Lessons*/
-
-.users_container,
-.subjects_container,
-.groups_container,
-.lessons_container,
-.evaluate_container {
+.container {
   display: grid;
   align-content: start;
   gap: 10px;
 }
 
-.users,
-.subjects,
-.groups,
-.lessons,
-.evaluate {
+.info {
   display: grid;
   border-radius: 7px;
   background-color: #302B33;  
 }
 
-.users_options,
-.subjects_options,
-.groups_options,
-.lessons_options,
-.evaluate_options {
+.options {
   display: grid;
 }
 
-.users_options button,
-.subjects_options button,
-.groups_options button,
-.lessons_options a,
-.evaluate_options a {
+.options button,
+.options a {
   justify-self: start;
   padding: 8px;
   border-radius: 7px;
@@ -100,23 +30,37 @@
   background-color: #302B33; 
 }
 
-.users_options button:hover,
-.subjects_options button:hover,
-.groups_options button:hover,
-.lessons_options a:hover,
-.evaluate_options a:hover {
+.options button:hover,
+.options a:hover {
   background-color: #464149;
 }
 
-.users div,
-.subjects div,
-.groups div,
-.lessons div,
-.evaluate div {
+.info div + div {
+  border-top: 1px solid #121214;
+}
+
+.info button svg,
+.info a svg {
+  border-radius: 7px;
+  fill: #E4E4E5;
+}
+
+.info button svg:hover,
+.info a svg:hover {
+  border-radius: 7px;
+  fill: #302B33;
+  background-color: #FFA700;
+}
+
+.info div {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
   place-items: center;
   height: 46px;
+}
+
+.subjects div,
+.groups div {
+  grid-template-columns: repeat(5, 1fr);
 }
 
 .lessons div {
@@ -130,223 +74,4 @@
 
 .evaluate div {
   grid-template-columns: 2fr repeat(4, 1fr);
-}
-
-.users div + div,
-.subjects div + div,
-.groups div + div,
-.lessons div + div,
-.evaluate div + div {
-  border-top: 1px solid #121214;
-}
-
-.user button svg,
-.subjects button svg,
-.groups button svg,
-.lesson button svg,
-.evaluate a svg {
-  border-radius: 7px;
-  fill: #E4E4E5;
-}
-
-.user button svg:hover,
-.subjects button svg:hover,
-.groups button svg:hover,
-.lesson button svg:hover,
-.evaluate a svg:hover {
-  border-radius: 7px;
-  fill: #302B33;
-  background-color: #FFA700;
-}
-
-/* Componente Newclass */
-.handlegroup form {
-  width: 400px;
-  height: 600px;
-  display: grid;
-  grid-template-rows: auto 1fr auto;
-}
-
-.handlegroup_students {
-  height: 90%;
-  padding: 12px;
-  border-radius: 7px;
-  background-color: #121214; 
-  overflow-y: scroll;
-}
-
-.handlegroup_students > div {
-  display: flex;
-  gap: 10px;
-}
-
-/* Componente CreateLesson */
-
-.createlesson form {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  width: 100%;
-}
-
-/* .createlesson textarea {
-  width: 100%;
-  min-height: 200px;
-} */
-
-
-.createlesson .question_container {
-  display: grid;
-  gap: 20px;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  padding: 18px;
-  border-radius: 7px;
-  background-color: #302B33;
-}
-
-.createlesson .question > div {
-  display: flex;
-  gap: 10px;
-}
-
-.createlesson_groups {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  padding: 12px;
-  background-color: #121214; 
-}
-
-.createlesson_groups > div {
-  display: flex;
-  gap: 4px;
-}
-
-.createlesson .newquestion {
-  margin-bottom: 40px;
-  color: #FFA700;
-  background-color: #302B33;
-}
-
-/* Componente EvaluateLesson */
-
-.evaluatelesson {
-  margin-left: 40px;
-}
-
-.evaluatelesson h1 {
-  margin-top: 0px;
-}
-
-.evaluatelesson > div {
-  display: grid;
-  gap: 20px;
-}
-
-.evaluatelesson .question_wrapper {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 16px;
-  padding: 12px;
-  border: 1px solid #464149;
-  border-radius: 7px;
-}
-
-.evaluatelesson .question_wrapper > div {
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  gap: 4px;
-}
-
-.evaluatelesson .question_wrapper > div span:nth-of-type(1) {
-  font-size: .75rem;
-  padding: 4px;
-  border-radius: 7px;
-  color: #a3a3a3;
-  background-color: #302B33;
-}
-
-.evaluatelesson .question_wrapper.wrong {
-  border: 2px solid red;
-}
-
-.evaluatelesson .question_wrapper.correct {
-  border: 2px solid green;
-}
-
-.evaluatelesson .buttons {
-  align-self: center;
-  grid-row: 1/4;
-  grid-column: 2/-1;
-
-  display: grid;
-  gap: 40px;
-}
-
-.evaluatelesson .buttons button {
-  border-radius: 7px;
-  width: 180px;
-  height: 40px;
-}
-
-.evaluatelesson .buttons button:first-of-type {
-  margin-bottom: 20px;
-  font-weight: 600;
-  color: #302B33;
-  background-color: #FFA700;
-}
-
-.evaluatelesson .buttons button:last-of-type {
-  background-color: #464149;
-}
-
-.evaluatelesson .buttons button:hover {
-  filter: brightness(1.2);
-}
-
-.evaluatelesson .btn_donevaluate {
-  margin-top: 20px;
-  padding: 16px;
-  background: #FFA700;
-  color: #2b2b2b;
-  font-weight: 700;
-  border-radius: 7px;
-  text-transform: uppercase;
-  cursor: pointer;
-}
-
-
-/* Componente Preferences */
-.preferences {
-  display: grid;
-  place-content: start;
-}
-
-.preferences_defaultpassword {
-  display: flex;
-  flex-direction: column;
-  padding: 12px;
-  border-radius: 7px;
-  background-color: #302B33; 
-  text-align: center;
-}
-
-.preferences_defaultpassword span:nth-child(1) {
-  font-size: 1.2rem;
-  font-weight: 700;
-}
-
-.preferences_defaultpassword button {
-  padding: 6px;
-  margin-top: 8px;
-  border-radius: 7px;
-  font-weight: 600;
-  color: #302B33;
-  background-color: #FFA700;
-}
-
-.preferences_defaultpassword button:hover {
-  filter: brightness(1.2);
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import Styles from '../Panel.module.css';
+import Panel from '../Panel.module.css';
 import useData from '../../../hooks/useData';
 import { GlobalContext } from '../../../GlobalContext';
 import Message from '../../../components/Message/Message';
@@ -24,13 +24,13 @@ const Subjects = () => {
   }
 
   return (
-    <section className={Styles.subjects_container}>
+    <section className={Panel.container}>
 
-      <div className={Styles.subjects_options}>
+      <div className={Panel.options}>
         <button onClick={() => setToggle(!toggle)}>Criar matéria +</button>
       </div>
 
-      <div className={Styles.subjects}>
+      <div className={`${Panel.info} ${Panel.subjects}`}>
 
         <div>
           <span>Nome</span>
@@ -41,7 +41,7 @@ const Subjects = () => {
         </div>
 
         {data?.subjects.map((m) => (
-          <div key={m.id} className={Styles.subject}>
+          <div key={m.id} className={Panel.subject}>
             <span>{m.name}</span>
             <span>{data.lessons.map((lesson) => lesson.subject === m.id).length}</span>
             <span>{m.status ? 'Ativado' : 'Desativado'}</span>

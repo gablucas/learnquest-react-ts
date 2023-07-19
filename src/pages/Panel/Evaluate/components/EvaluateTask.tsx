@@ -23,7 +23,7 @@ const EvaluateTask = () => {
 
   React.useEffect(() => {
     if (lessonToEvaluate) {
-      setTask({id: lessonToEvaluate.id, answers: [...lessonToEvaluate.answers]})
+      setTask({id: lessonToEvaluate.lessonID, answers: [...lessonToEvaluate.answers]})
     }
   }, [lessonToEvaluate])
 

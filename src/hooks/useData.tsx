@@ -243,7 +243,6 @@ const useData = (): UseDataReturn => {
       return userMap;
     })
 
-    console.log(updateData)
     localStorage.setItem('data', JSON.stringify(updateData));
     setData(updateData);
   }

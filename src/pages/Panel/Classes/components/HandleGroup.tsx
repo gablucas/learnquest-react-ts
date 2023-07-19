@@ -1,5 +1,5 @@
 import React from 'react';
-import Styles from '../../Panel.module.css';
+import Styles from '../Groups.module.css';
 import { GlobalContext } from '../../../../GlobalContext';
 import useData from '../../../../hooks/useData';
 import { Group } from '../../../../types/Group';

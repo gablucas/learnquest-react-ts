@@ -1,5 +1,5 @@
 import React from 'react';
-import Styles from '../Panel.module.css';
+import Panel from '../Panel.module.css';
 import useData from '../../../hooks/useData';
 import { GlobalContext } from '../../../GlobalContext';
 import Message from '../../../components/Message/Message';
@@ -26,13 +26,13 @@ const Users = () => {
   }
 
   return (
-    <section className={Styles.users_container}>
+    <section className={Panel.container}>
 
-      <div className={Styles.users_options}>
+      <div className={Panel.options}>
         <button onClick={() => setToggle(true)}>Criar usuário +</button>
       </div>
 
-      <div className={Styles.users}>
+      <div className={`${Panel.info} ${Panel.users}`}>
 
         <div>
           <span>Nome</span>
@@ -44,7 +44,7 @@ const Users = () => {
         </div>
 
         {data?.users.map((m, index) => (
-          <div key={m.id} className={Styles.user}>
+          <div key={m.id} className={Panel.user}>
             <span>{m.name}</span>
             <span>{m.email}</span>
             <span>{m.access}</span>

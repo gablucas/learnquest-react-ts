@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import Styles from '../../Panel.module.css';
+import Styles from '../Lessons.module.css';
 import useData from '../../../../hooks/useData';
 import { useNavigate, useParams } from 'react-router-dom';
 import { GlobalContext } from '../../../../GlobalContext';

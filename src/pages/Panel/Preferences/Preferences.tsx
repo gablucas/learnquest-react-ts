@@ -1,5 +1,5 @@
 import React from 'react';
-import Styles from '../Panel.module.css';
+import Styles from './Preferences.module.css';
 import { GlobalContext } from '../../../GlobalContext';
 import EditDefaultPassword from './EditDefaultPassword';
 

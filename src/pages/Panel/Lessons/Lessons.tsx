@@ -1,5 +1,5 @@
 import React from 'react';
-import Styles from '../Panel.module.css';
+import Panel from '../Panel.module.css';
 import { GlobalContext } from '../../../GlobalContext';
 import { Link, useNavigate } from "react-router-dom";
 import useData from '../../../hooks/useData';
@@ -29,13 +29,13 @@ const Lessons = () => {
   }
 
   return (
-    <section className={Styles.lessons_container}>
+    <section className={Panel.container}>
 
-      <div className={Styles.lessons_options}>
+      <div className={Panel.options}>
         <Link to='criar'>Criar aula +</Link>
       </div>
 
-      <div className={Styles.lessons}>
+      <div className={`${Panel.info} ${Panel.lessons}`}>
         <div>
           <span>Título</span>
           <span>Criada por</span>
@@ -46,7 +46,7 @@ const Lessons = () => {
         </div>
 
         {lessons.map((lesson) => (
-          <div key={lesson.id} className={Styles.lesson}>
+          <div key={lesson.id} className={Panel.lesson}>
             <span>{lesson.title}</span>
             <span>{getUser(lesson.createdBy)?.name}</span>
             <span>{getSubject(lesson.subject)?.name}</span>

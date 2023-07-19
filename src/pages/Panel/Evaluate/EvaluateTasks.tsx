@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Styles from '../Panel.module.css';
+import Panel from '../Panel.module.css';
 import { GlobalContext } from '../../../GlobalContext';
 import useData from '../../../hooks/useData';
 import EvaluateIcon from '../../../components/Icons/EvaluateIcon';
@@ -12,13 +12,13 @@ const EvaluateTasks = () => {
   const evaluate = loggedUser?.access === 'admin' ? data.evaluate : data.evaluate.filter((e) => e.createdBy === loggedUser?.id);
 
   return (
-    <section className={Styles.evaluate_container}>
+    <section className={Panel.container}>
 
-    <div className={Styles.evaluate_options}>
+    <div className={Panel.options}>
       <Link to='criar'>Criar aula +</Link>
     </div>
 
-    <div className={Styles.evaluate}>
+    <div className={`${Panel.info} ${Panel.evaluate}`}>
       <div>
         <span>Título</span>
         <span>Aluno</span>
@@ -33,7 +33,7 @@ const EvaluateTasks = () => {
         <span>{getUser(lesson.student)?.name}</span>
         <span>{getUser(lesson.createdBy)?.name}</span>
         <span>{data.subjects.find((s) => s.id === lesson.subject)?.name}</span>
-        <Link className={Styles.action} to={`/painel/avaliar/${lesson.id}`}><EvaluateIcon /></Link>
+        <Link className={Panel.action} to={`/painel/avaliar/${lesson.id}`}><EvaluateIcon /></Link>
       </div>
      ))}
     </div>

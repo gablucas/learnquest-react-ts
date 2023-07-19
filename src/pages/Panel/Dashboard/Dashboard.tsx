@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../Panel.module.css';
+import styles from './Dashboard.module.css';
 import { GlobalContext } from '../../../GlobalContext';
 
 const Dashboard = () => {

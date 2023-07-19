@@ -1,5 +1,4 @@
 import React from 'react';
-import Styles from './Student.module.css';
 import Container from "../../components/Container";
 import { Outlet } from 'react-router-dom';
 import StudentMenu from './StudentMenu/StudentMenu';
@@ -13,7 +12,7 @@ const Student = () => {
 
   return (
     <Container>
-      <div className={Styles.student_container}>
+      <div>
         <StudentMenu />
         <Outlet />
         {getLoggedUser()?.password == data?.preferences.defaultPassword && (<ChangeDefaultPassword />)}

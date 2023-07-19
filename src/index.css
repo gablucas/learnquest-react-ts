@@ -91,3 +91,9 @@ form button:hover {
 textarea {
   resize: none;
 }
+
+@media (max-width: 564px) {
+  form {
+    padding: 20px;
+  }
+}

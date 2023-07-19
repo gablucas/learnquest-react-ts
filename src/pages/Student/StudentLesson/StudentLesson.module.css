@@ -1,0 +1,17 @@
+.student_lesson {
+  display: grid;
+  justify-items: center;
+}
+
+.student_lesson form {
+  width: 800px;
+}
+
+.student_lesson p {
+  margin-bottom: 40px;
+}
+
+.student_lesson iframe {
+  margin-bottom: 80px;
+  border: none;
+}

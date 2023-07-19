@@ -1,0 +1,28 @@
+.sidebar {
+  padding: 10px;
+  border: 1px solid #302B33;
+  border-radius: 7px;
+  background: linear-gradient(#302B33, #2B2F33);
+}
+
+.sidebar li {
+  border-radius: 7px;
+}
+
+.sidebar li:hover {
+  background-color: #464149;
+}
+
+.sidebar li a,
+.sidebar li button {
+  text-align: start;
+  padding: 10px;
+  width: 100%;
+}
+
+.sidebar .active,
+.sidebar li:hover.active {
+  font-weight: 600;
+  color: #302B33;
+  background-color: #FFA700;
+}

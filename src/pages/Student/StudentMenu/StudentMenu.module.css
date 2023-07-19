@@ -1,0 +1,24 @@
+.student_menu_container ul {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.student_menu_container li {
+  padding: 8px;
+  border-radius: 7px;
+  background-color: #302B33;  
+}
+
+.student_menu_container li:hover {
+  background-color: #464149;
+}
+
+.student_menu_container .active,
+.student_menu_container li:hover.active {
+  font-weight: 600;
+  color: #302B33;
+  background-color: #FFA700;
+}
+

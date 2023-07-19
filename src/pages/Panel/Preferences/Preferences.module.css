@@ -1,0 +1,31 @@
+.preferences {
+  display: grid;
+  place-content: start;
+}
+
+.preferences_defaultpassword {
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+  border-radius: 7px;
+  background-color: #302B33; 
+  text-align: center;
+}
+
+.preferences_defaultpassword span:nth-child(1) {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.preferences_defaultpassword button {
+  padding: 6px;
+  margin-top: 8px;
+  border-radius: 7px;
+  font-weight: 600;
+  color: #302B33;
+  background-color: #FFA700;
+}
+
+.preferences_defaultpassword button:hover {
+  filter: brightness(1.2);
+}

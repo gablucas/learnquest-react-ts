@@ -1,4 +1,4 @@
-import Styles from '../Panel.module.css';
+import Styles from './Sidebar.module.css';
 import { Link, useParams } from "react-router-dom";
 import useData from '../../../hooks/useData';
 
