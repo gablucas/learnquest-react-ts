@@ -6,7 +6,7 @@ export interface IInstituition {
   id: string,
   name: string,
   email: string,
-  users: Array<ITeacher | IStudent>,
+  users: Array<IUser | IStudent>,
   groups: Group[],
   lessons: ILesson[],
   subjects: Subject[],
@@ -16,7 +16,7 @@ export interface IInstituition {
   }
 }
 
-export interface ITeacher {
+export interface IUser {
   id: string,
   access: 'admin' | 'teacher' | 'student',
   name: string,
@@ -26,7 +26,7 @@ export interface ITeacher {
   status: boolean,
 }
 
-export interface IStudent extends ITeacher {
+export interface IStudent extends IUser {
   level: number,
   xp: number,
   lessons: TaskStudent[];

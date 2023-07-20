@@ -1,0 +1,87 @@
+.list {
+  padding: 20px;
+  border-radius: 7px;
+  background-color: #302B33;  
+}
+
+.list ul {
+  height: 540px;
+  background-color: #121214;
+}
+
+.list > div {
+  padding-bottom: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.list div,
+.list ul li div {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  text-align: center;
+}
+
+.lessons div {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 12px;
+  background-color: #1E1C1F;
+}
+
+.list button,
+.list a {
+  display: flex;
+  justify-content: center;
+}
+
+.list svg {
+  border-radius: 7px;
+  fill: #E4E4E5;
+}
+
+.list button svg:hover,
+.list a svg:hover {
+  border-radius: 7px;
+  fill: #302B33;
+  background-color: #FFA700;
+}
+
+.mobile {
+  display: none !important;
+}
+
+@media (max-width: 1024px) {
+  .mobile {
+    display: initial !important;
+  }
+
+  .list div,
+  .list ul li div {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .list div span:nth-of-type(2),
+  .list div span:nth-of-type(3),
+  .list div span:nth-of-type(4) {
+    display: none;
+  }
+}
+
+
+@media (max-width: 768px) {
+
+  .list div,
+  .list ul li div {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .list div span:first-of-type {
+    grid-column: 1/-1;
+  }
+
+  .list > div {
+    row-gap: 10px;
+  }
+}

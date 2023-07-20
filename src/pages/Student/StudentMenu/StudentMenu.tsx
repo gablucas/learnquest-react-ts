@@ -1,5 +1,5 @@
 import { Link, useParams } from 'react-router-dom';
-import Styles from '../Student.module.css';
+import Styles from './StudentMenu.module.css';
 import useData from '../../../hooks/useData';
 
 

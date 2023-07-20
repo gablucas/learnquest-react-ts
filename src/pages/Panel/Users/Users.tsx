@@ -1,11 +1,16 @@
 import React from 'react';
-import Styles from '../Panel.module.css';
+import Panel from '../Panel.module.css';
 import useData from '../../../hooks/useData';
 import { GlobalContext } from '../../../GlobalContext';
 import Message from '../../../components/Message/Message';
 import HandleUser from './HandleUser';
 import DeleteIcon from '../../../components/Icons/DeleteIcon';
 import EditIcon from '../../../components/Icons/EditIcon';
+import MoreInfo from '../../../components/Icons/MoreInfo';
+import { MobileInfoProps } from '../../../types/Commom';
+import Modal from '../../../components/Modal';
+import MobileInfo from '../../../components/MobileInfo/MobileInfo';
+import { IStudent, IUser } from '../../../types/Users';
 
 const Users = () => {
   const { confirm, setConfirm } = React.useContext(GlobalContext);
@@ -16,6 +21,9 @@ const Users = () => {
   const { data } = React.useContext(GlobalContext);
   const { removeUser } = useData();
 
+  const [toggleMobile, setToggleMobile] = React.useState(false);
+  const [mobileInfo, setMobileInfo] = React.useState<MobileInfoProps[]>([{title: '', description: ''}]);
+
   function handleEdit(userid: string): void {
     setUserID(userid);
     setToggleEdit(true);
@@ -25,30 +33,41 @@ const Users = () => {
     removeUser(email);
   }
 
-  return (
-    <section className={Styles.users_container}>
+  function handleMobileInfo(user: IUser | IStudent): void {
+    const email = {title: 'Email', description: user.email};
+    const access = {title: 'Acesso', description: user.access};
+    const status = {title: 'Estado', description: user.status ? 'Ativado' : 'Desativado'};
 
-      <div className={Styles.users_options}>
+    setMobileInfo([email, access, status]);
+    setToggleMobile(true);
+  }
+
+  return (
+    <section className={Panel.container}>
+
+      <div className={Panel.options}>
         <button onClick={() => setToggle(true)}>Criar usuário +</button>
       </div>
 
-      <div className={Styles.users}>
+      <div className={`${Panel.info} ${Panel.users}`}>
 
         <div>
           <span>Nome</span>
           <span>Email</span>
           <span>Acesso</span>
           <span>Estado</span>
+          <span className={Panel.mobile}>Informações</span>
           <span>Editar</span>
           <span>Excluir</span>
         </div>
 
         {data?.users.map((m, index) => (
-          <div key={m.id} className={Styles.user}>
+          <div key={m.id} className={Panel.user}>
             <span>{m.name}</span>
             <span>{m.email}</span>
             <span>{m.access}</span>
             <span>{m.status ? 'Ativado' : 'Desativado'}</span>
+            <button className={Panel.mobile} onClick={() => handleMobileInfo(m)} ><MoreInfo /></button>
             {index !== 0 && (
               <>
                 <button onClick={() => handleEdit(m.id)}><EditIcon /></button>
@@ -63,6 +82,12 @@ const Users = () => {
       {toggle && (<HandleUser setToggle={setToggle} />)}
       {toggleEdit && (<HandleUser setToggle={setToggleEdit} userID={userID} />)}
       {confirm.toggle && <Message />}
+
+      {toggleMobile && mobileInfo && (
+        <Modal setToggle={setToggleMobile}>
+          <MobileInfo info={mobileInfo} />
+        </Modal>
+      )}
     </section>
   )
 }

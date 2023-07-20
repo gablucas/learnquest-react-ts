@@ -1,0 +1,16 @@
+.dashboard_container {
+  display: flex;
+  align-items: start;
+  gap: 10px;
+
+}
+
+.dashboard_container div {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding: 12px;
+  border: 1px solid #302B33;
+  border-radius: 7px;
+  background: linear-gradient(#302B33, #2B2F33);
+}

@@ -1,0 +1,159 @@
+.dashboard {
+  display: grid;
+  grid-template-areas:  "level donelessons data messages"
+                        "level todolessons data messages";
+  grid-template-columns: auto auto 1fr 2fr;
+  gap: 20px;
+}
+
+.level {
+  grid-area: level;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  border-radius: 7px;
+  background-color: #302B33;
+}
+
+.level div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+}
+
+.level span:first-child,
+.donelessons span:first-child, 
+.todolessons span:first-child {
+  text-align: center;
+  line-height: 1;
+  font-size: 3rem;
+  font-weight: 700;
+}
+
+.donelessons, 
+.todolessons,
+.data,
+.messages {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding: 10px;
+  border-radius: 7px;
+  background-color: #302B33;
+}
+
+.donelessons {
+  grid-area: donelessons;
+}
+
+.todolessons {
+  grid-area: todolessons;
+}
+
+.data {
+  grid-area: data;
+  text-align: start;
+}
+
+.messages {
+  grid-area: messages;
+  display: flex;
+  justify-content: center;
+  font-size: 1.2rem;
+}
+
+.data span:first-child {
+  line-height: 1;
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.data span {
+  font-size: 1.2rem;
+}
+
+.historic_container {
+  margin-top: 40px;
+}
+
+.historic_list {
+  border: 1px solid #302B33;
+  border-radius: 7px ;
+}
+
+.historic_list > div span:nth-of-type(n + 2) {
+  text-align: center;
+}
+
+.historic_list div:nth-of-type(1) {
+  border-radius: 7px 7px 0 0 ;
+  background-color: #302B33;
+}
+
+.historic_list > div {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  padding: 6px;
+}
+
+.historic_list > div:nth-of-type(n + 2) {
+  border-bottom: 1px solid #302B33;
+}
+
+.mobile {
+  display: none;
+}
+
+@media (max-width: 1024px) {
+  .mobile {
+    display: initial !important;
+  }
+  
+  .dashboard {
+    grid-template-areas:  "level donelessons data"
+                          "level todolessons data"
+                          "messages messages messages";
+    grid-template-columns: auto auto minmax(200px, 300px);
+    grid-template-rows: auto auto 200px;
+    justify-content: center;
+  }
+
+  .historic_list > div {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .historic_list div span:nth-of-type(n + 2) {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard {
+    grid-template-areas:  "level donelessons"
+                          "level todolessons"
+                          "data data"
+                          "messages messages";
+    grid-template-columns: auto auto;
+    grid-template-rows: repeat(3, auto) 200px;
+    /* justify-content: center; */
+  }
+}
+
+@media (max-width: 425px) {
+  .dashboard {
+    grid-template-areas:  "level"
+                          "donelessons"
+                          "todolessons"
+                          "data"
+                          "messages";
+    grid-template-columns: 300px;
+    grid-template-rows: repeat(4, auto) 200px;
+    justify-content: center;
+  }
+}

@@ -1,11 +1,15 @@
 import React from 'react';
-import Styles from '../Panel.module.css';
+import Panel from '../Panel.module.css';
 import useData from '../../../hooks/useData';
 import { GlobalContext } from '../../../GlobalContext';
 import Message from '../../../components/Message/Message';
 import HandleSubject from './HandleSubject';
 import EditIcon from '../../../components/Icons/EditIcon';
 import DeleteIcon from '../../../components/Icons/DeleteIcon';
+import MoreInfo from '../../../components/Icons/MoreInfo';
+import { MobileInfoProps, Subject } from '../../../types/Commom';
+import Modal from '../../../components/Modal';
+import MobileInfo from '../../../components/MobileInfo/MobileInfo';
 
 const Subjects = () => {
   const { data, confirm, setConfirm } = React.useContext(GlobalContext)
@@ -13,6 +17,13 @@ const Subjects = () => {
   const [toggleEdit, setToggleEdit] = React.useState<boolean>(false);
   const [subjectID, setSubjectID] = React.useState<string>('');
   const { removeSubject } = useData();
+
+  const [toggleMobile, setToggleMobile] = React.useState(false);
+  const [mobileInfo, setMobileInfo] = React.useState<MobileInfoProps[]>([{title: '', description: ''}]);
+
+  function getLessonsPerSubject(id: string): number {
+    return data.lessons.map((lesson) => lesson.subject === id).length
+  }
 
   function handleRemoveSubject(id: string): void {
     removeSubject(id);
@@ -23,28 +34,38 @@ const Subjects = () => {
     setToggleEdit(true);
   }
 
-  return (
-    <section className={Styles.subjects_container}>
+  function handleMobileInfo(subject: Subject): void {
+    const lessons = {title: 'Aulas', description: getLessonsPerSubject(subject.id)};
+    const status = {title: 'Estado', description: subject.status ? 'Ativado' : 'Desativado'};
 
-      <div className={Styles.subjects_options}>
+    setMobileInfo([lessons, status]);
+    setToggleMobile(true);
+  }
+
+  return (
+    <section className={Panel.container}>
+
+      <div className={Panel.options}>
         <button onClick={() => setToggle(!toggle)}>Criar matéria +</button>
       </div>
 
-      <div className={Styles.subjects}>
+      <div className={`${Panel.info} ${Panel.subjects}`}>
 
         <div>
           <span>Nome</span>
           <span>Aulas</span>
           <span>Estado</span>
+          <span>Informações</span>
           <span>Editar</span>
           <span>Excluir</span>
         </div>
 
         {data?.subjects.map((m) => (
-          <div key={m.id} className={Styles.subject}>
+          <div key={m.id} className={Panel.subject}>
             <span>{m.name}</span>
-            <span>{data.lessons.map((lesson) => lesson.subject === m.id).length}</span>
+            <span>{getLessonsPerSubject(m.id)}</span>
             <span>{m.status ? 'Ativado' : 'Desativado'}</span>
+            <button className={Panel.mobile} onClick={() => handleMobileInfo(m)} ><MoreInfo /></button>
             <button onClick={() => handleEdit(m.id)}><EditIcon /></button>
             <button onClick={() => setConfirm({toggle: true, type: 'confirm', text: 'Deseja realmente excluir está matéria?', action: () => handleRemoveSubject(m.id)})}><DeleteIcon /></button>
           </div>
@@ -55,6 +76,12 @@ const Subjects = () => {
       {toggle && <HandleSubject setToggle={setToggle} />}
       {toggleEdit && <HandleSubject setToggle={setToggleEdit} subjectID={subjectID} />}
       {confirm.toggle && <Message />}
+
+      {toggleMobile && mobileInfo && (
+        <Modal setToggle={setToggleMobile}>
+          <MobileInfo info={mobileInfo} />
+        </Modal>
+      )}
     </section>
   )
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import Styles from '../Student.module.css';
+import Styles from './StudentLesson.module.css';
 import { GlobalContext } from '../../../GlobalContext';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import useData from '../../../hooks/useData';

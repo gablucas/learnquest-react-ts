@@ -45,3 +45,47 @@
 .login a:hover {
   filter: brightness(1.2);
 }
+
+@media (max-width: 768px) {
+  .login_container {
+    grid-template-columns: 1fr;
+  }
+
+  .test {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  .test h2,
+  .test span {
+    text-align: center;
+    grid-column: 1/-1;
+  }
+}
+
+@media (max-width: 564px) {
+
+  .login_container {
+    justify-items: center;
+    margin-top: 20px;
+  }
+
+  .test {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .login form {
+    max-width: 340px;
+  }
+}
+
+
+@media (max-width: 375px) {
+
+  .login form {
+    width: 280px;
+  }
+}

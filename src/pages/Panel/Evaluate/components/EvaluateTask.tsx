@@ -1,5 +1,5 @@
 import React from 'react';
-import Styles from '../../Panel.module.css';
+import Styles from '../EvaluateTasks.module.css';
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { GlobalContext } from '../../../../GlobalContext';
 import { TaskStudent } from '../../../../types/Lessons';
@@ -23,7 +23,7 @@ const EvaluateTask = () => {
 
   React.useEffect(() => {
     if (lessonToEvaluate) {
-      setTask({id: lessonToEvaluate.id, answers: [...lessonToEvaluate.answers]})
+      setTask({id: lessonToEvaluate.lessonID, answers: [...lessonToEvaluate.answers]})
     }
   }, [lessonToEvaluate])
 
