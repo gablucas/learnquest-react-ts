@@ -58,7 +58,7 @@ const StudentLesson = () => {
     <div className={Styles.student_lesson}>
       <h1>{lesson.title}</h1>
       <p>{lesson.text}</p>
-      {lesson.video && (<iframe width="1280" height="720" src={`https://www.youtube.com/embed/${lesson.video}`} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>)}
+      {lesson.video && (<div className={Styles.video}><iframe src={`https://www.youtube.com/embed/${lesson.video}`} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe></div>)}
 
       <form className={Styles.student_lesson_task} onSubmit={handleSubmit}>
         <h2>Avaliação</h2>

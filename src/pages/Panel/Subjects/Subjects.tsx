@@ -55,7 +55,7 @@ const Subjects = () => {
           <span>Nome</span>
           <span>Aulas</span>
           <span>Estado</span>
-          <span>Informações</span>
+          <span className={Panel.mobile}>Informações</span>
           <span>Editar</span>
           <span>Excluir</span>
         </div>

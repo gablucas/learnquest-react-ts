@@ -26,3 +26,23 @@
   color: #302B33;
   background-color: #FFA700;
 }
+
+@media (max-width: 1024px) {
+  .sidebar > button {
+    font-size: 1rem;
+    font-weight: 600;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 7px;
+    background-color: #464149;
+  }
+
+  .sidebar ul.closed {
+    display: none;
+  }
+
+  .sidebar ul.open {
+    display: initial;
+  }
+}

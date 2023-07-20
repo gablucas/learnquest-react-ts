@@ -52,7 +52,7 @@ const Groups = () => {
           <span>Nome</span>
           <span>Alunos</span>
           <span>Estado</span>
-          <span>Informações</span>
+          <span className={Panel.mobile}>Informações</span>
           <span>Editar</span>
           <span>Excluir</span>
         </div>

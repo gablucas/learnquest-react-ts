@@ -85,6 +85,10 @@
     display: initial;
   }
 
+  .panel {
+    grid-template-columns: 1fr ;
+  }
+  
   .info div span:nth-of-type(2),
   .info div span:nth-of-type(3) {
     display: none;

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import Styles from '../Lessons.module.css';
 import useData from '../../../../hooks/useData';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { GlobalContext } from '../../../../GlobalContext';
 import { ILesson, Task } from '../../../../types/Lessons';
 import Input from '../../../../components/Inputs/Input';
@@ -19,18 +19,25 @@ const HandleLesson = () => {
   const loggedUser = getLoggedUser();
   const navigate = useNavigate();
   const { isEmpty, error } = useValidate();
-  console.log(id)
 
-  const LessonToEdit = data.lessons.find((lesson) => lesson.id === id);
+  const lessonToEdit = data.lessons.find((lesson) => lesson.id === id);
 
-  const title =  useForm({type: 'title', initialValue: ''})
-  const video =  useForm({type: 'video', initialValue: ''})
-  const description =  useForm({type: 'video', initialValue: ''})
+  const title =  useForm({type: 'title', initialValue: lessonToEdit ? lessonToEdit.title : ''})
+  const video =  useForm({type: 'video', initialValue: lessonToEdit ? lessonToEdit?.video : ''})
+  const description =  useForm({type: 'video', initialValue: lessonToEdit ? lessonToEdit.text : ''})
 
   const [task, setTask] = React.useState<Task[]>([{id: `T${getRandomID()}`, answer: '', question: '', xp: 25}]);
-  const [group, setGroup] = React.useState<string[]>([])
+  const [groups, setGroups] = React.useState<string[]>([])
   const [subject, setsubject] = React.useState<string>('');
   
+  React.useEffect(() => {
+    if (lessonToEdit) {
+      setTask(lessonToEdit.task);
+      setGroups(lessonToEdit.groups);
+      setsubject(lessonToEdit.subject);
+    }
+  }, [lessonToEdit])
+
 
   function handleCreateQuestion(e: React.MouseEvent<HTMLButtonElement>): void {
     e.stopPropagation();
@@ -41,9 +48,9 @@ const HandleLesson = () => {
 
   function handleGroups(e: React.ChangeEvent<HTMLInputElement>, groupID: string): void {
     if (e.target.checked) {
-      setGroup([...group, groupID]);
+      setGroups([...groups, groupID]);
     } else {
-      setGroup(group.filter((f) => f !== groupID));
+      setGroups(groups.filter((f) => f !== groupID));
     }
   }
 
@@ -71,17 +78,17 @@ const HandleLesson = () => {
   function handleSubmit(e: React.FormEvent): void {
     e.preventDefault();
     
-    if (title.validate() && description.validate() && isEmpty('group', group) && isEmpty('subject', subject) && loggedUser && task.every((t, i) => isEmpty(`question${i}`, t.question) && isEmpty(`answer${i}`, t.answer))) {
+    if (title.validate() && description.validate() && isEmpty('group', groups) && isEmpty('subject', subject) && loggedUser && task.every((t, i) => isEmpty(`question${i}`, t.question) && isEmpty(`answer${i}`, t.answer))) {
 
       const newLesson: ILesson = {
-        id: LessonToEdit ? LessonToEdit.id : `L${getRandomID()}`,
-        createdBy: LessonToEdit ? LessonToEdit.createdBy : loggedUser.id,
+        id: lessonToEdit ? lessonToEdit.id : `L${getRandomID()}`,
+        createdBy: lessonToEdit ? lessonToEdit.createdBy : loggedUser.id,
         title: title.value,
         video: video.value,
         text: description.value,
         subject: subject,
         task: [{id: '1' ,question: '', answer: '', xp: 25}],
-        groups: group,
+        groups: groups,
       }
 
       if (id) {
@@ -93,8 +100,8 @@ const HandleLesson = () => {
     }
   }
 
-  // if (loggedUser?.access !== 'admin' && loggedUser?.id !== LessonToEdit?.createdBy && LessonToEdit)
-  // return <Navigate to='/painel/aulas' />
+  if (loggedUser?.access !== 'admin' && loggedUser?.id !== lessonToEdit?.createdBy && lessonToEdit)
+  return <Navigate to='/painel/aulas' />
 
   return (
     <div className={Styles.createlesson} >
@@ -109,10 +116,10 @@ const HandleLesson = () => {
         <div>
           <h2>Turmas</h2>
           <div className={Styles.createlesson_groups}>
-            {data?.groups.map((c) => (
-              <div key={c.id}>
-                <input type='checkbox' onChange={(e) => handleGroups(e, c.id)}/>
-                <label>{c.name}</label>
+            {data?.groups.map((groupMap) => (
+              <div key={groupMap.id}>
+                <input type='checkbox' checked={groups.some((group) => group === groupMap.id)} onChange={(e) => handleGroups(e, groupMap.id)}/>
+                <label>{groupMap.name}</label>
               </div>
             ))}
           </div>
@@ -121,10 +128,10 @@ const HandleLesson = () => {
 
         <div className={Styles.createlesson_subjects}>
           <h2>Matéria</h2>
-          <select onChange={handleSubject}>
+          <select value={subject} onChange={handleSubject}>
             <option value=''>Selecione uma matéria</option>
-            {data?.subjects.map((subject) => (
-              <option key={subject.id} value={subject.id}>{subject.name}</option>
+            {data?.subjects.map((sub) => (
+              <option key={sub.id} value={sub.id}>{sub.name}</option>
             ))}
           </select>
           {error === 'subject' && (<Error>Selecione uma matéria</Error>)}

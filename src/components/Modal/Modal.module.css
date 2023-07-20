@@ -13,6 +13,13 @@
   left: 50%;
   transform: translate(-50%, -50%);
   border-radius: 7px;
-  background-color: #302B33;
   padding: 40px;
+  width: 100%;
+  max-width: 600px;
+}
+
+@media(max-width: 768px) {
+  .modal_content {
+    padding: 10px;
+  }
 }

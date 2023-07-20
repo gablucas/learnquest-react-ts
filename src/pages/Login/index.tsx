@@ -26,6 +26,11 @@ const Login = () => {
     password.setValue(passwordTest);
   }
 
+  function resetData(): void {
+    localStorage.removeItem('data');
+    localStorage.removeItem('logged');
+    window.location.reload();
+  }
 
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>): void {
@@ -75,6 +80,11 @@ const Login = () => {
             <span>Login: aluno</span>
             <span>Senha: teste</span>
           </div>
+
+          <div onClick={resetData}>
+            <span>Resetar dados</span>
+          </div>
+          
         </div>
         <div className={Styles.login}>
           <h1>Faça o login</h1>
