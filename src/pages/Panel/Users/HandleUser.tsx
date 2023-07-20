@@ -6,7 +6,7 @@ import useRandom from '../../../hooks/useRandom';
 import useData from '../../../hooks/useData';
 import { GlobalContext } from '../../../GlobalContext';
 import { Link } from 'react-router-dom';
-import { IInstituition, IStudent, ITeacher } from '../../../types/Users';
+import { IInstituition, IStudent, IUser } from '../../../types/Users';
 import Modal from '../../../components/Modal';
 
 
@@ -34,7 +34,7 @@ const HandleUser = ({ setToggle, userID }: HandleUserProps) => {
 
     if (!userID && access.validate() && login.validate() && access.validate() && name.validate() && email.validate()) {
 
-      const user: ITeacher = {
+      const user: IUser = {
         id: `U${getRandomID()}`,
         access: access.value as 'admin' | 'teacher' | 'student',
         login: login.value.toLowerCase(),

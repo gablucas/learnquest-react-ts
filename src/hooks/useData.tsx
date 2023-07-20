@@ -1,6 +1,6 @@
 import React from 'react';
 import { GlobalContext } from "../GlobalContext";
-import { IInstituition, ITeacher, IStudent } from '../types/Users';
+import { IInstituition, IUser, IStudent } from '../types/Users';
 import { IEvaluateTask, ILesson, TaskStudent } from '../types/Lessons';
 import { Group } from '../types/Group';
 import { Subject, ValidateOptions } from '../types/Commom';
@@ -8,13 +8,14 @@ import { Subject, ValidateOptions } from '../types/Commom';
 type UseDataReturn = {
   getData: () => IInstituition,
   createInitialUser: () => void,
-  getUser: (id: string) => ITeacher | IStudent | undefined,
-  createUser: (user: ITeacher | IStudent) => void,
+  getUser: (id: string) => IUser | IStudent | undefined,
+  createUser: (user: IUser | IStudent) => void,
   removeUser: (email: string) => void,
   editUser: (id: string, name: string, login: string, email: string, password: string) => void,
-  getLoggedUser: () => ITeacher | IStudent | undefined,
+  getLoggedUser: () => IUser | IStudent | undefined,
   logoutUser: () => void,
   checkUser: (type: ValidateOptions, value: string) => boolean,
+  getLesson: (id: string) => ILesson | undefined,
   createLesson: (lesson: ILesson) => void,
   removeLesson: (id: string) => void,
   editLesson: (id: string, lesson: ILesson) => void,
@@ -103,7 +104,7 @@ const useData = (): UseDataReturn => {
     return JSON.parse(localStorage.getItem('data') as string);
   }
 
-  function getUser(id: string): ITeacher | IStudent | undefined {
+  function getUser(id: string): IUser | IStudent | undefined {
     const data = getData();
 
     if (data) {
@@ -111,7 +112,7 @@ const useData = (): UseDataReturn => {
     }
   }
 
-  function createUser(user: ITeacher | IStudent): void {
+  function createUser(user: IUser | IStudent): void {
     const updateData = getData();
     updateData.users.push(user);
     localStorage.setItem('data', JSON.stringify(updateData));
@@ -139,7 +140,7 @@ const useData = (): UseDataReturn => {
     setData(updateData);
   }
 
-  function getLoggedUser(): ITeacher | IStudent | undefined {
+  function getLoggedUser(): IUser | IStudent | undefined {
     const data = getData();
     const userLogin = localStorage.getItem('logged');
 
@@ -168,6 +169,14 @@ const useData = (): UseDataReturn => {
     setData(updateData);
   }
 
+  function getLesson(id: string): ILesson | undefined {
+    const data = getData();
+
+    if (data) {
+      return data.lessons.find((lesson) => lesson.id === id);
+    }
+  }
+  
   function removeLesson(id: string) {
     const updateData = getData();
     updateData.lessons = updateData.lessons.filter((lesson) => lesson.id !== id);
@@ -348,6 +357,7 @@ const useData = (): UseDataReturn => {
     getLoggedUser,
     logoutUser,
     checkUser,
+    getLesson,
     createLesson,
     removeLesson,
     editLesson,

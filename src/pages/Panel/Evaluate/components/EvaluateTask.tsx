@@ -1,5 +1,5 @@
 import React from 'react';
-import Styles from '../../Panel.module.css';
+import Styles from '../EvaluateTasks.module.css';
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { GlobalContext } from '../../../../GlobalContext';
 import { TaskStudent } from '../../../../types/Lessons';

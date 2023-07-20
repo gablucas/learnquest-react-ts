@@ -14,3 +14,8 @@ export type ConfirmStateProps = {
   type: 'confirm' | 'message',
   action?: () => void,
 }
+
+export type MobileInfoProps = {
+  title: string,
+  description: string | number,
+}

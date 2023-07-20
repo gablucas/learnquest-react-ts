@@ -1,19 +1,19 @@
 .dashboard {
   display: grid;
-  grid-template-columns: auto auto 300px 1fr;
-  justify-content: start;
+  grid-template-areas:  "level donelessons data messages"
+                        "level todolessons data messages";
+  grid-template-columns: auto auto 1fr 2fr;
   gap: 20px;
 }
 
 .level {
+  grid-area: level;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 10px;
   border-radius: 7px;
   background-color: #302B33;
-
-  grid-row: 1/3;
 }
 
 .level div {
@@ -48,24 +48,20 @@
 }
 
 .donelessons {
-  grid-column: 2;
-  grid-row: 1;
+  grid-area: donelessons;
 }
 
 .todolessons {
-  grid-column: 2;
-  grid-row: 2;
+  grid-area: todolessons;
 }
 
 .data {
+  grid-area: data;
   text-align: start;
-  grid-column: 3;
-  grid-row: 1/3;
 }
 
 .messages {
-  grid-column: 4;
-  grid-row: 1/3;
+  grid-area: messages;
   display: flex;
   justify-content: center;
   font-size: 1.2rem;
@@ -116,16 +112,48 @@
 
 @media (max-width: 1024px) {
   .mobile {
-    display: initial !important ;
+    display: initial !important;
+  }
+  
+  .dashboard {
+    grid-template-areas:  "level donelessons data"
+                          "level todolessons data"
+                          "messages messages messages";
+    grid-template-columns: auto auto minmax(200px, 300px);
+    grid-template-rows: auto auto 200px;
+    justify-content: center;
   }
 
   .historic_list > div {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    padding: 6px;
+    grid-template-columns: 1fr 1fr;
   }
 
-  .historic_list > div span:nth-of-type(n + 2) {
+  .historic_list div span:nth-of-type(n + 2) {
     display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard {
+    grid-template-areas:  "level donelessons"
+                          "level todolessons"
+                          "data data"
+                          "messages messages";
+    grid-template-columns: auto auto;
+    grid-template-rows: repeat(3, auto) 200px;
+    /* justify-content: center; */
+  }
+}
+
+@media (max-width: 425px) {
+  .dashboard {
+    grid-template-areas:  "level"
+                          "donelessons"
+                          "todolessons"
+                          "data"
+                          "messages";
+    grid-template-columns: 300px;
+    grid-template-rows: repeat(4, auto) 200px;
+    justify-content: center;
   }
 }
