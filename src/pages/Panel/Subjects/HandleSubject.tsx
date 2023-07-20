@@ -35,7 +35,7 @@ const HandleSubject = ({ setToggle, subjectID }: HandleSubjectProps) => {
   return (
     <Modal setToggle={setToggle}>
       <div>
-        <h2>Criar nova matéria</h2>
+        <h2>{subjectID ? 'Editar' : 'Criar nova'} matéria</h2>
         <form onSubmit={handleSubmit}>
           <Input type='text' label='Matéria' {...subject} />
           <button>{!subjectID ? 'Cadastrar' : 'Atualizar'}</button>

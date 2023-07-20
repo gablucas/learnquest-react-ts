@@ -67,7 +67,7 @@ const HandleUser = ({ setToggle, userID }: HandleUserProps) => {
   return (
     <Modal setToggle={setToggle}>
       <div className={Styles.container}>
-        <h2>Criar novo usuário</h2>
+        <h2>{userID ? 'Editar': 'Criar novo'} usuário</h2>
         <form onSubmit={handleSubmit}>
          {!userID && (<Select options={[{option: 'admin', label: 'Administrador'}, {option: 'teacher', label: 'Professor'}, {option: 'student', label: 'Estudante'}]} {...access} />)}
           <Input type='text' label='Nome' {...name} />
@@ -77,7 +77,7 @@ const HandleUser = ({ setToggle, userID }: HandleUserProps) => {
           <button>{!userID ? 'Cadastrar' : 'Atualizar'}</button>
         </form>
 
-        <span>Será gerado uma senha padrão, veja em <Link to='/painel/preferencias'>Preferencias</Link></span>
+        {!userID && (<span className={Styles.passwordnotice}>Será gerado uma senha padrão, veja em <Link to='/painel/preferencias'>Preferencias</Link></span>)}
       </div>
     </Modal>
   )
