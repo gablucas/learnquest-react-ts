@@ -1,8 +1,8 @@
 .dashboard_container {
   display: flex;
   align-items: start;
+  flex-wrap: wrap;
   gap: 10px;
-
 }
 
 .dashboard_container div {

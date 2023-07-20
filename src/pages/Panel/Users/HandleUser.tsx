@@ -1,4 +1,5 @@
 import React from 'react';
+import Styles from './Users.module.css';
 import Input from '../../../components/Inputs/Input';
 import Select from '../../../components/Inputs/Select';
 import useForm, { UseFormType } from '../../../hooks/useForm';
@@ -65,11 +66,11 @@ const HandleUser = ({ setToggle, userID }: HandleUserProps) => {
 
   return (
     <Modal setToggle={setToggle}>
-      <div>
+      <div className={Styles.container}>
         <h2>Criar novo usuário</h2>
         <form onSubmit={handleSubmit}>
          {!userID && (<Select options={[{option: 'admin', label: 'Administrador'}, {option: 'teacher', label: 'Professor'}, {option: 'student', label: 'Estudante'}]} {...access} />)}
-          <Input type='text' label='name' {...name} />
+          <Input type='text' label='Nome' {...name} />
           <Input type='text' label='Login' {...login} />
           <Input type='email' label='Email' {...email} />
           {userID && (<Input type='text' label='Senha' {...password} />)}

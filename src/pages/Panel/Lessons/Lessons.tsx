@@ -58,7 +58,7 @@ const Lessons = () => {
           <span>Criada por</span>
           <span>Matéria</span>
           <span>Questões</span>
-          <span>Informações</span>
+          <span className={Panel.mobile}>Informações</span>
           <span>Editar</span>
           <span>Excluir</span>
         </div>

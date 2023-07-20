@@ -1,17 +1,20 @@
-.evaluatelesson {
+.container {
   margin-left: 40px;
 }
 
-.evaluatelesson h1 {
-  margin-top: 0px;
+.container > span {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #a3a3a3;
+
 }
 
-.evaluatelesson > div {
+.questions {
   display: grid;
   gap: 20px;
 }
 
-.evaluatelesson .question_wrapper {
+.question_wrapper {
   display: grid;
   grid-template-columns: 1fr auto;
   gap: 16px;
@@ -20,14 +23,18 @@
   border-radius: 7px;
 }
 
-.evaluatelesson .question_wrapper > div {
+.question_wrapper > div {
   display: flex;
   flex-direction: column;
   align-items: start;
   gap: 4px;
 }
 
-.evaluatelesson .question_wrapper > div span:nth-of-type(1) {
+.question_wrapper .buttons {
+  gap: 20px;
+}
+
+.question_wrapper > div span:nth-of-type(1) {
   font-size: .75rem;
   padding: 4px;
   border-radius: 7px;
@@ -35,15 +42,15 @@
   background-color: #302B33;
 }
 
-.evaluatelesson .question_wrapper.wrong {
+.question_wrapper.wrong {
   border: 2px solid red;
 }
 
-.evaluatelesson .question_wrapper.correct {
+.question_wrapper.correct {
   border: 2px solid green;
 }
 
-.evaluatelesson .buttons {
+.buttons {
   align-self: center;
   grid-row: 1/4;
   grid-column: 2/-1;
@@ -52,28 +59,27 @@
   gap: 40px;
 }
 
-.evaluatelesson .buttons button {
+.buttons button {
   border-radius: 7px;
   width: 180px;
   height: 40px;
 }
 
-.evaluatelesson .buttons button:first-of-type {
-  margin-bottom: 20px;
+.buttons button:first-of-type {
   font-weight: 600;
   color: #302B33;
   background-color: #FFA700;
 }
 
-.evaluatelesson .buttons button:last-of-type {
+.buttons button:last-of-type {
   background-color: #464149;
 }
 
-.evaluatelesson .buttons button:hover {
+.buttons button:hover {
   filter: brightness(1.2);
 }
 
-.evaluatelesson .btn_donevaluate {
+.btn_donevaluate {
   margin-top: 20px;
   padding: 16px;
   background: #FFA700;
@@ -82,4 +88,43 @@
   border-radius: 7px;
   text-transform: uppercase;
   cursor: pointer;
+}
+
+@media (max-width: 1024px) {
+  .container {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .question_wrapper {
+    grid-template-columns: 1fr;  
+  }
+
+  .buttons {
+    grid-row: initial;
+    grid-column: initial;
+  }
+
+  .question_wrapper .buttons {
+    flex-direction: row;
+    gap: 10px;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 425px) {
+  .container h1 {
+    font-size: 1.2rem;
+  }
+
+  .container > span {
+    font-size: 1rem;
+  }
+
+
+  .question_wrapper .buttons {
+    flex-direction: column;
+    align-items: center;
+  }
 }

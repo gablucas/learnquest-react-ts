@@ -53,11 +53,11 @@ const EvaluateTask = () => {
 
   if (lessonToEvaluate && lessonInfo && userInfo)
   return (
-    <div className={Styles.evaluatelesson}>
+    <div className={Styles.container}>
       <h1>{lessonInfo.title}</h1>
-      <h2>Avaliação feita por: {userInfo?.name} - {data.groups.find((group) => group.students.some((student) => student === userInfo.id))?.name}</h2>
+      <span>{userInfo?.name} - {data.groups.find((group) => group.students.some((student) => student === userInfo.id))?.name}</span>
 
-      <div>
+      <div className={Styles.questions}>
         {lessonInfo.task.map((question, index) => (
           <div key={question.id} className={`${Styles.question_wrapper} ${task?.answers[index].isCorrect === true ? Styles.correct : task?.answers[index].isCorrect === false ? Styles.wrong : ' '}`}>
 

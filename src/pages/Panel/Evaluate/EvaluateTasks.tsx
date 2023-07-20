@@ -43,7 +43,7 @@ const EvaluateTasks = () => {
         <span>Aluno</span>
         <span>Criada por</span>
         <span>Matéria</span>
-        <span>Informações</span>
+        <span className={Panel.mobile}>Informações</span>
         <span>Avaliar</span>
       </div>
 
