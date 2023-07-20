@@ -1,4 +1,12 @@
-/* Componente Newclass */
+.handlegroup > div {
+  display: grid;
+  grid-template-columns: 1fr auto;
+}
+
+.handlegroup > div button {
+  font-weight: 600;
+}
+
 .handlegroup form {
   height: 600px;
   display: grid;

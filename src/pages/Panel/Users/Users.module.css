@@ -1,3 +1,12 @@
+.container > div {
+  display: grid;
+  grid-template-columns: 1fr auto;
+}
+
+.container > div button {
+  font-weight: 600;
+}
+
 .passwordnotice a {
   display: inline-block;
   color: #FFA700;

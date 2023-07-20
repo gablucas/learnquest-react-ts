@@ -67,7 +67,11 @@ const HandleUser = ({ setToggle, userID }: HandleUserProps) => {
   return (
     <Modal setToggle={setToggle}>
       <div className={Styles.container}>
-        <h2>{userID ? 'Editar': 'Criar novo'} usuário</h2>
+        <div>
+          <h2>{userID ? 'Editar': 'Criar novo'} usuário</h2>
+          <button onClick={() => setToggle(false)}>Fechar</button>
+        </div>
+        
         <form onSubmit={handleSubmit}>
          {!userID && (<Select options={[{option: 'admin', label: 'Administrador'}, {option: 'teacher', label: 'Professor'}, {option: 'student', label: 'Estudante'}]} {...access} />)}
           <Input type='text' label='Nome' {...name} />
