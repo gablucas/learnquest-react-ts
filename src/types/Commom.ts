@@ -5,7 +5,7 @@ export type ValidateOptions = 'login' | 'email'
 export type Subject = {
   id: string, 
   name: string, 
-  status: boolean
+  status: 'active' | 'disable',
 }
 
 export type ConfirmStateProps = {
@@ -15,7 +15,12 @@ export type ConfirmStateProps = {
   action?: () => void,
 }
 
-export type MobileInfoProps = {
+export type MobileInfoData = {
   title: string,
   description: string | number,
+}
+
+export type MobileInfoProps = {
+  info: MobileInfoData[],
+  setToggle: React.Dispatch<React.SetStateAction<boolean>>,
 }

@@ -82,7 +82,7 @@ const HandleLesson = () => {
 
       const newLesson: ILesson = {
         id: lessonToEdit ? lessonToEdit.id : `L${getRandomID()}`,
-        createdBy: lessonToEdit ? lessonToEdit.createdBy : loggedUser.id,
+        createdby: lessonToEdit ? lessonToEdit.createdby : loggedUser.id,
         title: title.value,
         video: video.value,
         text: description.value,
@@ -100,7 +100,7 @@ const HandleLesson = () => {
     }
   }
 
-  if (loggedUser?.access !== 'admin' && loggedUser?.id !== lessonToEdit?.createdBy && lessonToEdit)
+  if (loggedUser?.access !== 'admin' && loggedUser?.id !== lessonToEdit?.createdby && lessonToEdit)
   return <Navigate to='/painel/aulas' />
 
   return (

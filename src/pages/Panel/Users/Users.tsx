@@ -7,23 +7,31 @@ import HandleUser from './HandleUser';
 import DeleteIcon from '../../../components/Icons/DeleteIcon';
 import EditIcon from '../../../components/Icons/EditIcon';
 import MoreInfo from '../../../components/Icons/MoreInfo';
-import { MobileInfoProps } from '../../../types/Commom';
-import Modal from '../../../components/Modal';
+import { MobileInfoData } from '../../../types/Commom';
 import MobileInfo from '../../../components/MobileInfo/MobileInfo';
 import { IStudent, IUser } from '../../../types/Users';
+import Filter from '../../../components/Filter/Filter';
+import FilterIcon from '../../../components/Icons/FilterIcon';
+import useHelpers from '../../../hooks/useHelpers';
 
 const Users = () => {
-  const { confirm, setConfirm } = React.useContext(GlobalContext);
+  const { confirm, setConfirm, filter } = React.useContext(GlobalContext);
   const [toggle, setToggle] = React.useState<boolean>(false);
   const [toggleEdit, setToggleEdit] = React.useState<boolean>(false);
-  
+  const [toggleFilter, setToggleFilter] = React.useState<boolean>(false);
+  const { isArrayEmpty,  isAnyArrayFilled, arrayIncludes, cleanFilter } = useHelpers();
+
   const [userID, setUserID] = React.useState<string>('');
   const { data } = React.useContext(GlobalContext);
   const { removeUser } = useData();
 
   const [toggleMobile, setToggleMobile] = React.useState(false);
-  const [mobileInfo, setMobileInfo] = React.useState<MobileInfoProps[]>([{title: '', description: ''}]);
+  const [mobileInfo, setMobileInfo] = React.useState<MobileInfoData[]>([{title: '', description: ''}]);
 
+  let users = data.users;
+  if (!isArrayEmpty(filter.access)) users = users.filter((user) => arrayIncludes(filter.access, user.access));
+  if (!isArrayEmpty(filter.status)) users = users.filter((user) => arrayIncludes(filter.status, user.status));
+  
   function handleEdit(userid: string): void {
     setUserID(userid);
     setToggleEdit(true);
@@ -47,6 +55,8 @@ const Users = () => {
 
       <div className={Panel.options}>
         <button onClick={() => setToggle(true)}>Criar usuário +</button>
+        <button onClick={() => setToggleFilter(true)} className={isAnyArrayFilled([filter.access, filter.status]) ? Panel.filter : ''} >Filtrar <FilterIcon /></button>
+        {isAnyArrayFilled([filter.access, filter.status]) && (<button onClick={() => cleanFilter()} className={Panel.cleanfilter}>Limpar filtro</button>)}
       </div>
 
       <div className={`${Panel.info} ${Panel.users}`}>
@@ -61,14 +71,14 @@ const Users = () => {
           <span>Excluir</span>
         </div>
 
-        {data?.users.map((m, index) => (
+        {users.map((m) => (
           <div key={m.id} className={Panel.user}>
             <span>{m.name}</span>
             <span>{m.email}</span>
-            <span>{m.access}</span>
-            <span>{m.status ? 'Ativado' : 'Desativado'}</span>
+            <span>{m.access === 'admin' ? 'Admin' : m.access === 'teacher' ? 'Professor' : 'Aluno'}</span>
+            <span>{m.status === 'active' ? 'Ativado' : 'Desativado'}</span>
             <button className={Panel.mobile} onClick={() => handleMobileInfo(m)} ><MoreInfo /></button>
-            {index !== 0 && (
+            {m.id !== 'U1' && (
               <>
                 <button onClick={() => handleEdit(m.id)}><EditIcon /></button>
                 <button onClick={() => setConfirm({toggle: true, type: 'confirm', text: 'Deseja realmente excluir este usuário?', action: () => handleRemove(m.email)})}><DeleteIcon /></button>
@@ -82,12 +92,8 @@ const Users = () => {
       {toggle && (<HandleUser setToggle={setToggle} />)}
       {toggleEdit && (<HandleUser setToggle={setToggleEdit} userID={userID} />)}
       {confirm.toggle && <Message />}
-
-      {toggleMobile && mobileInfo && (
-        <Modal setToggle={setToggleMobile}>
-          <MobileInfo info={mobileInfo} />
-        </Modal>
-      )}
+      {toggleFilter && <Filter options={{access: true, student: false, subject: false, group: false, createdby: false, status: true}} setToggle={setToggleFilter} />}
+      {toggleMobile && mobileInfo && (<MobileInfo info={mobileInfo} setToggle={setToggleMobile} />)}
     </section>
   )
 }

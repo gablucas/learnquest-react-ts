@@ -11,6 +11,12 @@
   gap: 10px;
 }
 
+.container button svg,
+.container a svg {
+  border-radius: 7px;
+  fill: #E4E4E5;
+}
+
 .info {
   display: grid;
   border-radius: 7px;
@@ -18,12 +24,16 @@
 }
 
 .options {
-  display: grid;
+  display: flex;
+  justify-content: start;
+  gap: 10px;
 }
 
 .options button,
 .options a {
-  justify-self: start;
+  display: flex;
+  align-items: center;
+  gap: 4px;
   padding: 8px;
   border-radius: 7px;
   color: rgba(255, 255, 255, 0.87);
@@ -35,14 +45,23 @@
   background-color: #464149;
 }
 
-.info div + div {
-  border-top: 1px solid #121214;
+.options button.filter {
+  font-weight: 600;
+  color: #121214;
+  background-color: #FFA700;
 }
 
-.info button svg,
-.info a svg {
-  border-radius: 7px;
-  fill: #E4E4E5;
+.options button.filter svg {
+  fill: #121214;
+}
+
+.options .cleanfilter {
+  font-size: .8rem;
+  background-color: rgba(48, 43, 51, .4);
+}
+
+.info div + div {
+  border-top: 1px solid #121214;
 }
 
 .info button svg:hover,

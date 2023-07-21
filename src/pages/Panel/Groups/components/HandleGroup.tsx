@@ -75,9 +75,12 @@ const HandleGroup = ({ setToggle, groupID }: HandleUserProps) => {
     <Modal setToggle={setToggle}>
 
       <div className={Styles.handlegroup}>
-        <h2>{groupID ? 'Editar' : 'Criar nova'} turma</h2>
-        <form onSubmit={handleSubmit}>
+        <div>
+          <h2>{groupID ? 'Editar' : 'Criar nova'} turma</h2>
+          <button onClick={() => setToggle(false)}>Fechar</button>
+        </div>
 
+        <form onSubmit={handleSubmit}>
           <div>
             <label>Nome da turma</label>
             <input type='text' value={newGroup.name} onChange={(e) => handleGroupName(e)} />

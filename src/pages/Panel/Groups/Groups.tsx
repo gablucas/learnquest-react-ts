@@ -7,20 +7,28 @@ import HandleGroup from './components/HandleGroup';
 import EditIcon from '../../../components/Icons/EditIcon';
 import DeleteIcon from '../../../components/Icons/DeleteIcon';
 import MoreInfo from '../../../components/Icons/MoreInfo';
-import { MobileInfoProps } from '../../../types/Commom';
-import Modal from '../../../components/Modal';
+import { MobileInfoData } from '../../../types/Commom';
 import MobileInfo from '../../../components/MobileInfo/MobileInfo';
 import { Group } from '../../../types/Group';
+import Filter from '../../../components/Filter/Filter';
+import useHelpers from '../../../hooks/useHelpers';
+import FilterIcon from '../../../components/Icons/FilterIcon';
 
 const Groups = () => {
-  const { data, confirm, setConfirm } = React.useContext(GlobalContext);
+  const { data, confirm, setConfirm, filter } = React.useContext(GlobalContext);
   const { removeGroup } = useData();
-  const [toggle, setToggle] = React.useState<boolean>(false);
-  const [toggleEdit, setToggleEdit] = React.useState<boolean>(false);
+  const { isArrayEmpty, isAnyArrayFilled, arrayIncludes, cleanFilter } = useHelpers();
   const [groupID, setGroupID] = React.useState<string>('');
 
+  const [toggle, setToggle] = React.useState<boolean>(false);
+  const [toggleEdit, setToggleEdit] = React.useState<boolean>(false);
+  const [toggleFilter, setToggleFilter] = React.useState<boolean>(false);
   const [toggleMobile, setToggleMobile] = React.useState(false);
-  const [mobileInfo, setMobileInfo] = React.useState<MobileInfoProps[]>([{title: '', description: ''}]);
+  const [mobileInfo, setMobileInfo] = React.useState<MobileInfoData[]>([{title: '', description: ''}]);
+
+  let groups = data.groups;
+  if (!isArrayEmpty(filter.access)) groups = groups.filter((groups) => arrayIncludes(filter.group, groups.id));
+  if (!isArrayEmpty(filter.status)) groups = groups.filter((groups) => arrayIncludes(filter.status, groups.status));
 
   function handleEdit(classid: string): void {
     setGroupID(classid);
@@ -44,6 +52,8 @@ const Groups = () => {
 
       <div className={Panel.options}>
         <button onClick={() => setToggle(!toggle)}>Criar turma +</button>
+        <button onClick={() => setToggleFilter(true)} className={isAnyArrayFilled([filter.group, filter.status]) ? Panel.filter : ''} >Filtrar <FilterIcon /></button>
+        {isAnyArrayFilled([filter.group, filter.status]) && (<button onClick={() => cleanFilter()} className={Panel.cleanfilter}>Limpar filtro</button>)}
       </div>
 
       <div className={`${Panel.info} ${Panel.groups}`}>
@@ -57,11 +67,11 @@ const Groups = () => {
           <span>Excluir</span>
         </div>
 
-        {data?.groups.map((m) => (
+        {groups.map((m) => (
           <div key={m.id} className={Panel.class}>
             <span>{m.name}</span>
             <span>{m.students.length}</span>
-            <span>{m.status ? 'Ativado' : 'Desativado'}</span>
+            <span>{m.status === 'active' ? 'Ativado' : 'Desativado'}</span>
             <button className={Panel.mobile} onClick={() => handleMobileInfo(m)} ><MoreInfo /></button>
             <button onClick={() => handleEdit(m.id)}><EditIcon /></button>
             <button onClick={() => setConfirm({toggle: true, type: 'confirm', text: 'Deseja realmente excluir essa turma?', action: () => handleRemoveGroup(m.id)})}><DeleteIcon /></button>
@@ -72,12 +82,8 @@ const Groups = () => {
       {toggle && <HandleGroup setToggle={setToggle} />}
       {toggleEdit && (<HandleGroup setToggle={setToggleEdit} groupID={groupID} />)}
       {confirm.toggle && <Message />}
-
-      {toggleMobile && mobileInfo && (
-        <Modal setToggle={setToggleMobile}>
-          <MobileInfo info={mobileInfo} />
-        </Modal>
-      )}
+      {toggleFilter && <Filter options={{access: false, student: false, subject: false, group: true, createdby: false, status: true}} setToggle={setToggleFilter} />}
+      {toggleMobile && mobileInfo && (<MobileInfo info={mobileInfo} setToggle={setToggleMobile} />)}
     </section>
   )
 }

@@ -6,7 +6,7 @@ export type TaskStudent = {
 export interface IEvaluateTask extends TaskStudent {
   id: string,
   lessonID: string,
-  createdBy: string,
+  createdby: string,
   student: string,
   subject: string,
 }
@@ -20,7 +20,7 @@ export type Task = {
 
 export interface ILesson {
   id: string,
-  createdBy: string,
+  createdby: string,
   title: string,
   video: string,
   text: string,

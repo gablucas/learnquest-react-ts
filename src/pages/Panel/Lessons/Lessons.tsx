@@ -8,21 +8,30 @@ import Message from '../../../components/Message/Message';
 import EditIcon from '../../../components/Icons/EditIcon';
 import DeleteIcon from '../../../components/Icons/DeleteIcon';
 import MoreInfo from '../../../components/Icons/MoreInfo';
-import { MobileInfoProps } from '../../../types/Commom';
-import Modal from '../../../components/Modal';
+import { MobileInfoData } from '../../../types/Commom';
 import MobileInfo from '../../../components/MobileInfo/MobileInfo';
 import { ILesson } from '../../../types/Lessons';
+import Filter from '../../../components/Filter/Filter';
+import useHelpers from '../../../hooks/useHelpers';
+import FilterIcon from '../../../components/Icons/FilterIcon';
 
 const Lessons = () => {
-  const { confirm, setConfirm } = React.useContext(GlobalContext);
+  const { confirm, setConfirm, filter } = React.useContext(GlobalContext);
+  const { isArrayEmpty, isAnyArrayFilled, arrayIncludes, cleanFilter } = useHelpers();
   const { data } = React.useContext(GlobalContext);
   const { getUser, getLoggedUser, removeLesson, getSubject } = useData();
   const navigate = useNavigate();
   const loggedUser = getLoggedUser();
-  const lessons = loggedUser?.access === 'admin' ? data.lessons : data.lessons.filter((lesson) => lesson.createdBy === loggedUser?.id)
 
-  const [toggleMobile, setToggleMobile] = React.useState(false);
-  const [mobileInfo, setMobileInfo] = React.useState<MobileInfoProps[]>([{title: '', description: ''}]);
+
+  let lessons = loggedUser?.access === 'admin' ? data.lessons : data.lessons.filter((lesson) => lesson.createdby === loggedUser?.id)
+  if (!isArrayEmpty(filter.subject)) lessons = lessons.filter((lesson) => arrayIncludes(filter.subject, lesson.subject));
+  if (!isArrayEmpty(filter.createdby)) lessons = lessons.filter((lesson) => arrayIncludes(filter.createdby, lesson.createdby));
+
+
+  const [toggleFilter, setToggleFilter] = React.useState<boolean>(false)
+  const [toggleMobile, setToggleMobile] = React.useState<boolean>(false);
+  const [mobileInfo, setMobileInfo] = React.useState<MobileInfoData[]>([{title: '', description: ''}]);
 
   function handleEdit(id: string): void {
     if (data.users.some((user) => user.access === 'student' && (user as IStudent).lessons.some((lesson) => lesson.id === id))) {
@@ -37,11 +46,11 @@ const Lessons = () => {
   }
 
   function handleMobileInfo(lesson: ILesson): void {
-    const createdBy = {title: 'Criado por', description: getUser(lesson.createdBy)?.name || ''};
+    const createdby = {title: 'Criado por', description: getUser(lesson.createdby)?.name || ''};
     const subject = {title: 'Matéria', description: getSubject(lesson.subject)?.name || ''};
     const questions = {title: 'Questões', description: lesson.task.length};
 
-    setMobileInfo([createdBy, subject, questions]);
+    setMobileInfo([createdby, subject, questions]);
     setToggleMobile(true);
   }
 
@@ -50,6 +59,8 @@ const Lessons = () => {
 
       <div className={Panel.options}>
         <Link to='criar'>Criar aula +</Link>
+        <button onClick={() => setToggleFilter(true)} className={isAnyArrayFilled([filter.subject, filter.createdby, filter.status]) ? Panel.filter : ''} >Filtrar <FilterIcon /></button>
+        {isAnyArrayFilled([filter.subject, filter.createdby, filter.status]) && (<button onClick={() => cleanFilter()} className={Panel.cleanfilter}>Limpar filtro</button>)}
       </div>
 
       <div className={`${Panel.info} ${Panel.lessons}`}>
@@ -66,7 +77,7 @@ const Lessons = () => {
         {lessons.map((lesson) => (
           <div key={lesson.id} className={Panel.lesson}>
             <span>{lesson.title}</span>
-            <span>{getUser(lesson.createdBy)?.name}</span>
+            <span>{getUser(lesson.createdby)?.name}</span>
             <span>{getSubject(lesson.subject)?.name}</span>
             <span>{lesson.task.length}</span>
             <button className={Panel.mobile} onClick={() => handleMobileInfo(lesson)}><MoreInfo /></button>
@@ -77,12 +88,8 @@ const Lessons = () => {
       </div>
 
       {confirm?.toggle && <Message />}
-
-      {toggleMobile && mobileInfo && (
-        <Modal setToggle={setToggleMobile}>
-          <MobileInfo info={mobileInfo} />
-        </Modal>
-      )}
+      {toggleFilter && <Filter options={{access: false, student: false, subject: true, group: false, createdby: true, status: false}} setToggle={setToggleFilter} />}
+      {toggleMobile && mobileInfo && (<MobileInfo info={mobileInfo} setToggle={setToggleMobile} />)}
       
     </section>
   )
