@@ -48,7 +48,7 @@ const EvaluateTask = () => {
     }
   }
 
-  if (loggedUser?.access !== 'admin' && loggedUser?.id !== lessonToEvaluate?.createdBy)
+  if (loggedUser?.access !== 'admin' && loggedUser?.id !== lessonToEvaluate?.createdby)
   return <Navigate to='/painel/avaliar' />
 
   if (lessonToEvaluate && lessonInfo && userInfo)

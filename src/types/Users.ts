@@ -23,7 +23,7 @@ export interface IUser {
   login: string,
   email: string,
   password: string,
-  status: boolean,
+  status: 'active' | 'disable',
 }
 
 export interface IStudent extends IUser {

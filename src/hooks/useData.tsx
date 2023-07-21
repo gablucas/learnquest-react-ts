@@ -30,6 +30,7 @@ type UseDataReturn = {
   editSubject: (id: string, updateSubject: Subject) => void,
   editDefaultPassword: (password: string) => void,
   editPassword: (password: string) => void,
+  getStudentLessons: () => ILesson[],
 }
 
 const useData = (): UseDataReturn => {
@@ -49,7 +50,7 @@ const useData = (): UseDataReturn => {
             login: 'admin',
             email: 'instituicao@edu.com.br',
             password: 'teste',
-            status: true, 
+            status: 'active', 
           },
           {
             id: 'U2',
@@ -58,7 +59,7 @@ const useData = (): UseDataReturn => {
             login: 'professor',
             email: 'professor@edu.com.br',
             password: 'teste',
-            status: true,
+            status: 'active',
           },
           {
             id: 'U3',
@@ -67,16 +68,16 @@ const useData = (): UseDataReturn => {
             login: 'aluno',
             email: 'aluno@edu.com.br',
             password: 'teste',
-            status: true,
+            status: 'active',
             level: 1,
             xp: 0,
             lessons: [],
           }
         ],
-        groups: [{id: 'G1', name: 'Turma 1', status: true, students: ['U3']}],
+        groups: [{id: 'G1', name: 'Turma 1', status: 'active', students: ['U3']}],
         lessons: [{
           groups: ['G1'], 
-          createdBy: 'U1', 
+          createdby: 'U1', 
           id: 'T1', 
           task: [
             {id: "Q1", question: "Quanto é 1 + 1?", answer: "2", xp: 25}, 
@@ -89,7 +90,7 @@ const useData = (): UseDataReturn => {
           title: 'Matemática Básica - Adição', 
           video: 'az6OYFS7AUA'
         }],
-        subjects: [{id: 'S1', name: 'Matemática', status: true}],
+        subjects: [{id: 'S1', name: 'Matemática', status: 'active'}],
         evaluate: [],
         preferences: {
           defaultPassword: '123',
@@ -347,6 +348,16 @@ const useData = (): UseDataReturn => {
     setData(updateData);
   }
 
+  function getStudentLessons(): ILesson[] {
+    const data = getData();
+    const student = getLoggedUser() as IStudent;
+
+    const studentGroup = data?.groups.find((f) => f.students.some((id) => id === student?.id));
+    const lessons = data?.lessons.filter((lesson) => lesson.groups.some((id) => id === studentGroup?.id && !student.lessons.some((l) => l.id === lesson.id) && (!data.evaluate.some((e) => e.lessonID === lesson.id && e.student === student.id))));
+    
+    return lessons;
+  }
+
   return {
     createInitialUser,
     getData,
@@ -372,6 +383,7 @@ const useData = (): UseDataReturn => {
     editSubject,
     editDefaultPassword,
     editPassword,
+    getStudentLessons,
   }
 }
 

@@ -1,0 +1,23 @@
+.container > div:nth-of-type(1) {
+  display: grid;
+  grid-template-columns: 1fr auto;
+}
+
+.container > div button {
+  font-weight: 600;
+}
+
+.options {
+  padding: 20px;
+  border-radius: 7px;
+  background-color: #202024;
+}
+
+.options > div {
+  margin-bottom: 12px;
+}
+
+.option {
+  display: flex;
+  gap: 10px;
+}

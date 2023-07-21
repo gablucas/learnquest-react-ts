@@ -22,7 +22,7 @@ const StudentLesson = () => {
 
   React.useEffect(() => {
     if (lesson) {
-      setAnswer({id: `E${getRandomID()}`, createdBy: lesson.createdBy, lessonID: lesson.id, student: student.id, subject: lesson.subject, answers: lesson.task.map((question) => ({id: question.id, value: '', isCorrect: undefined, xp: 0}))});
+      setAnswer({id: `E${getRandomID()}`, createdby: lesson.createdby, lessonID: lesson.id, student: student.id, subject: lesson.subject, answers: lesson.task.map((question) => ({id: question.id, value: '', isCorrect: undefined, xp: 0}))});
     }
   }, [lesson, student.id, getRandomID])
 
