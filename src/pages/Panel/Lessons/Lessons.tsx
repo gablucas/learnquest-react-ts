@@ -16,8 +16,8 @@ import useHelpers from '../../../hooks/useHelpers';
 import FilterIcon from '../../../components/Icons/FilterIcon';
 
 const Lessons = () => {
-  const { confirm, setConfirm, filter, setFilter } = React.useContext(GlobalContext);
-  const { isArrayEmpty, arrayIncludes } = useHelpers();
+  const { confirm, setConfirm, filter } = React.useContext(GlobalContext);
+  const { isArrayEmpty, isAnyArrayFilled, arrayIncludes, cleanFilter } = useHelpers();
   const { data } = React.useContext(GlobalContext);
   const { getUser, getLoggedUser, removeLesson, getSubject } = useData();
   const navigate = useNavigate();
@@ -59,8 +59,8 @@ const Lessons = () => {
 
       <div className={Panel.options}>
         <Link to='criar'>Criar aula +</Link>
-        <button onClick={() => setToggleFilter(true)} className={!isArrayEmpty(filter.subject) || !isArrayEmpty(filter.createdby) || !isArrayEmpty(filter.status) ? Panel.filter : ''} >Filtrar <FilterIcon /></button>
-        {(!isArrayEmpty(filter.subject) || !isArrayEmpty(filter.createdby) || !isArrayEmpty(filter.status)) && (<button onClick={() => setFilter({...filter, subject: [], createdby: [], status: []})} className={Panel.cleanfilter}>Limpar filtro</button>)}
+        <button onClick={() => setToggleFilter(true)} className={isAnyArrayFilled([filter.subject, filter.createdby, filter.status]) ? Panel.filter : ''} >Filtrar <FilterIcon /></button>
+        {isAnyArrayFilled([filter.subject, filter.createdby, filter.status]) && (<button onClick={() => cleanFilter()} className={Panel.cleanfilter}>Limpar filtro</button>)}
       </div>
 
       <div className={`${Panel.info} ${Panel.lessons}`}>

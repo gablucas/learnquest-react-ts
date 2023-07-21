@@ -15,9 +15,9 @@ import useHelpers from '../../../hooks/useHelpers';
 import FilterIcon from '../../../components/Icons/FilterIcon';
 
 const Groups = () => {
-  const { data, confirm, setConfirm, filter, setFilter } = React.useContext(GlobalContext);
+  const { data, confirm, setConfirm, filter } = React.useContext(GlobalContext);
   const { removeGroup } = useData();
-  const { isArrayEmpty, arrayIncludes } = useHelpers();
+  const { isArrayEmpty, isAnyArrayFilled, arrayIncludes, cleanFilter } = useHelpers();
   const [groupID, setGroupID] = React.useState<string>('');
 
   const [toggle, setToggle] = React.useState<boolean>(false);
@@ -52,8 +52,8 @@ const Groups = () => {
 
       <div className={Panel.options}>
         <button onClick={() => setToggle(!toggle)}>Criar turma +</button>
-        <button onClick={() => setToggleFilter(true)} className={!isArrayEmpty(filter.group) || !isArrayEmpty(filter.status) ? Panel.filter : ''} >Filtrar <FilterIcon /></button>
-        {(!isArrayEmpty(filter.group) || (!isArrayEmpty(filter.status))) && (<button onClick={() => setFilter({...filter, group: [], status: []})} className={Panel.cleanfilter}>Limpar filtro</button>)}
+        <button onClick={() => setToggleFilter(true)} className={isAnyArrayFilled([filter.group, filter.status]) ? Panel.filter : ''} >Filtrar <FilterIcon /></button>
+        {isAnyArrayFilled([filter.group, filter.status]) && (<button onClick={() => cleanFilter()} className={Panel.cleanfilter}>Limpar filtro</button>)}
       </div>
 
       <div className={`${Panel.info} ${Panel.groups}`}>

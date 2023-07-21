@@ -15,11 +15,11 @@ import FilterIcon from '../../../components/Icons/FilterIcon';
 import useHelpers from '../../../hooks/useHelpers';
 
 const Users = () => {
-  const { confirm, setConfirm, filter, setFilter } = React.useContext(GlobalContext);
+  const { confirm, setConfirm, filter } = React.useContext(GlobalContext);
   const [toggle, setToggle] = React.useState<boolean>(false);
   const [toggleEdit, setToggleEdit] = React.useState<boolean>(false);
   const [toggleFilter, setToggleFilter] = React.useState<boolean>(false);
-  const { isArrayEmpty, arrayIncludes } = useHelpers();
+  const { isArrayEmpty,  isAnyArrayFilled, arrayIncludes, cleanFilter } = useHelpers();
 
   const [userID, setUserID] = React.useState<string>('');
   const { data } = React.useContext(GlobalContext);
@@ -55,8 +55,8 @@ const Users = () => {
 
       <div className={Panel.options}>
         <button onClick={() => setToggle(true)}>Criar usuário +</button>
-        <button onClick={() => setToggleFilter(true)} className={!isArrayEmpty(filter.access) || !isArrayEmpty(filter.status) ? Panel.filter : ''} >Filtrar <FilterIcon /></button>
-        {(!isArrayEmpty(filter.access) || !isArrayEmpty(filter.status)) && (<button onClick={() => setFilter({...filter, access: [], status: []})} className={Panel.cleanfilter}>Limpar filtro</button>)}
+        <button onClick={() => setToggleFilter(true)} className={isAnyArrayFilled([filter.access, filter.status]) ? Panel.filter : ''} >Filtrar <FilterIcon /></button>
+        {isAnyArrayFilled([filter.access, filter.status]) && (<button onClick={() => cleanFilter()} className={Panel.cleanfilter}>Limpar filtro</button>)}
       </div>
 
       <div className={`${Panel.info} ${Panel.users}`}>

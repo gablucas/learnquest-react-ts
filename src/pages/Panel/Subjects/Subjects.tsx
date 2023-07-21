@@ -14,10 +14,10 @@ import FilterIcon from '../../../components/Icons/FilterIcon';
 import Filter from '../../../components/Filter/Filter';
 
 const Subjects = () => {
-  const { data, confirm, setConfirm, filter, setFilter } = React.useContext(GlobalContext)
+  const { data, confirm, setConfirm, filter } = React.useContext(GlobalContext)
   const [subjectID, setSubjectID] = React.useState<string>('');
   const { removeSubject } = useData();
-  const { isArrayEmpty, arrayIncludes } = useHelpers();
+  const { isArrayEmpty, isAnyArrayFilled, arrayIncludes, cleanFilter } = useHelpers();
   
   const [toggle, setToggle] = React.useState<boolean>(false);
   const [toggleEdit, setToggleEdit] = React.useState<boolean>(false);
@@ -55,8 +55,8 @@ const Subjects = () => {
 
       <div className={Panel.options}>
         <button onClick={() => setToggle(!toggle)}>Criar matéria +</button>
-        <button onClick={() => setToggleFilter(true)} className={!isArrayEmpty(filter.status) || !isArrayEmpty(filter.subject) ? Panel.filter : ''} >Filtrar <FilterIcon /></button>
-        {(!isArrayEmpty(filter.status) || !isArrayEmpty(filter.subject)) && (<button onClick={() => setFilter({...filter, subject: [], status: []})} className={Panel.cleanfilter}>Limpar filtro</button>)}
+        <button onClick={() => setToggleFilter(true)} className={isAnyArrayFilled([filter.status, filter.subject]) ? Panel.filter : ''} >Filtrar <FilterIcon /></button>
+        {isAnyArrayFilled([filter.status, filter.subject]) && (<button onClick={() => cleanFilter()} className={Panel.cleanfilter}>Limpar filtro</button>)}
       </div>
 
       <div className={`${Panel.info} ${Panel.subjects}`}>
