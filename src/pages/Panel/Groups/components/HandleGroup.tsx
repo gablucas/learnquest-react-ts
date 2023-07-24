@@ -18,12 +18,12 @@ const HandleGroup = ({ groupID }: HandleUserProps) => {
   const { createGroup, editGroup } = useData();
   const { getRandomID } = useRandom();
   const { data, setToggle } = React.useContext(GlobalContext);
-  const group = data.groups.find((group) => group.id === groupID);
+  const groupToEdit = data.groups.find((group) => group.id === groupID);
 
-  const [students, setStudents] = React.useState<string[]>(group ? group.students : [])
+  const [students, setStudents] = React.useState<string[]>(groupToEdit ? groupToEdit.students : [])
 
-    const name = useForm({type: 'name', initialValue: group ? group.name : ''});
-    const status = useForm({type: 'status', initialValue: group ? group.status : ''})
+    const name = useForm({type: 'name', initialValue: groupToEdit ? groupToEdit.name : ''});
+    const status = useForm({type: 'status', initialValue: groupToEdit ? groupToEdit.status : ''})
 
 
     function studentHasGroup(userid: string): boolean {
@@ -47,20 +47,17 @@ const HandleGroup = ({ groupID }: HandleUserProps) => {
     e.preventDefault();
     
     const group: Group = {
-      id: '',
+      id: groupToEdit ? groupToEdit.id : `G${getRandomID()}`,
       name: name.value,
       students: students,
-      status: 'active',
+      status: groupToEdit ? status.value as Status :'active',
     }
 
     if (!groupID && name.validate()) {
-      group.id = `G${getRandomID()}`;
       createGroup(group);
       setToggle('none');
 
     } else if(groupID && name.validate() && status.validate()) {
-      group.id = groupID;
-      group.status = status.value as Status;
       editGroup(groupID, group)
       setToggle('none');
     }

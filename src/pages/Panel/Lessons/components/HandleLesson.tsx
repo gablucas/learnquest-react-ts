@@ -25,7 +25,7 @@ const HandleLesson = () => {
   const lessonToEdit = data.lessons.find((lesson) => lesson.id === id);
 
   const title =  useForm({type: 'title', initialValue: lessonToEdit ? lessonToEdit.title : ''})
-  const video =  useForm({type: 'video', initialValue: lessonToEdit ? lessonToEdit?.video : ''})
+  const video =  useForm({type: 'video', initialValue: lessonToEdit ? `https://www.youtube.com/watch?v=${lessonToEdit?.video}` : ''})
   const description =  useForm({type: 'video', initialValue: lessonToEdit ? lessonToEdit.text : ''})
   const status =  useForm({type: 'status', initialValue: lessonToEdit ? lessonToEdit.status : ''})
 
