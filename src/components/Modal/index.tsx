@@ -1,14 +1,16 @@
+import React from 'react';
+import { GlobalContext } from '../../GlobalContext';
 import Styles from './Modal.module.css';
 
 type ModalProps = {
   children: React.ReactNode,
-  setToggle?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Modal = ({children, setToggle}: ModalProps) => {
+const Modal = ({ children }: ModalProps) => {
+  const { setToggle } = React.useContext(GlobalContext);
 
   function handleToggle(e: React.MouseEvent<HTMLDivElement>): void {
-    if (e.target === e.currentTarget) setToggle?.(false);
+    if (e.target === e.currentTarget) setToggle('none');
   }
 
   return (

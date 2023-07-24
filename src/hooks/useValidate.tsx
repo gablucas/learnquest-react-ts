@@ -17,7 +17,6 @@ const useValidate = <T,>(): ValidateReturn<T> => {
       return false;
     } else if (value === undefined) {
       setError(name)
-      console.log('oi')
       return false;
     } else {
       setError('')

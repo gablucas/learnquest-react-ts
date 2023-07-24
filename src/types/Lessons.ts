@@ -1,3 +1,5 @@
+import { Status } from "./Commom"
+
 export type TaskStudent = {
   id: string,
   answers: {id: string, value: string, isCorrect: boolean | undefined, xp: number}[]
@@ -27,4 +29,5 @@ export interface ILesson {
   subject: string,
   task: Task[],
   groups: string[],
+  status: Status,
 }

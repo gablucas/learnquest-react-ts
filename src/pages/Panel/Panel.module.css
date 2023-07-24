@@ -77,22 +77,37 @@
   height: 46px;
 }
 
-.subjects div,
-.groups div {
+.subjects div {
   grid-template-columns: repeat(5, 1fr);
 }
 
 .lessons div {
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: 2fr repeat(5, 1fr);
 }
 
-.users div,
-.lessons div {
+.users div {
   grid-template-columns: 2fr 2fr repeat(4, 1fr);
 }
 
 .evaluate div {
   grid-template-columns: 2fr repeat(4, 1fr);
+}
+
+.groups div {
+  grid-template-columns: repeat(6, 1fr);
+}
+
+.selectusers {
+  height: 300px;
+  padding: 12px;
+  border-radius: 7px;
+  background-color: #121214; 
+  overflow-y: scroll;
+}
+
+.selectusers > div {
+  display: flex;
+  gap: 10px;
 }
 
 .mobile {

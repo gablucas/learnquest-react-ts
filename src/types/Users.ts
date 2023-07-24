@@ -1,4 +1,4 @@
-import { Subject } from "./Commom";
+import { Status, Subject } from "./Commom";
 import { Group } from "./Group";
 import { IEvaluateTask, ILesson, TaskStudent } from "./Lessons";
 
@@ -23,7 +23,7 @@ export interface IUser {
   login: string,
   email: string,
   password: string,
-  status: 'active' | 'disable',
+  status: Status,
 }
 
 export interface IStudent extends IUser {

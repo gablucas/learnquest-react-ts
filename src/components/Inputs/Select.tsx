@@ -2,17 +2,19 @@ import Styles from './Inputs.module.css';
 import { UseFormType } from '../../hooks/useForm';
 
 type SelectProps = {
-  options: {option: string, label: string}[],
+  label: string,
+  options: {name: string, value: string}[],
 }
 
-const Select = ({ options, error, value, onChange }: SelectProps & UseFormType) => {
+const Select = ({ label, options, error, value, onChange }: SelectProps & UseFormType) => {
 
   return (
     <div className={Styles.inputs}>
+      <label>{label}</label>
       <select onChange={onChange} value={value}>
-        <option value=''>Escolha um acesso</option>
+        <option value=''>Selecione uma opção</option>
         {options.map((o) => (
-          <option key={o.option} value={o.option}>{o.label}</option>
+          <option key={o.value} value={o.value}>{o.name}</option>
         ))}
       </select>
       {error && <span>{error}</span>}

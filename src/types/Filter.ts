@@ -16,7 +16,6 @@ export type FilterProp = {
     createdby: boolean,
     status: boolean,
   },
-  setToggle: React.Dispatch<React.SetStateAction<boolean>>,
 }
 
 export type FilterData<U extends keyof FilterStateProps> = {

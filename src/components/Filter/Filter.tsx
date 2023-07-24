@@ -6,15 +6,15 @@ import { FilterProp } from '../../types/Filter';
 import FilterOptions from './FilterOptions';
 
 
-const Filter = ({ options, setToggle }: FilterProp) => {
-  const { data } = React.useContext(GlobalContext)
+const Filter = ({ options }: FilterProp) => {
+  const { data, setToggle } = React.useContext(GlobalContext)
 
   return (
-    <Modal setToggle={setToggle}>
+    <Modal>
       <div className={Styles.container}>
         <div>
           <h2>Filtro</h2>
-          <button onClick={() => setToggle(false)}>Fechar</button>
+          <button onClick={() => setToggle('none')}>Fechar</button>
         </div>
 
         <div className={Styles.options}>

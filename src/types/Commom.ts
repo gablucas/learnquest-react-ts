@@ -1,15 +1,17 @@
 export type Role = 'admin' | 'teacher'| 'student';
 
-export type ValidateOptions = 'login' | 'email'
+export type ValidateOptions = 'login' | 'email';
+
+export type Status = 'active' | 'disable';
 
 export type Subject = {
   id: string, 
-  name: string, 
-  status: 'active' | 'disable',
+  name: string,
+  teachers: string[],
+  status: Status,
 }
 
 export type ConfirmStateProps = {
-  toggle: boolean,
   text: string,
   type: 'confirm' | 'message',
   action?: () => void,
@@ -22,5 +24,6 @@ export type MobileInfoData = {
 
 export type MobileInfoProps = {
   info: MobileInfoData[],
-  setToggle: React.Dispatch<React.SetStateAction<boolean>>,
 }
+
+export type Toggle = 'create' | 'edit' | 'filter' | 'confirm' | 'mobile' | 'none';
