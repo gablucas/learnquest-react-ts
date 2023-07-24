@@ -77,8 +77,7 @@
   height: 46px;
 }
 
-.subjects div,
-.groups div {
+.subjects div {
   grid-template-columns: repeat(5, 1fr);
 }
 
@@ -92,6 +91,10 @@
 
 .evaluate div {
   grid-template-columns: 2fr repeat(4, 1fr);
+}
+
+.groups div {
+  grid-template-columns: repeat(6, 1fr);
 }
 
 .mobile {

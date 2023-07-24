@@ -57,6 +57,7 @@ const Groups = () => {
         <div>
           <span>Nome</span>
           <span>Alunos</span>
+          <span>Professores</span>
           <span>Estado</span>
           <span className={Panel.mobile}>Informações</span>
           <span>Editar</span>
@@ -67,6 +68,7 @@ const Groups = () => {
           <div key={m.id} className={Panel.class}>
             <span>{m.name}</span>
             <span>{m.students.length}</span>
+            <span>{m.teachers.length}</span>
             <span>{m.status === 'active' ? 'Ativado' : 'Desativado'}</span>
             <button className={Panel.mobile} onClick={() => handleMobileInfo(m)} ><MoreInfo /></button>
             <button onClick={() => handleEdit(m.id)}><EditIcon /></button>

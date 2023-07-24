@@ -16,7 +16,7 @@ import { Status } from '../../../../types/Commom';
 const HandleLesson = () => {
   const { data } = useContext(GlobalContext);
   const { id } = useParams();
-  const { getLoggedUser, createLesson, editLesson } = useData();
+  const { getLoggedUser, createLesson, editLesson, showUserGroups } = useData();
   const { getRandomID } = useRandom();
   const loggedUser = getLoggedUser();
   const navigate = useNavigate();
@@ -33,7 +33,6 @@ const HandleLesson = () => {
   const [groups, setGroups] = React.useState<string[]>([])
   const [subject, setSubject] = React.useState<string>('');
 
-  const activeGroups = data.groups.filter((group) => group.status === 'active');
   const activeSubjects = data.subjects.filter((subject) => subject.status === 'active');
   
   React.useEffect(() => {
@@ -125,13 +124,13 @@ const HandleLesson = () => {
         <div>
           <h2>Turmas</h2>
           <div className={Styles.createlesson_groups}>
-            {activeGroups.map((groupMap) => (
+            {showUserGroups().map((groupMap) => (
               <div key={groupMap.id}>
                 <input type='checkbox' checked={groups.some((group) => group === groupMap.id)} onChange={(e) => handleGroups(e, groupMap.id)}/>
                 <label>{groupMap.name}</label>
               </div>
             ))}
-            {activeGroups.length === 0 && (<label>Sem turma criada ou ativa</label>)}
+            {showUserGroups().length === 0 && (<label>Sem turma criada ou ativa</label>)}
           </div>
           {error === 'group' && (<Error>Selecione pelo menos uma turma</Error>)}
         </div>

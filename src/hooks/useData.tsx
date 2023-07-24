@@ -25,6 +25,7 @@ type UseDataReturn = {
   evaluateLesson: (id: string, studentID: string, lesson: TaskStudent) => void,
   createGroup: (newgroup: Group) => void,
   removeGroup: (id: string) => void,
+  showUserGroups: () => Group[],
   editGroup: (groupid: string, updateGroup: Group) => void,
   getSubject: (id: string) => Subject | undefined,
   createSubject: (subject: Subject) => void,
@@ -77,7 +78,7 @@ const useData = (): UseDataReturn => {
             lessons: [],
           }
         ],
-        groups: [{id: 'G1', name: 'Turma 1', status: 'active', students: ['U3']}],
+        groups: [{id: 'G1', name: 'Turma 1', status: 'active', students: ['U3'], teachers: ['U2']}],
         lessons: [{
           groups: ['G1'], 
           createdby: 'U1', 
@@ -296,6 +297,19 @@ const useData = (): UseDataReturn => {
     setData(updateData);
   }
 
+  function showUserGroups(): Group[] {
+    const data = getData();
+    const user = getLoggedUser();
+
+    if (user?.access === 'admin') {
+      return data.groups.filter((group) => group.status === 'active');
+    } else {
+      return data.groups
+      .filter((group) => group.status === 'active')
+      .filter((group) => group.teachers.some((teacherID) => teacherID === user?.id));
+    }
+  }
+
   function editGroup(id: string, updateGroup: Group): void {
     const updateData = getData();
     updateData.groups = updateData.groups.map((group) => {
@@ -406,6 +420,7 @@ const useData = (): UseDataReturn => {
     createGroup,
     removeGroup,
     editGroup,
+    showUserGroups,
     getSubject,
     createSubject,
     removeSubject,

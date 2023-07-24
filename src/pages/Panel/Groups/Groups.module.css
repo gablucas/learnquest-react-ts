@@ -8,20 +8,25 @@
 }
 
 .handlegroup form {
-  height: 600px;
   display: grid;
-  grid-template-rows: auto 1fr auto;
+  grid-template-rows: repeat(3, auto);
 }
 
-.handlegroup_students {
-  height: 90%;
+.handlegroup .togglets {
+  display: flex;
+  cursor: pointer;
+  fill: #FFA700;
+}
+
+.handlegroup .users {
+  height: 300px;
   padding: 12px;
   border-radius: 7px;
   background-color: #121214; 
   overflow-y: scroll;
 }
 
-.handlegroup_students > div {
+.handlegroup .users > div {
   display: flex;
   gap: 10px;
 }
