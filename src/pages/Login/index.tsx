@@ -3,8 +3,7 @@ import Styles from './Login.module.css';
 import Container from '../../components/Container';
 import Input from '../../components/Inputs/Input';
 import useForm, { UseFormType } from '../../hooks/useForm';
-import { Navigate, NavigateFunction, useNavigate } from 'react-router-dom';
-import { GlobalContext } from '../../GlobalContext';
+import { Navigate } from 'react-router-dom';
 import useData from '../../hooks/useData';
 
 type TestAccount = {
@@ -13,11 +12,9 @@ type TestAccount = {
 }
 
 const Login = () => {
-  const { data, setUser } = React.useContext(GlobalContext);
-  const { getLoggedUser } = useData();
+  const { getLoggedUser, authUser } = useData();
   const user = getLoggedUser();
 
-  const navigate: NavigateFunction = useNavigate();
   const login: UseFormType = useForm({type: 'user', initialValue: ''});
   const password: UseFormType = useForm({type: 'password', initialValue: ''});
 
@@ -32,24 +29,11 @@ const Login = () => {
     window.location.reload();
   }
 
-
   function handleSubmit(e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault();
 
     if (login.validate() && password.validate()) {
-      if (data?.users.some((s) => s.login.toLowerCase() === login.value.toLowerCase() && s.password === password.value)) {
-        localStorage.setItem('logged', login.value);
-        setUser(login.value);
-
-        if (getLoggedUser()?.access === "student") {
-          navigate('/estudante');
-        } else {
-          navigate('/painel');
-        }
-
-      } else {
-        password.setError('Usuário ou Senha invalidos');
-      }
+      authUser(login.value, password.value, password.setError)
     }
   }
 

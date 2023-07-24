@@ -65,7 +65,7 @@ const Lessons = () => {
           <span>Título</span>
           <span>Criada por</span>
           <span>Matéria</span>
-          <span>Questões</span>
+          <span>Estado</span>
           <span className={Panel.mobile}>Informações</span>
           <span>Editar</span>
           <span>Excluir</span>
@@ -76,7 +76,7 @@ const Lessons = () => {
             <span>{lesson.title}</span>
             <span>{getUser(lesson.createdby)?.name}</span>
             <span>{getSubject(lesson.subject)?.name}</span>
-            <span>{lesson.task.length}</span>
+            <span>{lesson.status === 'active' ? 'Ativada' : 'Desativada'}</span>
             <button className={Panel.mobile} onClick={() => handleMobileInfo(lesson)}><MoreInfo /></button>
             <button onClick={() => handleEdit(lesson.id)}><EditIcon /></button>
             <button onClick={() => setConfirm({type: 'confirm', text: 'A exclusão desta aula também removerá de todos os alunos que já a concluíram, incluindo a XP ganha também. Deseja excluir mesmo assim?', action: () => handleRemove(lesson.id)})}><DeleteIcon /></button>

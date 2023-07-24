@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import { GlobalContext } from "../GlobalContext";
 import { IInstituition, IUser, IStudent } from '../types/Users';
 import { IEvaluateTask, ILesson, TaskStudent } from '../types/Lessons';
 import { Group } from '../types/Group';
-import { Subject, ValidateOptions } from '../types/Commom';
+import { Status, Subject, ValidateOptions } from '../types/Commom';
+import { useNavigate } from 'react-router-dom';
 
 type UseDataReturn = {
   getData: () => IInstituition,
@@ -11,7 +12,8 @@ type UseDataReturn = {
   getUser: (id: string) => IUser | IStudent | undefined,
   createUser: (user: IUser | IStudent) => void,
   removeUser: (email: string) => void,
-  editUser: (id: string, name: string, login: string, email: string, password: string) => void,
+  editUser: (id: string, name: string, login: string, email: string, password: string, status: Status) => void,
+  authUser: (login: string, password: string, setError: Dispatch<SetStateAction<string | null>>) => void,
   getLoggedUser: () => IUser | IStudent | undefined,
   logoutUser: () => void,
   checkUser: (type: ValidateOptions, value: string) => boolean,
@@ -34,7 +36,8 @@ type UseDataReturn = {
 }
 
 const useData = (): UseDataReturn => {
-  const { setData, setUser } = React.useContext(GlobalContext)
+  const { setData, setUser } = React.useContext(GlobalContext);
+  const navigate = useNavigate();
 
   function createInitialUser(): void {
     if (!localStorage.getItem('data')) {
@@ -88,7 +91,8 @@ const useData = (): UseDataReturn => {
           subject: 'S1',
           text: 'Nessa aula você aprenderá sobre adição', 
           title: 'Matemática Básica - Adição', 
-          video: 'az6OYFS7AUA'
+          video: 'az6OYFS7AUA',
+          status: 'active',
         }],
         subjects: [{id: 'S1', name: 'Matemática', status: 'active'}],
         evaluate: [],
@@ -127,11 +131,11 @@ const useData = (): UseDataReturn => {
     setData(updateData);
   }
 
-  function editUser(id: string, name: string, login: string, email: string, password: string): void {
+  function editUser(id: string, name: string, login: string, email: string, password: string, status: Status): void {
     const updateData = getData();
     updateData.users = updateData.users.map((user) => {
       if (user.id === id) {
-        return {...user, name, login, email, password}
+        return {...user, name, login, email, password, status}
       }
 
       return user;
@@ -139,6 +143,27 @@ const useData = (): UseDataReturn => {
 
     localStorage.setItem('data', JSON.stringify(updateData));
     setData(updateData);
+  }
+
+  function authUser(login: string, password: string, setError: Dispatch<SetStateAction<string | null>>): void {
+    const data = getData();
+    const user = data.users.find((user) => user.login.toLowerCase() === login.toLowerCase() && user.password === password);
+
+    if (user && user.status === 'active') {
+      localStorage.setItem('logged', login);
+      setUser(login);
+
+      if (getLoggedUser()?.access === "student") {
+        navigate('/estudante');
+      } else {
+        navigate('/painel');
+      }
+    
+    } else if (user?.status === 'disable') {
+      setError('Usuario inativo')
+    } else {
+      setError('Usuário ou Senha invalidos');
+    }
   }
 
   function getLoggedUser(): IUser | IStudent | undefined {
@@ -310,7 +335,7 @@ const useData = (): UseDataReturn => {
 
   function editSubject(id: string, updateSubject: Subject): void {
     const updateData = getData();
-    updateData.subjects = updateData.groups.map((subject) => {
+    updateData.subjects = updateData.subjects.map((subject) => {
       if (subject.id === id) {
         return {...updateSubject}
       }
@@ -341,8 +366,6 @@ const useData = (): UseDataReturn => {
       return user;
     })
     
-    
-
 
     localStorage.setItem('data', JSON.stringify(updateData));
     setData(updateData);
@@ -353,7 +376,12 @@ const useData = (): UseDataReturn => {
     const student = getLoggedUser() as IStudent;
 
     const studentGroup = data?.groups.find((f) => f.students.some((id) => id === student?.id));
-    const lessons = data?.lessons.filter((lesson) => lesson.groups.some((id) => id === studentGroup?.id && !student.lessons.some((l) => l.id === lesson.id) && (!data.evaluate.some((e) => e.lessonID === lesson.id && e.student === student.id))));
+
+    const lessons = data?.lessons
+    .filter((lesson) => lesson.groups.some((id) => id === studentGroup?.id))
+    .filter((lesson) => !student.lessons.some((l) => l.id === lesson.id))
+    .filter((lesson) => !data.evaluate.some((e) => e.lessonID === lesson.id && e.student === student.id))
+    .filter((lesson) => lesson.status === 'active');
     
     return lessons;
   }
@@ -365,6 +393,7 @@ const useData = (): UseDataReturn => {
     createUser,
     removeUser,
     editUser,
+    authUser,
     getLoggedUser,
     logoutUser,
     checkUser,

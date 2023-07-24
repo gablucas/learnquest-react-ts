@@ -1,15 +1,17 @@
 import React, { useContext } from 'react';
 import Styles from '../Lessons.module.css';
 import useData from '../../../../hooks/useData';
-import { Navigate, useNavigate, useParams } from 'react-router-dom';
-import { GlobalContext } from '../../../../GlobalContext';
-import { ILesson, Task } from '../../../../types/Lessons';
 import Input from '../../../../components/Inputs/Input';
 import useForm from '../../../../hooks/useForm';
 import Textarea from '../../../../components/Inputs/Textarea';
 import useRandom from '../../../../hooks/useRandom';
 import Error from '../../../../components/Helper/Error';
 import useValidate from '../../../../hooks/useValidate';
+import Select from '../../../../components/Inputs/Select';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
+import { GlobalContext } from '../../../../GlobalContext';
+import { ILesson, Task } from '../../../../types/Lessons';
+import { Status } from '../../../../types/Commom';
 
 const HandleLesson = () => {
   const { data } = useContext(GlobalContext);
@@ -25,16 +27,20 @@ const HandleLesson = () => {
   const title =  useForm({type: 'title', initialValue: lessonToEdit ? lessonToEdit.title : ''})
   const video =  useForm({type: 'video', initialValue: lessonToEdit ? lessonToEdit?.video : ''})
   const description =  useForm({type: 'video', initialValue: lessonToEdit ? lessonToEdit.text : ''})
+  const status =  useForm({type: 'status', initialValue: lessonToEdit ? lessonToEdit.status : ''})
 
   const [task, setTask] = React.useState<Task[]>([{id: `T${getRandomID()}`, answer: '', question: '', xp: 25}]);
   const [groups, setGroups] = React.useState<string[]>([])
-  const [subject, setsubject] = React.useState<string>('');
+  const [subject, setSubject] = React.useState<string>('');
+
+  const activeGroups = data.groups.filter((group) => group.status === 'active');
+  const activeSubjects = data.subjects.filter((subject) => subject.status === 'active');
   
   React.useEffect(() => {
     if (lessonToEdit) {
       setTask(lessonToEdit.task);
       setGroups(lessonToEdit.groups);
-      setsubject(lessonToEdit.subject);
+      setSubject(lessonToEdit.subject);
     }
   }, [lessonToEdit])
 
@@ -55,7 +61,7 @@ const HandleLesson = () => {
   }
 
   function handleSubject(e: React.ChangeEvent<HTMLSelectElement>): void {
-    setsubject(e.target.value)
+    setSubject(e.target.value)
   }
 
   function handleTask(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>, propertie: string, index?: number): void {
@@ -87,8 +93,9 @@ const HandleLesson = () => {
         video: video.value,
         text: description.value,
         subject: subject,
-        task: [{id: '1' ,question: '', answer: '', xp: 25}],
+        task: task,
         groups: groups,
+        status: lessonToEdit ? status.value as Status : 'active',
       }
 
       if (id) {
@@ -113,15 +120,18 @@ const HandleLesson = () => {
           <Textarea label='Descrição' rows={10} {...description} />
         </div>
 
+        {id && (<Select label='Estado' options={[{name: 'Ativo', value: 'active'}, {name: 'Desativo', value: 'disable'}]} {...status} />)}
+
         <div>
           <h2>Turmas</h2>
           <div className={Styles.createlesson_groups}>
-            {data?.groups.map((groupMap) => (
+            {activeGroups.map((groupMap) => (
               <div key={groupMap.id}>
                 <input type='checkbox' checked={groups.some((group) => group === groupMap.id)} onChange={(e) => handleGroups(e, groupMap.id)}/>
                 <label>{groupMap.name}</label>
               </div>
             ))}
+            {activeGroups.length === 0 && (<label>Sem turma criada ou ativa</label>)}
           </div>
           {error === 'group' && (<Error>Selecione pelo menos uma turma</Error>)}
         </div>
@@ -129,8 +139,8 @@ const HandleLesson = () => {
         <div className={Styles.createlesson_subjects}>
           <h2>Matéria</h2>
           <select value={subject} onChange={handleSubject}>
-            <option value=''>Selecione uma matéria</option>
-            {data?.subjects.map((sub) => (
+            {activeSubjects.length > 0 ? (<option value=''>Selecione uma matéria</option>) : (<option value=''>Sem máteria criada ou ativa</option>)}
+            {activeSubjects.map((sub) => (
               <option key={sub.id} value={sub.id}>{sub.name}</option>
             ))}
           </select>

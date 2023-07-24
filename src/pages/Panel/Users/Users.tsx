@@ -30,7 +30,7 @@ const Users = () => {
   
   function handleEdit(userid: string): void {
     setUserID(userid);
-    setToggle('none');
+    setToggle('edit');
   }
 
   function handleRemove(email: string): void {
@@ -43,7 +43,7 @@ const Users = () => {
     const status = {title: 'Estado', description: user.status ? 'Ativado' : 'Desativado'};
 
     setMobileInfo([email, access, status]);
-    setToggle('none');
+    setToggle('edit');
   }
 
   return (

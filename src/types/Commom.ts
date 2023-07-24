@@ -1,11 +1,13 @@
 export type Role = 'admin' | 'teacher'| 'student';
 
-export type ValidateOptions = 'login' | 'email'
+export type ValidateOptions = 'login' | 'email';
+
+export type Status = 'active' | 'disable';
 
 export type Subject = {
   id: string, 
   name: string, 
-  status: 'active' | 'disable',
+  status: Status,
 }
 
 export type ConfirmStateProps = {

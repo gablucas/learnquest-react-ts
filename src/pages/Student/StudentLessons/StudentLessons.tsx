@@ -61,7 +61,7 @@ const StudentLessons = () => {
       </div>
 
       {toggleMobile && mobileInfo && (
-        <MobileInfo setToggle={setToggleMobile} info={mobileInfo} />
+        <MobileInfo info={mobileInfo} />
       )}
     </div>
   )

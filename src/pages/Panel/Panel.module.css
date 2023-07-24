@@ -83,11 +83,10 @@
 }
 
 .lessons div {
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: 2fr repeat(5, 1fr);
 }
 
-.users div,
-.lessons div {
+.users div {
   grid-template-columns: 2fr 2fr repeat(4, 1fr);
 }
 
