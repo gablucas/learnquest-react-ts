@@ -6,7 +6,8 @@ export type Status = 'active' | 'disable';
 
 export type Subject = {
   id: string, 
-  name: string, 
+  name: string,
+  teachers: string[],
   status: Status,
 }
 

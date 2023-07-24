@@ -97,6 +97,19 @@
   grid-template-columns: repeat(6, 1fr);
 }
 
+.selectusers {
+  height: 300px;
+  padding: 12px;
+  border-radius: 7px;
+  background-color: #121214; 
+  overflow-y: scroll;
+}
+
+.selectusers > div {
+  display: flex;
+  gap: 10px;
+}
+
 .mobile {
   display: none;
 }

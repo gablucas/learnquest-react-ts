@@ -30,6 +30,7 @@ type UseDataReturn = {
   getSubject: (id: string) => Subject | undefined,
   createSubject: (subject: Subject) => void,
   removeSubject: (subject: string) => void,
+  showUserSubjects: () => Subject[],
   editSubject: (id: string, updateSubject: Subject) => void,
   editDefaultPassword: (password: string) => void,
   editPassword: (password: string) => void,
@@ -95,7 +96,7 @@ const useData = (): UseDataReturn => {
           video: 'az6OYFS7AUA',
           status: 'active',
         }],
-        subjects: [{id: 'S1', name: 'Matemática', status: 'active'}],
+        subjects: [{id: 'S1', name: 'Matemática', status: 'active', teachers: ['U2']}],
         evaluate: [],
         preferences: {
           defaultPassword: '123',
@@ -361,6 +362,19 @@ const useData = (): UseDataReturn => {
     setData(updateData);
   }
 
+  function showUserSubjects(): Subject[] {
+    const data = getData();
+    const user = getLoggedUser();
+
+    if (user?.access === 'admin') {
+      return data.subjects.filter((group) => group.status === 'active');
+    } else {
+      return data.subjects
+      .filter((subject) => subject.status === 'active')
+      .filter((subject) => subject.teachers.some((teacherID) => teacherID === user?.id));
+    }
+  }
+
   function editDefaultPassword(password: string): void {
     const updateData = getData();
     updateData.preferences.defaultPassword = password;
@@ -425,6 +439,7 @@ const useData = (): UseDataReturn => {
     createSubject,
     removeSubject,
     editSubject,
+    showUserSubjects,
     editDefaultPassword,
     editPassword,
     getStudentLessons,

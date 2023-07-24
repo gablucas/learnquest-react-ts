@@ -1,4 +1,5 @@
 import React from 'react';
+import Panel from '../../Panel.module.css';
 import Styles from '../Groups.module.css';
 import useData from '../../../../hooks/useData';
 import Modal from '../../../../components/Modal';
@@ -92,7 +93,7 @@ const HandleGroup = ({ groupID }: HandleUserProps) => {
 
           <div>
             <span className={Styles.togglets} onClick={() => setToggleTeacherStudent('student')}>Adicionar aluno a turma {toggleTeacherStudent === 'student' ? <Expand /> : <Contract />}</span>
-            {toggleTeacherStudent === 'student' && (<div className={Styles.users}>
+            {toggleTeacherStudent === 'student' && (<div className={Panel.selectusers}>
               {data.users.map((user) => user.access === 'student' && (
                 <div key={user.id}>
                   {(studentHasGroup(user.id) || onStudentGroup(user.id)) && (<input type='checkbox' checked={students.some((student) => student === user.id)} onChange={(e) => handleStudent(e, user.id)}/>)}
@@ -105,7 +106,7 @@ const HandleGroup = ({ groupID }: HandleUserProps) => {
 
           <div>
             <span className={Styles.togglets} onClick={() => setToggleTeacherStudent('teacher')}>Adicionar professor a turma{toggleTeacherStudent === 'teacher' ? <Expand /> : <Contract />}</span>
-            {toggleTeacherStudent === 'teacher' && (<div className={Styles.users}>
+            {toggleTeacherStudent === 'teacher' && (<div className={Panel.selectusers}>
               {data.users.map((user) => user.access === 'teacher' && (
                 <div key={user.id}>
                   <input type='checkbox' checked={teachers.some((teacher) => teacher === user.id)} onChange={(e) => handleTeacher(e, user.id)}/>

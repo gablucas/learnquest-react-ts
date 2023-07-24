@@ -16,7 +16,7 @@ import { Status } from '../../../../types/Commom';
 const HandleLesson = () => {
   const { data } = useContext(GlobalContext);
   const { id } = useParams();
-  const { getLoggedUser, createLesson, editLesson, showUserGroups } = useData();
+  const { getLoggedUser, createLesson, editLesson, showUserGroups, showUserSubjects } = useData();
   const { getRandomID } = useRandom();
   const loggedUser = getLoggedUser();
   const navigate = useNavigate();
@@ -33,8 +33,7 @@ const HandleLesson = () => {
   const [groups, setGroups] = React.useState<string[]>([])
   const [subject, setSubject] = React.useState<string>('');
 
-  const activeSubjects = data.subjects.filter((subject) => subject.status === 'active');
-  
+
   React.useEffect(() => {
     if (lessonToEdit) {
       setTask(lessonToEdit.task);
@@ -130,7 +129,7 @@ const HandleLesson = () => {
                 <label>{groupMap.name}</label>
               </div>
             ))}
-            {showUserGroups().length === 0 && (<label>Sem turma criada ou ativa</label>)}
+            {showUserGroups().length === 0 && (<label>Sem turma criada, ativa ou vinculada</label>)}
           </div>
           {error === 'group' && (<Error>Selecione pelo menos uma turma</Error>)}
         </div>
@@ -138,8 +137,8 @@ const HandleLesson = () => {
         <div className={Styles.createlesson_subjects}>
           <h2>Matéria</h2>
           <select value={subject} onChange={handleSubject}>
-            {activeSubjects.length > 0 ? (<option value=''>Selecione uma matéria</option>) : (<option value=''>Sem máteria criada ou ativa</option>)}
-            {activeSubjects.map((sub) => (
+            {showUserSubjects().length > 0 ? (<option value=''>Selecione uma matéria</option>) : (<option value=''>Sem máteria criada, ativa ou vinculada</option>)}
+            {showUserSubjects().map((sub) => (
               <option key={sub.id} value={sub.id}>{sub.name}</option>
             ))}
           </select>

@@ -17,16 +17,3 @@
   cursor: pointer;
   fill: #FFA700;
 }
-
-.handlegroup .users {
-  height: 300px;
-  padding: 12px;
-  border-radius: 7px;
-  background-color: #121214; 
-  overflow-y: scroll;
-}
-
-.handlegroup .users > div {
-  display: flex;
-  gap: 10px;
-}
