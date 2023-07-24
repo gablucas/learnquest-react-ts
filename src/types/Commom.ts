@@ -9,7 +9,6 @@ export type Subject = {
 }
 
 export type ConfirmStateProps = {
-  toggle: boolean,
   text: string,
   type: 'confirm' | 'message',
   action?: () => void,
@@ -22,5 +21,6 @@ export type MobileInfoData = {
 
 export type MobileInfoProps = {
   info: MobileInfoData[],
-  setToggle: React.Dispatch<React.SetStateAction<boolean>>,
 }
+
+export type Toggle = 'create' | 'edit' | 'filter' | 'confirm' | 'mobile' | 'none';

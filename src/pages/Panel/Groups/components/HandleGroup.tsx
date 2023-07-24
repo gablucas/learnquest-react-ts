@@ -9,21 +9,20 @@ import useRandom from '../../../../hooks/useRandom';
 import Error from '../../../../components/Helper/Error';
 
 type HandleUserProps = {
-  setToggle: React.Dispatch<React.SetStateAction<boolean>>,
   groupID?: string,
 }
 
-const HandleGroup = ({ setToggle, groupID }: HandleUserProps) => {
+const HandleGroup = ({ groupID }: HandleUserProps) => {
   const { createGroup, editGroup } = useData();
   const { isEmpty, error } = useValidate();
   const { getRandomID } = useRandom();
-  const { data } = React.useContext(GlobalContext);
+  const { data, setToggle } = React.useContext(GlobalContext);
   const [newGroup, setNewGroup] = React.useState<Group>(
       {
         id: `G${getRandomID()}`,
         name: '',
         students: [],
-        status: true,
+        status: 'active',
       }
     );
 
@@ -66,18 +65,18 @@ const HandleGroup = ({ setToggle, groupID }: HandleUserProps) => {
         editGroup(groupID, newGroup);
       }
   
-      setToggle(false);
+      setToggle('none');
     }
   }
 
   if (data)
   return (
-    <Modal setToggle={setToggle}>
+    <Modal>
 
       <div className={Styles.handlegroup}>
         <div>
           <h2>{groupID ? 'Editar' : 'Criar nova'} turma</h2>
-          <button onClick={() => setToggle(false)}>Fechar</button>
+          <button onClick={() => setToggle('none')}>Fechar</button>
         </div>
 
         <form onSubmit={handleSubmit}>

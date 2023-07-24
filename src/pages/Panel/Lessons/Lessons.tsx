@@ -16,7 +16,7 @@ import useHelpers from '../../../hooks/useHelpers';
 import FilterIcon from '../../../components/Icons/FilterIcon';
 
 const Lessons = () => {
-  const { confirm, setConfirm, filter } = React.useContext(GlobalContext);
+  const { setConfirm, filter, toggle, setToggle } = React.useContext(GlobalContext);
   const { isArrayEmpty, isAnyArrayFilled, arrayIncludes, cleanFilter } = useHelpers();
   const { data } = React.useContext(GlobalContext);
   const { getUser, getLoggedUser, removeLesson, getSubject } = useData();
@@ -28,14 +28,11 @@ const Lessons = () => {
   if (!isArrayEmpty(filter.subject)) lessons = lessons.filter((lesson) => arrayIncludes(filter.subject, lesson.subject));
   if (!isArrayEmpty(filter.createdby)) lessons = lessons.filter((lesson) => arrayIncludes(filter.createdby, lesson.createdby));
 
-
-  const [toggleFilter, setToggleFilter] = React.useState<boolean>(false)
-  const [toggleMobile, setToggleMobile] = React.useState<boolean>(false);
   const [mobileInfo, setMobileInfo] = React.useState<MobileInfoData[]>([{title: '', description: ''}]);
 
   function handleEdit(id: string): void {
     if (data.users.some((user) => user.access === 'student' && (user as IStudent).lessons.some((lesson) => lesson.id === id))) {
-      setConfirm({toggle: true, type: 'message', text: 'Não é mais possível editar essa aula, pois ela já foi finalizada por um ou mais alunos'})
+      setConfirm({type: 'message', text: 'Não é mais possível editar essa aula, pois ela já foi finalizada por um ou mais alunos'})
     } else {
       navigate(`editar/${id}`);
     }
@@ -51,7 +48,7 @@ const Lessons = () => {
     const questions = {title: 'Questões', description: lesson.task.length};
 
     setMobileInfo([createdby, subject, questions]);
-    setToggleMobile(true);
+    setToggle('mobile');
   }
 
   return (
@@ -59,7 +56,7 @@ const Lessons = () => {
 
       <div className={Panel.options}>
         <Link to='criar'>Criar aula +</Link>
-        <button onClick={() => setToggleFilter(true)} className={isAnyArrayFilled([filter.subject, filter.createdby, filter.status]) ? Panel.filter : ''} >Filtrar <FilterIcon /></button>
+        <button onClick={() => setToggle('mobile')} className={isAnyArrayFilled([filter.subject, filter.createdby, filter.status]) ? Panel.filter : ''} >Filtrar <FilterIcon /></button>
         {isAnyArrayFilled([filter.subject, filter.createdby, filter.status]) && (<button onClick={() => cleanFilter()} className={Panel.cleanfilter}>Limpar filtro</button>)}
       </div>
 
@@ -82,14 +79,14 @@ const Lessons = () => {
             <span>{lesson.task.length}</span>
             <button className={Panel.mobile} onClick={() => handleMobileInfo(lesson)}><MoreInfo /></button>
             <button onClick={() => handleEdit(lesson.id)}><EditIcon /></button>
-            <button onClick={() => setConfirm({toggle: true, type: 'confirm', text: 'A exclusão desta aula também removerá de todos os alunos que já a concluíram, incluindo a XP ganha também. Deseja excluir mesmo assim?', action: () => handleRemove(lesson.id)})}><DeleteIcon /></button>
+            <button onClick={() => setConfirm({type: 'confirm', text: 'A exclusão desta aula também removerá de todos os alunos que já a concluíram, incluindo a XP ganha também. Deseja excluir mesmo assim?', action: () => handleRemove(lesson.id)})}><DeleteIcon /></button>
           </div>
         ))}
       </div>
 
-      {confirm?.toggle && <Message />}
-      {toggleFilter && <Filter options={{access: false, student: false, subject: true, group: false, createdby: true, status: false}} setToggle={setToggleFilter} />}
-      {toggleMobile && mobileInfo && (<MobileInfo info={mobileInfo} setToggle={setToggleMobile} />)}
+      {toggle === 'confirm' && <Message />}
+      {toggle === 'filter' && <Filter options={{access: false, student: false, subject: true, group: false, createdby: true, status: false}} />}
+      {toggle === 'mobile' && mobileInfo && (<MobileInfo info={mobileInfo} />)}
       
     </section>
   )

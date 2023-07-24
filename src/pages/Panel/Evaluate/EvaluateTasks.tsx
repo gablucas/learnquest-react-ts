@@ -1,26 +1,23 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import Panel from '../Panel.module.css';
-import { GlobalContext } from '../../../GlobalContext';
 import useData from '../../../hooks/useData';
 import EvaluateIcon from '../../../components/Icons/EvaluateIcon';
 import MoreInfo from '../../../components/Icons/MoreInfo';
-import { MobileInfoData, Subject } from '../../../types/Commom';
 import MobileInfo from '../../../components/MobileInfo/MobileInfo';
-import { IEvaluateTask } from '../../../types/Lessons';
 import useHelpers from '../../../hooks/useHelpers';
 import FilterIcon from '../../../components/Icons/FilterIcon';
 import Filter from '../../../components/Filter/Filter';
+import { Link } from 'react-router-dom';
+import { GlobalContext } from '../../../GlobalContext';
+import { MobileInfoData, Subject } from '../../../types/Commom';
+import { IEvaluateTask } from '../../../types/Lessons';
 
 const EvaluateTasks = () => {
-  const { data, filter } = React.useContext(GlobalContext);
+  const { data, filter, toggle, setToggle } = React.useContext(GlobalContext);
   const { isArrayEmpty, isAnyArrayFilled, arrayIncludes, cleanFilter } = useHelpers();
   const { getLoggedUser, getUser, getSubject } = useData();
   const loggedUser = getLoggedUser();
   
-
-  const [toggleFilter, setToggleFilter] = React.useState<boolean>(false);
-  const [toggleMobile, setToggleMobile] = React.useState<boolean>(false);
   const [mobileInfo, setMobileInfo] = React.useState<MobileInfoData[]>([{title: '', description: ''}]);
 
 
@@ -35,14 +32,14 @@ const EvaluateTasks = () => {
     const subject = {title: 'Matéria', description: getSubject(lesson.subject)?.name || ''};
 
     setMobileInfo([student, createdby, subject]);
-    setToggleMobile(true);
+    setToggle('none');
   }
 
   return (
     <section className={Panel.container}>
 
     <div className={Panel.options}>
-      <button onClick={() => setToggleFilter(true)} className={isAnyArrayFilled([filter.student, filter.subject, filter.createdby]) ? Panel.filter : ''} >Filtrar <FilterIcon /></button>
+      <button onClick={() => setToggle('filter')} className={isAnyArrayFilled([filter.student, filter.subject, filter.createdby]) ? Panel.filter : ''} >Filtrar <FilterIcon /></button>
       {isAnyArrayFilled([filter.student, filter.subject, filter.createdby]) && (<button onClick={() => cleanFilter()} className={Panel.cleanfilter}>Limpar filtro</button>)}
     </div>
 
@@ -68,8 +65,8 @@ const EvaluateTasks = () => {
      ))}
     </div>
 
-    {toggleFilter && <Filter options={{access: false, student: true, subject: true, group: false, createdby: true, status: false}} setToggle={setToggleFilter} />}
-    {toggleMobile && mobileInfo && (<MobileInfo info={mobileInfo} setToggle={setToggleMobile} />)}
+    {toggle === 'filter' && <Filter options={{access: false, student: true, subject: true, group: false, createdby: true, status: false}} />}
+    {toggle === 'mobile' && mobileInfo && (<MobileInfo info={mobileInfo} />)}
   </section>
   )
 }

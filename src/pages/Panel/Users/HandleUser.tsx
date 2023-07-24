@@ -12,12 +12,11 @@ import Modal from '../../../components/Modal';
 
 
 type HandleUserProps = {
-  setToggle: React.Dispatch<React.SetStateAction<boolean>>,
   userID?: string,
 }
 
-const HandleUser = ({ setToggle, userID }: HandleUserProps) => {
-  const { data } = React.useContext(GlobalContext);
+const HandleUser = ({ userID }: HandleUserProps) => {
+  const { data, setToggle } = React.useContext(GlobalContext);
   const { createUser, editUser } = useData();
   const user = data.users.find((user) => user.id === userID);
   const { getRandomID } = useRandom();
@@ -42,7 +41,7 @@ const HandleUser = ({ setToggle, userID }: HandleUserProps) => {
         email: email.value.toLowerCase(),
         name: name.value,
         password: (data as IInstituition).preferences.defaultPassword,
-        status: true,
+        status: 'active',
       }
 
       if(access.value === 'student') {
@@ -57,19 +56,19 @@ const HandleUser = ({ setToggle, userID }: HandleUserProps) => {
         createUser(user);
       }
       
-      setToggle(false);
+      setToggle('none');
     } else if (userID && name.validate() && login.validate() && email.validate() && password.validate()) {
       editUser(userID, name.value, login.value, email.value, password.value);
-      setToggle(false);
+      setToggle('none');
     }
   }
 
   return (
-    <Modal setToggle={setToggle}>
+    <Modal>
       <div className={Styles.container}>
         <div>
           <h2>{userID ? 'Editar': 'Criar novo'} usuário</h2>
-          <button onClick={() => setToggle(false)}>Fechar</button>
+          <button onClick={() => setToggle('none')}>Fechar</button>
         </div>
         
         <form onSubmit={handleSubmit}>

@@ -15,15 +15,11 @@ import useHelpers from '../../../hooks/useHelpers';
 import FilterIcon from '../../../components/Icons/FilterIcon';
 
 const Groups = () => {
-  const { data, confirm, setConfirm, filter } = React.useContext(GlobalContext);
+  const { data, setConfirm, filter, toggle, setToggle } = React.useContext(GlobalContext);
   const { removeGroup } = useData();
   const { isArrayEmpty, isAnyArrayFilled, arrayIncludes, cleanFilter } = useHelpers();
   const [groupID, setGroupID] = React.useState<string>('');
 
-  const [toggle, setToggle] = React.useState<boolean>(false);
-  const [toggleEdit, setToggleEdit] = React.useState<boolean>(false);
-  const [toggleFilter, setToggleFilter] = React.useState<boolean>(false);
-  const [toggleMobile, setToggleMobile] = React.useState(false);
   const [mobileInfo, setMobileInfo] = React.useState<MobileInfoData[]>([{title: '', description: ''}]);
 
   let groups = data.groups;
@@ -32,7 +28,7 @@ const Groups = () => {
 
   function handleEdit(classid: string): void {
     setGroupID(classid);
-    setToggleEdit(true);
+    setToggle('edit');
   }
 
   function handleRemoveGroup(id: string): void {
@@ -44,15 +40,15 @@ const Groups = () => {
     const status = {title: 'Estado', description: m.status ? 'Ativado' : 'Desativado'};
 
     setMobileInfo([students, status]);
-    setToggleMobile(true);
+    setToggle('mobile');
   }
 
   return (
     <section className={Panel.container}>
 
       <div className={Panel.options}>
-        <button onClick={() => setToggle(!toggle)}>Criar turma +</button>
-        <button onClick={() => setToggleFilter(true)} className={isAnyArrayFilled([filter.group, filter.status]) ? Panel.filter : ''} >Filtrar <FilterIcon /></button>
+        <button onClick={() => setToggle('create')}>Criar turma +</button>
+        <button onClick={() => setToggle('filter')} className={isAnyArrayFilled([filter.group, filter.status]) ? Panel.filter : ''} >Filtrar <FilterIcon /></button>
         {isAnyArrayFilled([filter.group, filter.status]) && (<button onClick={() => cleanFilter()} className={Panel.cleanfilter}>Limpar filtro</button>)}
       </div>
 
@@ -74,16 +70,16 @@ const Groups = () => {
             <span>{m.status === 'active' ? 'Ativado' : 'Desativado'}</span>
             <button className={Panel.mobile} onClick={() => handleMobileInfo(m)} ><MoreInfo /></button>
             <button onClick={() => handleEdit(m.id)}><EditIcon /></button>
-            <button onClick={() => setConfirm({toggle: true, type: 'confirm', text: 'Deseja realmente excluir essa turma?', action: () => handleRemoveGroup(m.id)})}><DeleteIcon /></button>
+            <button onClick={() => setConfirm({type: 'confirm', text: 'Deseja realmente excluir essa turma?', action: () => handleRemoveGroup(m.id)})}><DeleteIcon /></button>
           </div>
         ))}
       </div>
 
-      {toggle && <HandleGroup setToggle={setToggle} />}
-      {toggleEdit && (<HandleGroup setToggle={setToggleEdit} groupID={groupID} />)}
-      {confirm.toggle && <Message />}
-      {toggleFilter && <Filter options={{access: false, student: false, subject: false, group: true, createdby: false, status: true}} setToggle={setToggleFilter} />}
-      {toggleMobile && mobileInfo && (<MobileInfo info={mobileInfo} setToggle={setToggleMobile} />)}
+      {toggle === 'create' && <HandleGroup />}
+      {toggle === 'edit' && (<HandleGroup groupID={groupID} />)}
+      {toggle === 'confirm' && <Message />}
+      {toggle === 'filter' && <Filter options={{access: false, student: false, subject: false, group: true, createdby: false, status: true}} />}
+      {toggle === 'mobile' && mobileInfo && (<MobileInfo info={mobileInfo} />)}
     </section>
   )
 }

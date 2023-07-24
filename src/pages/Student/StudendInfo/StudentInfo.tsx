@@ -3,17 +3,15 @@ import Styles from './StudentInfo.module.css'
 import useData from "../../../hooks/useData";
 import { IStudent } from "../../../types/Users";
 import { GlobalContext } from '../../../GlobalContext';
-import Modal from '../../../components/Modal';
 import { TaskStudent } from '../../../types/Lessons';
 import MobileInfo from '../../../components/MobileInfo/MobileInfo';
-import { MobileInfoProps } from '../../../types/Commom';
+import { MobileInfoData } from '../../../types/Commom';
 
 const StudentInfo = () => {
-  const { data } = React.useContext(GlobalContext);
+  const { data, toggle, setToggle } = React.useContext(GlobalContext);
   const { getLoggedUser, getSubject } = useData();
   const student = getLoggedUser() as IStudent;
-  const [toggleMobile, setToggleMobile] = React.useState(false);
-  const [mobileInfo, setMobileInfo] = React.useState<MobileInfoProps[]>([{title: '', description: ''}]);
+  const [mobileInfo, setMobileInfo] = React.useState<MobileInfoData[]>([{title: '', description: ''}]);
 
   const studentGroup = data?.groups.find((f) => f.students.some((id) => id === student?.id));
   const todoLessons = data?.lessons.filter((lesson) => lesson.groups.some((id) => id === studentGroup?.id && !student.lessons.some((l) => l.id === lesson.id) && !data.evaluate.some((e) => e.id === lesson.id)));
@@ -51,10 +49,8 @@ const StudentInfo = () => {
     const totalXP = {title: 'XP Ganho', description: totalXPEarned(index)};
 
     setMobileInfo([subject, questions, correct, wrong, totalXP]);
-    setToggleMobile(true);
+    setToggle('mobile');
   }
-
-  console.log('Renderizou')
 
   if (data)
   return (
@@ -120,11 +116,7 @@ const StudentInfo = () => {
         </div>
       </div>
 
-      {toggleMobile && mobileInfo && (
-        <Modal setToggle={setToggleMobile}>
-          <MobileInfo info={mobileInfo} />
-        </Modal>
-      )}
+      {toggle === 'mobile' && (<MobileInfo info={mobileInfo} />)}
     </div>
   )
 }

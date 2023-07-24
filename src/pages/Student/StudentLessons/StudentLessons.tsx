@@ -4,8 +4,7 @@ import useData from '../../../hooks/useData';
 import { Link } from 'react-router-dom';
 import MoreInfo from '../../../components/Icons/MoreInfo';
 import StartLesson from '../../../components/Icons/StartLesson';
-import { MobileInfoProps, Subject } from '../../../types/Commom';
-import Modal from '../../../components/Modal';
+import { MobileInfoData, Subject } from '../../../types/Commom';
 import MobileInfo from '../../../components/MobileInfo/MobileInfo';
 import { ILesson } from '../../../types/Lessons';
 
@@ -13,7 +12,7 @@ const StudentLessons = () => {
   const { getSubject, getStudentLessons } = useData();
 
   const [toggleMobile, setToggleMobile] = React.useState(false);
-  const [mobileInfo, setMobileInfo] = React.useState<MobileInfoProps[]>([{title: '', description: ''}]);
+  const [mobileInfo, setMobileInfo] = React.useState<MobileInfoData[]>([{title: '', description: ''}]);
 
   function getTotalXP(lesson: ILesson): number {
     const totalXP = lesson.task.map((m) => m.xp).reduce((acc, cur) => acc + cur);
@@ -62,9 +61,7 @@ const StudentLessons = () => {
       </div>
 
       {toggleMobile && mobileInfo && (
-        <Modal setToggle={setToggleMobile}>
-          <MobileInfo info={mobileInfo} />
-        </Modal>
+        <MobileInfo setToggle={setToggleMobile} info={mobileInfo} />
       )}
     </div>
   )

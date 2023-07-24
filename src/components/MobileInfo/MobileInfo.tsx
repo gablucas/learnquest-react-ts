@@ -3,10 +3,10 @@ import Modal from '../Modal';
 import Styles from './MobileInfo.module.css';
 
 
-const MobileInfo = ({ info, setToggle }: MobileInfoProps) => {
+const MobileInfo = ({ info }: MobileInfoProps) => {
 
   return (
-    <Modal setToggle={setToggle}>
+    <Modal>
       <div className={Styles.container}>
         {info.map((i) => (
           <div key={i.title} className={Styles.info}>

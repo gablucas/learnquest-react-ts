@@ -8,12 +8,11 @@ import Modal from '../../../components/Modal';
 import useRandom from '../../../hooks/useRandom';
 
 type HandleSubjectProps = {
-  setToggle: React.Dispatch<React.SetStateAction<boolean>>,
   subjectID?: string,
 }
 
-const HandleSubject = ({ setToggle, subjectID }: HandleSubjectProps) => {
-  const { data } = React.useContext(GlobalContext);
+const HandleSubject = ({ subjectID }: HandleSubjectProps) => {
+  const { data, setToggle } = React.useContext(GlobalContext);
   const { getRandomID } = useRandom();
   const { createSubject, editSubject } = useData();
   const subject: UseFormType = useForm({type: 'subject', initialValue: data.subjects.find((subject) => subject.id === subjectID)?.name || ''});
@@ -24,21 +23,21 @@ const HandleSubject = ({ setToggle, subjectID }: HandleSubjectProps) => {
 
     if (subject.validate()) {
       if(!subjectID && data) {
-        createSubject({id: `S${getRandomID()}`, name: subject.value, status: true})
+        createSubject({id: `S${getRandomID()}`, name: subject.value, status: 'active'})
       } else if (subjectID) {
-        editSubject(subjectID, {id: subjectID, name: subject.value, status: true})
+        editSubject(subjectID, {id: subjectID, name: subject.value, status: 'active'})
       }
 
-      setToggle(false);
+      setToggle('none');
     }
   }
 
   return (
-    <Modal setToggle={setToggle}>
+    <Modal>
       <div className={Styles.container}>
         <div>
           <h2>{subjectID ? 'Editar' : 'Criar nova'} matéria</h2>
-          <button onClick={() => setToggle(false)}>Fechar</button>
+          <button onClick={() => setToggle('none')}>Fechar</button>
         </div>
         
         <form onSubmit={handleSubmit}>
