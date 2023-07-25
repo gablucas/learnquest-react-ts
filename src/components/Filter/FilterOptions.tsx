@@ -11,7 +11,6 @@ const FilterOptions = <U extends keyof FilterStateProps>({ dataKey, title, optio
 
     if (e.target.checked) {
       updateFilter[dataKey].push(id);
-      console.log('oi')
     } else {
       updateFilter[dataKey] = updateFilter[dataKey].filter((option) => option !== id);
     }

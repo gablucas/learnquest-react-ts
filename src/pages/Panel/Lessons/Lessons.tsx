@@ -56,7 +56,7 @@ const Lessons = () => {
 
       <div className={Panel.options}>
         <Link to='criar'>Criar aula +</Link>
-        <button onClick={() => setToggle('mobile')} className={isAnyArrayFilled([filter.subject, filter.createdby, filter.status]) ? Panel.filter : ''} >Filtrar <FilterIcon /></button>
+        <button onClick={() => setToggle('filter')} className={isAnyArrayFilled([filter.subject, filter.createdby, filter.status]) ? Panel.filter : ''} >Filtrar <FilterIcon /></button>
         {isAnyArrayFilled([filter.subject, filter.createdby, filter.status]) && (<button onClick={() => cleanFilter()} className={Panel.cleanfilter}>Limpar filtro</button>)}
       </div>
 

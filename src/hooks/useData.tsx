@@ -10,6 +10,7 @@ type UseDataReturn = {
   getData: () => IInstituition,
   createInitialUser: () => void,
   getUser: (id: string) => IUser | IStudent | undefined,
+  getUsersByAcess: (access: 'student' | 'teacher' | 'admin') => IUser[] | IStudent[] | undefined
   createUser: (user: IUser | IStudent) => void,
   removeUser: (email: string) => void,
   editUser: (id: string, name: string, login: string, email: string, password: string, status: Status) => void,
@@ -34,7 +35,10 @@ type UseDataReturn = {
   editSubject: (id: string, updateSubject: Subject) => void,
   editDefaultPassword: (password: string) => void,
   editPassword: (password: string) => void,
+  getStudentGroup: (studentID: string) => Group | undefined,
   getStudentLessons: (id?: string) => ILesson[],
+  getStudentsByGroup: (groupID: string[]) => IStudent[],
+  getStudentsByTeacher: (teacherID: string) => IStudent[],
   counterCorrectWrongQuestions: (counterType: 'correct' | 'wrong', lesson: TaskStudent) => number,
 }
 
@@ -44,60 +48,139 @@ const useData = (): UseDataReturn => {
 
   function createInitialUser(): void {
     if (!localStorage.getItem('data')) {
+
+      const admin_1: IUser = {
+        id: 'U1',
+        access: 'admin',
+        name: 'Administrador',
+        login: 'admin',
+        email: 'instituicao@edu.com.br',
+        password: 'teste',
+        status: 'active', 
+      }
+
+      const teacher_1: IUser = {
+        id: 'U2',
+        access: 'teacher',
+        name: 'Professor',
+        login: 'professor',
+        email: 'professor@edu.com.br',
+        password: 'teste',
+        status: 'active',
+      }
+
+      const teacher_2: IUser = {
+        id: 'U3',
+        access: 'teacher',
+        name: 'Professor',
+        login: 'professor',
+        email: 'professor@edu.com.br',
+        password: 'teste',
+        status: 'active',
+      }
+
+      const student_1: IStudent = {
+        id: 'U4',
+        access: 'student',
+        name: 'Aluno',
+        login: 'aluno',
+        email: 'aluno@edu.com.br',
+        password: 'teste',
+        status: 'active',
+        level: 1,
+        xp: 0,
+        lessons: []
+      }
+
+      const student_2: IStudent = {
+        id: 'U5',
+        access: 'student',
+        name: 'Aluno2',
+        login: 'aluno2',
+        email: 'aluno2@edu.com.br',
+        password: 'teste',
+        status: 'active',
+        level: 1,
+        xp: 0,
+        lessons: []
+      }
+
+      const student_3: IStudent = {
+        id: 'U6',
+        access: 'student',
+        name: 'Aluno3',
+        login: 'aluno3',
+        email: 'aluno3@edu.com.br',
+        password: 'teste',
+        status: 'active',
+        level: 1,
+        xp: 0,
+        lessons: []
+      }
+
+      const group_1: Group = {
+        id: 'G1', 
+        name: 'Turma 1', 
+        status: 'active', 
+        students: ['U4'], 
+        teachers: ['U2']
+      }
+
+      const group_2: Group = {
+        id: 'G2', 
+        name: 'Turma 2', 
+        status: 'active', 
+        students: ['U5'], 
+        teachers: ['U2']
+      }
+
+      const group_3: Group = {
+        id: 'G3', 
+        name: 'Turma 3', 
+        status: 'active', 
+        students: ['U6'], 
+        teachers: ['U3']
+      }
+
+      const lesson_1: ILesson = {
+        groups: ['G1', 'G2'], 
+        createdby: 'U1', 
+        id: 'T1', 
+        task: [
+          {id: "Q1", question: "Quanto é 1 + 1?", answer: "2", xp: 25}, 
+          {id: "Q2", question: "Quanto é 2 + 2?", answer: "4", xp: 50}, 
+          {id: "Q3", question: "Quanto é 3 + 3?", answer: "6", xp: 75}, 
+          {id: "Q4", question: "Quanto é 4 + 4?", answer: "8", xp: 100},
+        ], 
+        subject: 'S1',
+        text: 'Nessa aula você aprenderá sobre adição', 
+        title: 'Matemática Básica - Adição', 
+        video: 'az6OYFS7AUA',
+        status: 'active',
+      }
+
+      const subject_1: Subject = {
+        id: 'S1', 
+        name: 'Matemática', 
+        status: 'active', 
+        teachers: ['U2']
+      }
+
+      const subject_2: Subject = {
+        id: 'S2', 
+        name: 'Português', 
+        status: 'active', 
+        teachers: ['U3']
+      }
+
       const data: IInstituition = {
         id: 'I1',
         name: 'Instituição',
         email: 'instituicao@edu.com.br',
-        users: [
-          {
-            id: 'U1',
-            access: 'admin',
-            name: 'Administrador',
-            login: 'admin',
-            email: 'instituicao@edu.com.br',
-            password: 'teste',
-            status: 'active', 
-          },
-          {
-            id: 'U2',
-            access: 'teacher',
-            name: 'Professor',
-            login: 'professor',
-            email: 'professor@edu.com.br',
-            password: 'teste',
-            status: 'active',
-          },
-          {
-            id: 'U3',
-            access: 'student',
-            name: 'Aluno',
-            login: 'aluno',
-            email: 'aluno@edu.com.br',
-            password: 'teste',
-            status: 'active',
-            level: 1,
-            xp: 0,
-            lessons: [],
-          }
-        ],
-        groups: [{id: 'G1', name: 'Turma 1', status: 'active', students: ['U3'], teachers: ['U2']}],
-        lessons: [{
-          groups: ['G1'], 
-          createdby: 'U1', 
-          id: 'T1', 
-          task: [
-            {id: "Q1", question: "Quanto é 1 + 1?", answer: "2", xp: 25}, 
-            {id: "Q2", question: "Quanto é 2 + 2?", answer: "4", xp: 50}, 
-            {id: "Q3", question: "Quanto é 3 + 3?", answer: "6", xp: 75}, 
-            {id: "Q4", question: "Quanto é 4 + 4?", answer: "8", xp: 100},
-          ], 
-          subject: 'S1',
-          text: 'Nessa aula você aprenderá sobre adição', 
-          title: 'Matemática Básica - Adição', 
-          video: 'az6OYFS7AUA',
-          status: 'active',
-        }],
-        subjects: [{id: 'S1', name: 'Matemática', status: 'active', teachers: ['U2']}],
+        users: [admin_1, teacher_1, teacher_2, student_1, student_2, student_3],
+        groups: [group_1, group_2, group_3],
+        lessons: [lesson_1],
+        subjects: [subject_1, subject_2],
         evaluate: [],
         preferences: {
           defaultPassword: '123',
@@ -117,6 +200,18 @@ const useData = (): UseDataReturn => {
 
     if (data) {
       return data.users.find((user) => user.id === id);
+    }
+  }
+
+  function getUsersByAcess(access: 'student' | 'teacher' | 'admin'): IUser[] | IStudent[] | undefined {
+    const data = getData();
+
+    if (access === 'student') {
+      return data.users.filter((user) => user.access === 'student') as IStudent[];
+    } else if (access === 'teacher') {
+      return data.users.filter((user) => user.access === 'teacher') as IUser[];
+    } else if (access === 'admin') {
+      return data.users.filter((user) => user.access === 'admin') as IUser[];
     }
   }
 
@@ -404,6 +499,13 @@ const useData = (): UseDataReturn => {
     setData(updateData);
   }
 
+  function getStudentGroup(studentID: string): Group | undefined {
+    const data = getData();
+
+    return data.groups.find((group) => group.students.includes(studentID));
+
+  }
+
   function getStudentLessons(id?: string): ILesson[] {
     const data = getData();
     const student = id ? getUser(id) as IStudent : getLoggedUser() as IStudent;
@@ -417,6 +519,26 @@ const useData = (): UseDataReturn => {
     .filter((lesson) => lesson.status === 'active');
     
     return lessons;
+  }
+
+  function getStudentsByGroup(groupID: string[]): IStudent[] {
+    const data = getData();
+    const users = data.groups
+    .filter((group) => groupID.some((id) => group.id === id))
+    .map((group) => group.students)
+    .flat()
+    .map((studentID) => data.users.find((user) => studentID === user.id))
+
+    return users as IStudent[];
+  }
+
+  function getStudentsByTeacher(teacherID: string): IStudent[] {
+    const data = getData();
+    const teacherGroups = data.groups
+    .filter((group) => group.teachers.some((id) => teacherID === id))
+    .map((group) => group.id)
+
+    return getStudentsByGroup(teacherGroups);
   }
 
   function counterCorrectWrongQuestions(counterType: 'correct' | 'wrong', lesson: TaskStudent): number {
@@ -433,6 +555,7 @@ const useData = (): UseDataReturn => {
     createInitialUser,
     getData,
     getUser,
+    getUsersByAcess,
     createUser,
     removeUser,
     editUser,
@@ -457,7 +580,10 @@ const useData = (): UseDataReturn => {
     showUserSubjects,
     editDefaultPassword,
     editPassword,
+    getStudentGroup,
     getStudentLessons,
+    getStudentsByGroup,
+    getStudentsByTeacher,
     counterCorrectWrongQuestions,
   }
 }

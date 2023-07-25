@@ -23,7 +23,7 @@ const Subjects = () => {
   const [mobileInfo, setMobileInfo] = React.useState<MobileInfoData[]>([{title: '', description: ''}]);
 
   let subjects = data.subjects;
-  if (!isArrayEmpty(filter.access)) subjects = subjects.filter((subject) => arrayIncludes(filter.subject, subject.id));
+  if (!isArrayEmpty(filter.subject)) subjects = subjects.filter((subject) => arrayIncludes(filter.subject, subject.id));
   if (!isArrayEmpty(filter.status)) subjects = subjects.filter((subject) => arrayIncludes(filter.status, subject.status));
 
   function getLessonsPerSubject(id: string): number {

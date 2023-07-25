@@ -23,7 +23,7 @@ const Groups = () => {
   const [mobileInfo, setMobileInfo] = React.useState<MobileInfoData[]>([{title: '', description: ''}]);
 
   let groups = data.groups;
-  if (!isArrayEmpty(filter.access)) groups = groups.filter((groups) => arrayIncludes(filter.group, groups.id));
+  if (!isArrayEmpty(filter.group)) groups = groups.filter((groups) => arrayIncludes(filter.group, groups.id));
   if (!isArrayEmpty(filter.status)) groups = groups.filter((groups) => arrayIncludes(filter.status, groups.status));
 
   function handleEdit(classid: string): void {

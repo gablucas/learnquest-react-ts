@@ -33,8 +33,6 @@
   cursor: pointer;
 }
 
-
-
 .lessons_container > div + div {
   border-top: 1px solid #302B33;
 }

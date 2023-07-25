@@ -4,18 +4,25 @@ import { GlobalContext } from '../../../GlobalContext';
 import MoreInfo from '../../../components/Icons/MoreInfo';
 import { MobileInfoData } from '../../../types/Commom';
 import MobileInfo from '../../../components/MobileInfo/MobileInfo';
-import { IStudent } from '../../../types/Users';
+import { IStudent, IUser } from '../../../types/Users';
 import Filter from '../../../components/Filter/Filter';
 import FilterIcon from '../../../components/Icons/FilterIcon';
 import useHelpers from '../../../hooks/useHelpers';
 import { Link } from 'react-router-dom';
 import StudentDataIcon from '../../../components/Icons/StudentDataIcon';
+import useData from '../../../hooks/useData';
+import { Group } from '../../../types/Group';
 
 const Students = () => {
   const { data, filter, toggle, setToggle } = React.useContext(GlobalContext);
-  const { isAnyArrayFilled, cleanFilter } = useHelpers();
+  const { isArrayEmpty, arrayIncludes, isAnyArrayFilled, cleanFilter } = useHelpers();
+  const { getUsersByAcess, getLoggedUser, getStudentGroup, getStudentsByTeacher } = useData();
 
-  const students = data.users.filter((user) => user.access === 'student') as IStudent[];
+  const loggedUser = getLoggedUser() as IUser;
+  let students = loggedUser.access === 'admin' ? getUsersByAcess('student') as IStudent[] : getStudentsByTeacher(loggedUser.id);
+  if (!isArrayEmpty(filter.group)) students = students.filter((student) => arrayIncludes(filter.group, (getStudentGroup(student.id) as Group).id));
+
+
   const [mobileInfo, setMobileInfo] = React.useState<MobileInfoData[]>([{title: '', description: ''}]);
 
   function handleMobileInfo(user: IStudent): void {

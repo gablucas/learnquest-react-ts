@@ -19,7 +19,7 @@ const Filter = ({ options }: FilterProp) => {
 
         <div className={Styles.options}>
           {options.access && <FilterOptions dataKey='access' title='Acesso' options={[{id: 'student', name: 'Estudante'}, {id: 'teacher', name: 'Professor'}, {id: 'admin', name: 'Administrador'}]} />}
-          {options.student && <FilterOptions dataKey='student' title='Matérias' options={data.users.filter((user) => user.access === 'student').map((user2) => ({id: user2.id, name: user2.name}))} />}
+          {options.student && <FilterOptions dataKey='student' title='Alunos' options={data.users.filter((user) => user.access === 'student').map((user2) => ({id: user2.id, name: user2.name}))} />}
           {options.subject && <FilterOptions dataKey='subject' title='Matérias' options={data.subjects.map((subject) => ({id: subject.id, name: subject.name}))} />}
           {options.group && <FilterOptions dataKey='group' title='Turmas' options={data.groups.map((groups) => ({id: groups.id, name: groups.name}))} />}
           {options.createdby && <FilterOptions dataKey='createdby' title='Criado por' options={data.users.filter((user) => user.access !== 'student').map((user2) => ({id: user2.id, name: user2.name}))} />}
