@@ -1,6 +1,6 @@
 import React from 'react';
 import Styles from '../EvaluateTasks.module.css';
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { Link, Navigate, useParams } from "react-router-dom";
 import { GlobalContext } from '../../../../GlobalContext';
 import { TaskStudent } from '../../../../types/Lessons';
 import useData from '../../../../hooks/useData';
@@ -12,9 +12,10 @@ const EvaluateTask = () => {
   const { id } = useParams();
   const { getLoggedUser, evaluateLesson } = useData();
   const [task, setTask] = React.useState<TaskStudent>();
-  const navigate = useNavigate();
   const loggedUser = getLoggedUser();
   const { isEmpty, error } = useValidate();
+
+  const [toggleDoneEvaluate, setToggleDoneEvaluate] = React.useState<boolean>(false);
 
 
   const lessonToEvaluate = data.evaluate.find((lesson) => lesson.id === id);
@@ -44,51 +45,58 @@ const EvaluateTask = () => {
   function handleDoneEvaluate(): void {
     if (task?.answers.every((answer, index) => isEmpty(`answer${index}` ,answer.isCorrect)) && userInfo && id) {
       evaluateLesson(id, userInfo.id, task);
-      navigate('/painel/avaliar');
+      setToggleDoneEvaluate(true);
     }
   }
 
-  if (loggedUser?.access !== 'admin' && loggedUser?.id !== lessonToEvaluate?.createdby)
-  return <Navigate to='/painel/avaliar' />
+  if (loggedUser?.access !== 'admin' && loggedUser?.id !== lessonToEvaluate?.createdby) {
+    return <Navigate to='/painel/avaliar' />
 
-  if (lessonToEvaluate && lessonInfo && userInfo)
-  return (
-    <div className={Styles.container}>
-      <h1>{lessonInfo.title}</h1>
-      <span>{userInfo?.name} - {data.groups.find((group) => group.students.some((student) => student === userInfo.id))?.name}</span>
-
-      <div className={Styles.questions}>
-        {lessonInfo.task.map((question, index) => (
-          <div key={question.id} className={`${Styles.question_wrapper} ${task?.answers[index].isCorrect === true ? Styles.correct : task?.answers[index].isCorrect === false ? Styles.wrong : ' '}`}>
-
-            <div>
-              <span>Questão {index + 1}</span>
-              <span>{question.question}</span>
-            </div>
-
-            <div>
-              <span>Reposta do aluno</span>
-              <span>{lessonToEvaluate.answers[index].value}</span>
-            </div>
-
-            <div>
-              <span>Sua resposta</span>
-              <span>{question.answer}</span>
-            </div>
-
-            <div className={Styles.buttons}>
-              <button onClick={() => handleEvaluate(index, true)}>Correto</button>
-              <button onClick={() => handleEvaluate(index, false)}>Errado</button>
-            </div>
-
-            {error === `answer${index}` && (<Error>Essa questão precisa ser avaliada</Error>)}
-          </div>
-        ))}
+  } else if (toggleDoneEvaluate) {
+    return (
+      <div className={Styles.message}>
+        <h1>Tarefa avaliada com sucesso</h1>
+        <Link to='/painel/avaliar'>Voltar</Link>
       </div>
+    )
 
-      <button className={Styles.btn_donevaluate} onClick={handleDoneEvaluate}>Finalizar avaliação</button>
+  } else if (lessonToEvaluate && lessonInfo && userInfo)
+    return (
+      <div className={Styles.container}>
+        <h1>{lessonInfo.title}</h1>
+        <span>{userInfo?.name} - {data.groups.find((group) => group.students.some((student) => student === userInfo.id))?.name}</span>
 
-    </div>
+        <div className={Styles.questions}>
+          {lessonInfo.task.map((question, index) => (
+            <div key={question.id} className={`${Styles.question_wrapper} ${task?.answers[index].isCorrect === true ? Styles.correct : task?.answers[index].isCorrect === false ? Styles.wrong : ' '}`}>
+
+              <div>
+                <span>Questão {index + 1}</span>
+                <span>{question.question}</span>
+              </div>
+
+              <div>
+                <span>Reposta do aluno</span>
+                <span>{lessonToEvaluate.answers[index].value}</span>
+              </div>
+
+              <div>
+                <span>Sua resposta</span>
+                <span>{question.answer}</span>
+              </div>
+
+              <div className={Styles.buttons}>
+                <button onClick={() => handleEvaluate(index, true)}>Correto</button>
+                <button onClick={() => handleEvaluate(index, false)}>Errado</button>
+              </div>
+
+              {error === `answer${index}` && (<Error>Essa questão precisa ser avaliada</Error>)}
+            </div>
+          ))}
+        </div>
+
+        <button className={Styles.btn_donevaluate} onClick={handleDoneEvaluate}>Finalizar avaliação</button>
+      </div>
   )
 }
 
