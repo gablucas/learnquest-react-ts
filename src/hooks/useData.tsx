@@ -145,7 +145,7 @@ const useData = (): UseDataReturn => {
       const lesson_1: ILesson = {
         groups: ['G1', 'G2'], 
         createdby: 'U1', 
-        id: 'T1', 
+        id: 'L1', 
         task: [
           {id: "Q1", question: "Quanto é 1 + 1?", answer: "2", xp: 25}, 
           {id: "Q2", question: "Quanto é 2 + 2?", answer: "4", xp: 50}, 

@@ -38,8 +38,9 @@ const Lessons = () => {
     }
   }
 
-  function handleRemove(id: string): void {
-    removeLesson(id);
+  function handleRemove(lessonID: string): void {
+    setToggle('confirm');
+    setConfirm({type: 'confirm', text: 'A exclusão desta aula também removerá de todos os alunos que já a concluíram, incluindo a XP ganha também. Deseja excluir mesmo assim?', action: () => removeLesson(lessonID)})
   }
 
   function handleMobileInfo(lesson: ILesson): void {
@@ -79,7 +80,7 @@ const Lessons = () => {
             <span>{lesson.status === 'active' ? 'Ativada' : 'Desativada'}</span>
             <button className={Panel.mobile} onClick={() => handleMobileInfo(lesson)}><MoreInfo /></button>
             <button onClick={() => handleEdit(lesson.id)}><EditIcon /></button>
-            <button onClick={() => setConfirm({type: 'confirm', text: 'A exclusão desta aula também removerá de todos os alunos que já a concluíram, incluindo a XP ganha também. Deseja excluir mesmo assim?', action: () => handleRemove(lesson.id)})}><DeleteIcon /></button>
+            <button onClick={() => handleRemove(lesson.id)}><DeleteIcon /></button>
           </div>
         ))}
       </div>

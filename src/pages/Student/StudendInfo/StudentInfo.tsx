@@ -66,7 +66,7 @@ const StudentInfo = () => {
       </div>
 
       <div className={Styles.historic_container}>
-        <h2>Tarefas realizadas</h2>
+        <h2>Aulas finalizadas</h2>
 
         <div className={Styles.historic_list}>
           <div>
