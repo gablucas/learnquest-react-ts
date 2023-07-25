@@ -4,8 +4,7 @@ import { GlobalContext } from '../../../GlobalContext';
 import EditDefaultPassword from './EditDefaultPassword';
 
 const Preferences = () => {
-  const { data } = React.useContext(GlobalContext);
-  const [toggle, setToggle] = React.useState<boolean>(false)
+  const { data, toggle, setToggle } = React.useContext(GlobalContext);
 
   return (
     <div className={Styles.preferences}>
@@ -13,12 +12,12 @@ const Preferences = () => {
       <div className={Styles.preferences_defaultpassword}>
         <span>Senha padrão</span>
         <span>{data?.preferences.defaultPassword}</span>
-        <button onClick={() => setToggle(true)}>Alterar senha</button>
+        <button onClick={() => setToggle('edit')}>Alterar senha</button>
       </div>
 
-    {toggle && (
-      <EditDefaultPassword setToggle={setToggle} />
-    )}
+
+      {toggle === 'edit' && (<EditDefaultPassword />)}
+
     </div>
   )
 }

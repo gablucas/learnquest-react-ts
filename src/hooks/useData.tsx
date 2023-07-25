@@ -34,7 +34,8 @@ type UseDataReturn = {
   editSubject: (id: string, updateSubject: Subject) => void,
   editDefaultPassword: (password: string) => void,
   editPassword: (password: string) => void,
-  getStudentLessons: () => ILesson[],
+  getStudentLessons: (id?: string) => ILesson[],
+  counterCorrectWrongQuestions: (counterType: 'correct' | 'wrong', lesson: TaskStudent) => number,
 }
 
 const useData = (): UseDataReturn => {
@@ -304,10 +305,14 @@ const useData = (): UseDataReturn => {
 
     if (user?.access === 'admin') {
       return data.groups.filter((group) => group.status === 'active');
-    } else {
+    } else if (user?.access === 'teacher') {
       return data.groups
       .filter((group) => group.status === 'active')
       .filter((group) => group.teachers.some((teacherID) => teacherID === user?.id));
+    } else {
+      return data.groups
+      .filter((group) => group.status === 'active')
+      .filter((group) => group.students.some((StudentID) => StudentID === user?.id));
     }
   }
 
@@ -399,9 +404,9 @@ const useData = (): UseDataReturn => {
     setData(updateData);
   }
 
-  function getStudentLessons(): ILesson[] {
+  function getStudentLessons(id?: string): ILesson[] {
     const data = getData();
-    const student = getLoggedUser() as IStudent;
+    const student = id ? getUser(id) as IStudent : getLoggedUser() as IStudent;
 
     const studentGroup = data?.groups.find((f) => f.students.some((id) => id === student?.id));
 
@@ -412,6 +417,16 @@ const useData = (): UseDataReturn => {
     .filter((lesson) => lesson.status === 'active');
     
     return lessons;
+  }
+
+  function counterCorrectWrongQuestions(counterType: 'correct' | 'wrong', lesson: TaskStudent): number {
+    if (counterType === 'correct') {
+      return lesson.answers.filter((f) => f.isCorrect === true).length;
+    } else if (counterType === 'wrong') {
+      return lesson.answers.filter((f) => f.isCorrect === false).length;
+    } else {
+      return 0;
+    }
   }
 
   return {
@@ -443,6 +458,7 @@ const useData = (): UseDataReturn => {
     editDefaultPassword,
     editPassword,
     getStudentLessons,
+    counterCorrectWrongQuestions,
   }
 }
 

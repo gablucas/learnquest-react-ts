@@ -18,6 +18,8 @@ import Groups from './pages/Panel/Groups/Groups';
 import HandleLesson from './pages/Panel/Lessons/components/HandleLesson';
 import EvaluateTasks from './pages/Panel/Evaluate/EvaluateTasks';
 import EvaluateTask from './pages/Panel/Evaluate/components/EvaluateTask';
+import Students from './pages/Panel/Students/Students';
+import StudentData from './pages/Panel/Students/StudentData';
 
 
 function App() {
@@ -37,6 +39,8 @@ function App() {
                 <Route path='aulas/editar/:id' element={<HandleLesson />} />
                 <Route path='avaliar' element={<EvaluateTasks />} />
                 <Route path='avaliar/:id' element={<EvaluateTask />} />
+                <Route path='alunos' element={<Students />} />
+                <Route path='aluno/:id' element={<StudentData />} />
                 
                 <Route element={<ProtectedRoutes allowedAccess={['admin']} />}>
                   <Route path='usuarios' element={<Users />}/>

@@ -11,7 +11,7 @@ const Message = () => {
       confirm.action?.();
     } 
 
-    setConfirm({toggle: false, type: 'message', text: '', action: () => ''});
+    setConfirm({type: 'message', text: '', action: () => ''});
   }
 
 

@@ -3,12 +3,11 @@ import Input from "../../../components/Inputs/Input";
 import Modal from "../../../components/Modal";
 import useForm from "../../../hooks/useForm";
 import useData from '../../../hooks/useData';
+import { GlobalContext } from '../../../GlobalContext';
 
-type EditDefaultPasswordProps = {
-  setToggle: React.Dispatch<React.SetStateAction<boolean>>
-}
 
-const EditDefaultPassword = ({ setToggle }: EditDefaultPasswordProps) => {
+const EditDefaultPassword = () => {
+  const { setToggle } = React.useContext(GlobalContext)
   const { editDefaultPassword } = useData();
   const editPassword = useForm({type: 'defaultPassword', initialValue: ''});
 
@@ -17,12 +16,12 @@ const EditDefaultPassword = ({ setToggle }: EditDefaultPasswordProps) => {
 
     if (editPassword.validate()) {
       editDefaultPassword(editPassword.value);
-      setToggle(false);
+      setToggle('none');
     }
   }
 
   return (
-    <Modal setToggle={setToggle}>
+    <Modal>
       <form onSubmit={handleSubmit}>
         <Input type="text" label="Alterar senha padrão" {...editPassword}/>
         <button>Salvar nova senha</button>
