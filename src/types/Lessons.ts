@@ -13,11 +13,18 @@ export interface IEvaluateTask extends TaskStudent {
   subject: string,
 }
 
+export type TaskOptions = {
+  id: string,
+  option: string,
+}
+
 export type Task = {
   id: string,
+  type: 'open' | 'alternatives',
   question: string,
   answer: string,
   xp: number,
+  options?: TaskOptions[],
 }
 
 export interface ILesson {

@@ -6,6 +6,8 @@ import useData from '../../../hooks/useData';
 import { IEvaluateTask } from '../../../types/Lessons';
 import { IInstituition, IStudent } from '../../../types/Users';
 import useRandom from '../../../hooks/useRandom';
+import useValidate from '../../../hooks/useValidate';
+import Error from '../../../components/Helper/Error';
 
 const StudentLesson = () => {
   const { data } = React.useContext(GlobalContext);
@@ -13,6 +15,7 @@ const StudentLesson = () => {
   const [answer, setAnswer] = React.useState<IEvaluateTask>();
   const { saveStudentLesson, getLoggedUser } = useData();
   const { getRandomID } = useRandom();
+  const { isEmpty, error } = useValidate();
 
   const [toggleDoneLesson, setToggleDoneLesson] = React.useState<boolean>(false);
 
@@ -26,7 +29,7 @@ const StudentLesson = () => {
   }, [lesson, student.id, getRandomID])
 
 
-  function handleChange(e: React.ChangeEvent<HTMLInputElement>, index: number): void {
+  function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, index: number): void {
     if (answer) {
       const newAnswer = {...answer};
       newAnswer.answers[index].value = e.target.value;
@@ -38,7 +41,7 @@ const StudentLesson = () => {
   function handleSubmit(e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault();
 
-    if (answer?.answers.every((answer) => answer.value)) {
+    if (answer?.answers.every((answer, index) => isEmpty(`answer${index}`, answer.value))) {
       saveStudentLesson(answer);
       setToggleDoneLesson(true);
     }
@@ -73,8 +76,29 @@ const StudentLesson = () => {
           <h2>Tarefa</h2>
           {lesson.task.map((question, index) => (
             <div key={question.id}>
-              <label>{question.question}</label>
-              <input type='text' value={answer.answers[index].value} onChange={(e) => handleChange(e, index)} />
+
+              <span>{question.question}</span>
+              {question.type === 'alternatives' ? 
+              (
+                <>
+                  {question.options?.map((alternatives) => (
+                    <div key={alternatives.id} className={Styles.task_alternatives}>
+                      <input type='radio' id={alternatives.id} name={question.id} value={alternatives.option} onChange={(e) => handleChange(e, index)} />
+                      <label htmlFor={alternatives.id}>{alternatives.option}</label>
+                    </div>
+                  ))}
+                </>
+              ) : question.type === 'open' ? (
+                <>
+                  <textarea rows={5} value={answer.answers[index].value} onChange={(e) => handleChange(e, index)}/>
+                </>
+              ) : (
+                <>
+
+                </>
+              )}
+              
+              {error === `answer${index}` && (<Error>{lesson.task[index].type === 'open' ? 'Campo vazio' : 'Selecione uma opção'}</Error>)}
             </div>
           ))}
           <button>Finalizar Aula</button>

@@ -10,7 +10,7 @@ import useValidate from '../../../../hooks/useValidate';
 import Select from '../../../../components/Inputs/Select';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { GlobalContext } from '../../../../GlobalContext';
-import { ILesson, Task } from '../../../../types/Lessons';
+import { ILesson, Task, TaskOptions } from '../../../../types/Lessons';
 import { Status } from '../../../../types/Commom';
 
 const HandleLesson = () => {
@@ -29,7 +29,7 @@ const HandleLesson = () => {
   const description =  useForm({type: 'video', initialValue: lessonToEdit ? lessonToEdit.text : ''})
   const status =  useForm({type: 'status', initialValue: lessonToEdit ? lessonToEdit.status : ''})
 
-  const [task, setTask] = React.useState<Task[]>([{id: `T${getRandomID()}`, answer: '', question: '', xp: 25}]);
+  const [task, setTask] = React.useState<Task[]>([{id: `T${getRandomID()}`, type: 'open', answer: '', question: '', xp: 25}]);
   const [groups, setGroups] = React.useState<string[]>([])
   const [subject, setSubject] = React.useState<string>('');
 
@@ -46,7 +46,7 @@ const HandleLesson = () => {
   function handleCreateQuestion(e: React.MouseEvent<HTMLButtonElement>): void {
     e.stopPropagation();
     const addNewQuestion = [...task];
-    addNewQuestion.push({id: `T${getRandomID()}`, question: '', answer: '', xp: 25});
+    addNewQuestion.push({id: `T${getRandomID()}`, type: 'open', question: '', answer: '', xp: 25});
     setTask(addNewQuestion);
   }
 
@@ -79,14 +79,54 @@ const HandleLesson = () => {
     setTask([...updateTask]);
   }
 
+  function handleTaskType(e: React.ChangeEvent<HTMLInputElement>, index: number): void {
+    const type = e.target.value;
+    const updateTask = [...task];
+
+    if (type === `open${index}`) {
+      updateTask[index].type = 'open';
+      delete updateTask[index].options;
+    } else if (type === `alternatives${index}`) {
+      updateTask[index].type = 'alternatives';
+      updateTask[index].options = [{id: `O${getRandomID()}`, option: ''}, {id: `O${getRandomID()}`, option: ''}];
+    }
+
+    setTask(updateTask);
+  }
+
+  function handleAddAlternative(e: React.MouseEvent<HTMLButtonElement> ,index: number): void {
+    e.preventDefault();
+    const updateTask = [...task];
+    updateTask[index].options?.push({id: `O${getRandomID()}`, option: ''});
+    setTask(updateTask);
+  }
+
+  function handleTaskAlternative(e: React.ChangeEvent<HTMLInputElement>, index: number, optionIndex: number): void {
+    const updateTask = [...task];
+
+    (updateTask[index].options as TaskOptions[])[optionIndex].option = e.target.value;
+    setTask(updateTask);
+  }
+
   function handleSubmit(e: React.FormEvent): void {
     e.preventDefault();
+
+    function validateOpenTasks(): boolean {
+      return task.every((t, i) => t.type === 'open' && isEmpty(`question${i}`, t.question) && isEmpty(`answer${i}`, t.answer));
+    }
     
-    if (title.validate() && description.validate() && isEmpty('group', groups) && isEmpty('subject', subject) && loggedUser && task.every((t, i) => isEmpty(`question${i}`, t.question) && isEmpty(`answer${i}`, t.answer))) {
+    function validateOpenAlternativeTasks(): boolean {
+      return task.some((t, i) => isEmpty(`question${i}`, t.question) && t.options?.every((t2, optionIndex) => isEmpty(`alternative-t${i}-o${optionIndex}`, t2.option)) && isEmpty(`answer${i}`, t.answer))
+    }
+
+    console.log((validateOpenAlternativeTasks()))
+    
+    if (title.validate() && description.validate() && isEmpty('group', groups) && isEmpty('subject', subject) && loggedUser && 
+       (validateOpenTasks() || validateOpenAlternativeTasks())) {
 
       const newLesson: ILesson = {
         id: lessonToEdit ? lessonToEdit.id : `L${getRandomID()}`,
-        createdby: lessonToEdit ? lessonToEdit.createdby : loggedUser.id,
+        createdby: lessonToEdit ? lessonToEdit.createdby : 'a',
         title: title.value,
         video: video.value,
         text: description.value,
@@ -152,10 +192,32 @@ const HandleLesson = () => {
             <div key={question.id} className={Styles.question_container}>
 
               <div className={Styles.question}>
+
+              <div>
+                  <input type="radio" name={`question${index}`} id={`open${index}`} value={`open${index}`} defaultChecked onChange={(e) => handleTaskType(e, index)}/>
+                  <label htmlFor='open'>Questão aberta</label>
+                  <input type="radio" name={`question${index}`} id={`alternatives${index}`}  value={`alternatives${index}`}  onChange={(e) => handleTaskType(e, index)}/>
+                  <label htmlFor='alternatives'>Questão com alternativas</label>
+                </div>
+
                 <label>Questão {index + 1}</label>
                 <textarea rows={5} value={question.question} onChange={(e) => handleTask(e, 'question', index)}/>
                 {error === `question${index}` && (<Error>Campo vazio</Error>)}
               </div>
+
+              {question.type === 'alternatives' && 
+              (
+              <div>
+                {question.options?.map((option, optionIndex) => (
+                  <div key={option.id}>
+                    <label htmlFor="">Alternativa {optionIndex + 1}</label>
+                    <input type='text' onChange={(e) => handleTaskAlternative(e, index, optionIndex)}/>
+                    {error === `alternative-t${index}-o${optionIndex}` && (<Error>Campo vazio</Error>)}
+                  </div>
+                ))}
+                <button onClick={(e) => handleAddAlternative(e, index)}>Adicionar alternativa</button>
+              </div>
+              )}
 
               <div>
                 <label>Resposta (Para comparar com a resposta do aluno)</label>
