@@ -145,12 +145,12 @@ const useData = (): UseDataReturn => {
       const lesson_1: ILesson = {
         groups: ['G1', 'G2'], 
         createdby: 'U1', 
-        id: 'L1', 
+        id: 'L1',
         task: [
-          {id: "Q1", question: "Quanto é 1 + 1?", answer: "2", xp: 25}, 
-          {id: "Q2", question: "Quanto é 2 + 2?", answer: "4", xp: 50}, 
-          {id: "Q3", question: "Quanto é 3 + 3?", answer: "6", xp: 75}, 
-          {id: "Q4", question: "Quanto é 4 + 4?", answer: "8", xp: 100},
+          {id: "Q1", type: 'open', question: "Quanto é 1 + 1?", answer: "2", xp: 25}, 
+          {id: "Q2", type: 'alternatives', question: "Quanto é 2 + 2?", answer: "4", options: [{id: 'Q2O1', option: '4'}, {id: 'Q2O2', option: '5'}, {id: 'Q2O3', option: '9'}], xp: 50}, 
+          {id: "Q3", type: 'open', question: "Quanto é 3 + 3?", answer: "6", xp: 75}, 
+          {id: "Q4", type: 'alternatives', question: "Quanto é 4 + 4?", answer: "8", options: [{id: 'Q4O1', option: '11'}, {id: 'Q4O2', option: '12'}, {id: 'Q4O3', option: '8'}], xp: 100},
         ], 
         subject: 'S1',
         text: 'Nessa aula você aprenderá sobre adição', 
