@@ -120,8 +120,6 @@
   filter: brightness(1.2);
 }
 
-
-
 @media (max-width: 1024px) {
   .container {
     margin-left: 0;

@@ -15,7 +15,7 @@ import StudentDashboard from './pages/Student/StudentDashboard/StudentDashboard'
 import StudentLesson from './pages/Student/StudentLesson/StudentLesson';
 import Subjects from './pages/Panel/Subjects/Subjects';
 import Groups from './pages/Panel/Groups/Groups';
-import HandleLesson from './pages/Panel/HandleLesson/HandleLesson';
+import HandleLesson from './pages/Panel/HandleLesson';
 import EvaluateTask from './pages/Panel/EvaluateTask/EvaluateTask';
 import Students from './pages/Panel/Students/Students';
 import StudentData from './pages/Panel/StudentData/StudentData';
