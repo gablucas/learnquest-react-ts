@@ -1,17 +1,17 @@
 import React, { useContext } from 'react';
-import Styles from '../Lessons.module.css';
-import useData from '../../../../hooks/useData';
-import Input from '../../../../components/Inputs/Input';
-import useForm from '../../../../hooks/useForm';
-import Textarea from '../../../../components/Inputs/Textarea';
-import useRandom from '../../../../hooks/useRandom';
-import Error from '../../../../components/Helper/Error';
-import useValidate from '../../../../hooks/useValidate';
-import Select from '../../../../components/Inputs/Select';
+import Styles from './HandleLesson.module.css';
+import useData from '../../../hooks/useData';
+import Input from '../../../components/Inputs/Input';
+import useForm from '../../../hooks/useForm';
+import Textarea from '../../../components/Inputs/Textarea';
+import useRandom from '../../../hooks/useRandom';
+import Error from '../../../components/Helper/Error';
+import useValidate from '../../../hooks/useValidate';
+import Select from '../../../components/Inputs/Select';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
-import { GlobalContext } from '../../../../GlobalContext';
-import { ILesson, Task, TaskOptions } from '../../../../types/Lessons';
-import { Status } from '../../../../types/Commom';
+import { GlobalContext } from '../../../GlobalContext';
+import { ILesson, Task, TaskOptions } from '../../../types/Lessons';
+import { Status } from '../../../types/Commom';
 
 const HandleLesson = () => {
   const { data } = useContext(GlobalContext);

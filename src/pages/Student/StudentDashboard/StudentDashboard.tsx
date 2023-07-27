@@ -1,5 +1,5 @@
 import React from 'react';
-import Styles from './StudentInfo.module.css'
+import Styles from './StudentDashboard.module.css'
 import useData from "../../../hooks/useData";
 import { IStudent } from "../../../types/Users";
 import { GlobalContext } from '../../../GlobalContext';
@@ -7,7 +7,7 @@ import { TaskStudent } from '../../../types/Lessons';
 import MobileInfo from '../../../components/MobileInfo/MobileInfo';
 import { MobileInfoData } from '../../../types/Commom';
 
-const StudentInfo = () => {
+const StudentDashboard = () => {
   const { data, toggle, setToggle } = React.useContext(GlobalContext);
   const { getLoggedUser, getLesson, getSubject, getStudentLessons, counterCorrectWrongQuestions } = useData();
   const student = getLoggedUser() as IStudent;
@@ -98,4 +98,4 @@ const StudentInfo = () => {
   )
 }
 
-export default StudentInfo;
+export default StudentDashboard;

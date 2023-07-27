@@ -1,18 +1,18 @@
 import React from 'react';
 import Panel from '../Panel.module.css';
 import useData from '../../../hooks/useData';
-import { GlobalContext } from '../../../GlobalContext';
 import Message from '../../../components/Message/Message';
-import HandleUser from './HandleUser';
+import HandleUser from './components/HandleUser';
+import MobileInfo from '../../../components/MobileInfo/MobileInfo';
+import Filter from '../../../components/Filter/Filter';
+import useHelpers from '../../../hooks/useHelpers';
 import DeleteIcon from '../../../components/Icons/DeleteIcon';
 import EditIcon from '../../../components/Icons/EditIcon';
 import MoreInfo from '../../../components/Icons/MoreInfo';
-import { MobileInfoData } from '../../../types/Commom';
-import MobileInfo from '../../../components/MobileInfo/MobileInfo';
-import { IStudent, IUser } from '../../../types/Users';
-import Filter from '../../../components/Filter/Filter';
 import FilterIcon from '../../../components/Icons/FilterIcon';
-import useHelpers from '../../../hooks/useHelpers';
+import { GlobalContext } from '../../../GlobalContext';
+import { MobileInfoData } from '../../../types/Commom';
+import { IStudent, IUser } from '../../../types/Users';
 
 const Users = () => {
   const { setConfirm, filter, toggle, setToggle } = React.useContext(GlobalContext);

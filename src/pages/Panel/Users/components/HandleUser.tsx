@@ -1,15 +1,15 @@
 import React from 'react';
-import Styles from './Users.module.css';
-import Input from '../../../components/Inputs/Input';
-import Select from '../../../components/Inputs/Select';
-import useForm, { UseFormType } from '../../../hooks/useForm';
-import useRandom from '../../../hooks/useRandom';
-import useData from '../../../hooks/useData';
-import { GlobalContext } from '../../../GlobalContext';
+import Styles from './HandleUser.module.css';
+import Input from '../../../../components/Inputs/Input';
+import Select from '../../../../components/Inputs/Select';
+import useForm, { UseFormType } from '../../../../hooks/useForm';
+import useRandom from '../../../../hooks/useRandom';
+import useData from '../../../../hooks/useData';
+import { GlobalContext } from '../../../../GlobalContext';
 import { Link } from 'react-router-dom';
-import { IInstituition, IStudent, IUser } from '../../../types/Users';
-import Modal from '../../../components/Modal';
-import { Status } from '../../../types/Commom';
+import { IInstituition, IStudent, IUser } from '../../../../types/Users';
+import Modal from '../../../../components/Modal';
+import { Status } from '../../../../types/Commom';
 
 
 type HandleUserProps = {

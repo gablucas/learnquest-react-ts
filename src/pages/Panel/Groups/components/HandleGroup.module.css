@@ -1,18 +1,18 @@
-.handlegroup > div {
+.container > div {
   display: grid;
   grid-template-columns: 1fr auto;
 }
 
-.handlegroup > div button {
+.container > div button {
   font-weight: 600;
 }
 
-.handlegroup form {
+.container form {
   display: grid;
   grid-template-rows: repeat(3, auto);
 }
 
-.handlegroup .togglets {
+.togglets {
   display: flex;
   cursor: pointer;
   fill: #FFA700;

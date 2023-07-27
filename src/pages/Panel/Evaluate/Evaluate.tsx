@@ -12,7 +12,7 @@ import { GlobalContext } from '../../../GlobalContext';
 import { MobileInfoData, Subject } from '../../../types/Commom';
 import { IEvaluateTask } from '../../../types/Lessons';
 
-const EvaluateTasks = () => {
+const Evaluate = () => {
   const { data, filter, toggle, setToggle } = React.useContext(GlobalContext);
   const { isArrayEmpty, isAnyArrayFilled, arrayIncludes, cleanFilter } = useHelpers();
   const { getLoggedUser, getUser, getSubject } = useData();
@@ -71,4 +71,4 @@ const EvaluateTasks = () => {
   )
 }
 
-export default EvaluateTasks;
+export default Evaluate;

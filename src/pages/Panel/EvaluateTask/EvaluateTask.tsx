@@ -1,11 +1,11 @@
 import React from 'react';
-import Styles from '../EvaluateTasks.module.css';
+import Styles from './EvaluateTasks.module.css';
 import { Link, Navigate, useParams } from "react-router-dom";
-import { GlobalContext } from '../../../../GlobalContext';
-import { TaskStudent } from '../../../../types/Lessons';
-import useData from '../../../../hooks/useData';
-import useValidate from '../../../../hooks/useValidate';
-import Error from '../../../../components/Helper/Error';
+import { GlobalContext } from '../../../GlobalContext';
+import { TaskStudent } from '../../../types/Lessons';
+import useData from '../../../hooks/useData';
+import useValidate from '../../../hooks/useValidate';
+import Error from '../../../components/Helper/Error';
 
 const EvaluateTask = () => {
   const { data } = React.useContext(GlobalContext);

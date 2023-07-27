@@ -1,7 +1,7 @@
 import React from 'react';
 import Styles from './Preferences.module.css';
 import { GlobalContext } from '../../../GlobalContext';
-import EditDefaultPassword from './EditDefaultPassword';
+import EditDefaultPassword from './components/EditDefaultPassword';
 
 const Preferences = () => {
   const { data, toggle, setToggle } = React.useContext(GlobalContext);

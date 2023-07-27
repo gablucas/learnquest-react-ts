@@ -1,9 +1,9 @@
 import React from 'react';
-import Input from "../../../components/Inputs/Input";
-import Modal from "../../../components/Modal";
-import useForm from "../../../hooks/useForm";
-import useData from '../../../hooks/useData';
-import { GlobalContext } from '../../../GlobalContext';
+import Input from "../../../../components/Inputs/Input";
+import Modal from "../../../../components/Modal";
+import useForm from "../../../../hooks/useForm";
+import useData from '../../../../hooks/useData';
+import { GlobalContext } from '../../../../GlobalContext';
 
 
 const EditDefaultPassword = () => {

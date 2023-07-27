@@ -3,7 +3,7 @@ import Panel from '../Panel.module.css';
 import useData from '../../../hooks/useData';
 import { GlobalContext } from '../../../GlobalContext';
 import Message from '../../../components/Message/Message';
-import HandleSubject from './HandleSubject';
+import HandleSubject from './components/HandleSubject';
 import EditIcon from '../../../components/Icons/EditIcon';
 import DeleteIcon from '../../../components/Icons/DeleteIcon';
 import MoreInfo from '../../../components/Icons/MoreInfo';

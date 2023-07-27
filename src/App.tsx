@@ -11,15 +11,15 @@ import Preferences from './pages/Panel/Preferences/Preferences';
 import Lessons from './pages/Panel/Lessons/Lessons';
 import Student from './pages/Student';
 import StudentLessons from './pages/Student/StudentLessons/StudentLessons';
-import StudentInfo from './pages/Student/StudendInfo/StudentInfo';
+import StudentDashboard from './pages/Student/StudentDashboard/StudentDashboard';
 import StudentLesson from './pages/Student/StudentLesson/StudentLesson';
 import Subjects from './pages/Panel/Subjects/Subjects';
 import Groups from './pages/Panel/Groups/Groups';
-import HandleLesson from './pages/Panel/Lessons/components/HandleLesson';
-import EvaluateTasks from './pages/Panel/Evaluate/EvaluateTasks';
-import EvaluateTask from './pages/Panel/Evaluate/components/EvaluateTask';
+import HandleLesson from './pages/Panel/HandleLesson/HandleLesson';
+import EvaluateTask from './pages/Panel/EvaluateTask/EvaluateTask';
 import Students from './pages/Panel/Students/Students';
-import StudentData from './pages/Panel/Students/StudentData';
+import StudentData from './pages/Panel/StudentData/StudentData';
+import Evaluate from './pages/Panel/Evaluate/Evaluate';
 
 
 function App() {
@@ -37,7 +37,7 @@ function App() {
                 <Route path='aulas' element={<Lessons />}/>
                 <Route path='aulas/criar' element={<HandleLesson />} />
                 <Route path='aulas/editar/:id' element={<HandleLesson />} />
-                <Route path='avaliar' element={<EvaluateTasks />} />
+                <Route path='avaliar' element={<Evaluate />} />
                 <Route path='avaliar/:id' element={<EvaluateTask />} />
                 <Route path='alunos' element={<Students />} />
                 <Route path='aluno/:id' element={<StudentData />} />
@@ -53,7 +53,7 @@ function App() {
 
             <Route element={<ProtectedRoutes allowedAccess={['student']}/>}>
               <Route path='/estudante/*' element={<Student />}>
-                <Route path='' element={<StudentInfo />} />
+                <Route path='' element={<StudentDashboard />} />
                 <Route path='aulas' element={<StudentLessons />} />
                 <Route path='aula/:id' element={<StudentLesson />} />
               </Route>

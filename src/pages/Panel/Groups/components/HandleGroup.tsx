@@ -1,6 +1,6 @@
 import React from 'react';
 import Panel from '../../Panel.module.css';
-import Styles from '../Groups.module.css';
+import Styles from './HandleGroup.module.css';
 import useData from '../../../../hooks/useData';
 import Modal from '../../../../components/Modal';
 import useRandom from '../../../../hooks/useRandom';
@@ -80,7 +80,7 @@ const HandleGroup = ({ groupID }: HandleUserProps) => {
   return (
     <Modal>
 
-      <div className={Styles.handlegroup}>
+      <div className={Styles.container}>
 
         <div>
           <h2>{groupID ? 'Editar' : 'Criar nova'} turma</h2>

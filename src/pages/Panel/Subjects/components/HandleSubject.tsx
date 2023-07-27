@@ -1,14 +1,14 @@
 import React from 'react';
-import Panel from '../Panel.module.css';
-import Styles from './Subjects.module.css';
-import Input from '../../../components/Inputs/Input';
-import useForm, { UseFormType } from '../../../hooks/useForm';
-import useData from '../../../hooks/useData';
-import { GlobalContext } from '../../../GlobalContext';
-import Modal from '../../../components/Modal';
-import useRandom from '../../../hooks/useRandom';
-import Select from '../../../components/Inputs/Select';
-import { Status } from '../../../types/Commom';
+import Panel from '../../Panel.module.css';
+import Styles from './HandleSubject.module.css';
+import Input from '../../../../components/Inputs/Input';
+import useForm, { UseFormType } from '../../../../hooks/useForm';
+import useData from '../../../../hooks/useData';
+import Modal from '../../../../components/Modal';
+import useRandom from '../../../../hooks/useRandom';
+import Select from '../../../../components/Inputs/Select';
+import { GlobalContext } from '../../../../GlobalContext';
+import { Status } from '../../../../types/Commom';
 
 type HandleSubjectProps = {
   subjectID?: string,
