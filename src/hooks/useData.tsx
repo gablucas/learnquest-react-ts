@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 type UseDataReturn = {
   getData: () => IInstituition,
   createInitialUser: () => void,
-  getUser: (id: string) => IUser | IStudent | undefined,
+  getUser: (id: string | undefined) => IUser | IStudent | undefined,
   getUsersByAcess: (access: 'student' | 'teacher' | 'admin') => IUser[] | IStudent[] | undefined
   createUser: (user: IUser | IStudent) => void,
   removeUser: (email: string) => void,
@@ -18,7 +18,7 @@ type UseDataReturn = {
   getLoggedUser: () => IUser | IStudent | undefined,
   logoutUser: () => void,
   checkUser: (type: ValidateOptions, value: string) => boolean,
-  getLesson: (id: string) => ILesson | undefined,
+  getLesson: (id: string | undefined) => ILesson | undefined,
   createLesson: (lesson: ILesson) => void,
   removeLesson: (id: string) => void,
   editLesson: (id: string, lesson: ILesson) => void,
@@ -195,10 +195,10 @@ const useData = (): UseDataReturn => {
     return JSON.parse(localStorage.getItem('data') as string);
   }
 
-  function getUser(id: string): IUser | IStudent | undefined {
+  function getUser(id: string | undefined): IUser | IStudent | undefined {
     const data = getData();
 
-    if (data) {
+    if (id) {
       return data.users.find((user) => user.id === id);
     }
   }
@@ -293,12 +293,14 @@ const useData = (): UseDataReturn => {
     setData(updateData);
   }
 
-  function getLesson(id: string): ILesson | undefined {
+  function getLesson(id: string | undefined): ILesson | undefined {
     const data = getData();
 
-    if (data) {
+    if (id) {
       return data.lessons.find((lesson) => lesson.id === id);
     }
+
+
   }
   
   function removeLesson(id: string) {

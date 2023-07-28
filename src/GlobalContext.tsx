@@ -58,8 +58,21 @@ export const GlobalProvider = ({ children }: GlobalProviderProps) => {
   const [filter, setFilter] = React.useState<FilterStateProps>({access: [], student: [], subject: [], group: [], createdby: [], status: []})
   const [toggle, setToggle] = React.useState<Toggle>('none');
 
+  const value = {
+    data,
+    setData,
+    user,
+    setUser,
+    confirm,
+    setConfirm,
+    filter,
+    setFilter,
+    toggle,
+    setToggle,
+  }
+
   return (
-    <GlobalContext.Provider value={{ data, setData, user, setUser, confirm, setConfirm, filter, setFilter, toggle, setToggle }}>
+    <GlobalContext.Provider value={value}>
       { children }
     </GlobalContext.Provider>
   )

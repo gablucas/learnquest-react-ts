@@ -26,10 +26,10 @@ const HandleLesson = () => {
 
   const lessonToEdit = data.lessons.find((lesson) => lesson.id === id);
 
-  const title =  useForm({type: 'title', initialValue: lessonToEdit ? lessonToEdit.title : ''})
+  const title =  useForm({type: 'title', initialValue: lessonToEdit ? lessonToEdit.title : ''});
   const video =  useForm({type: 'video', initialValue: lessonToEdit ? `https://www.youtube.com/watch?v=${lessonToEdit?.video}` : ''})
-  const description =  useForm({type: 'video', initialValue: lessonToEdit ? lessonToEdit.text : ''})
-  const status =  useForm({type: 'status', initialValue: lessonToEdit ? lessonToEdit.status : ''})
+  const description =  useForm({type: 'video', initialValue: lessonToEdit ? lessonToEdit.text : ''});
+  const status =  useForm({type: 'status', initialValue: lessonToEdit ? lessonToEdit.status : ''});
 
   const [task, setTask] = React.useState<Task[]>(lessonToEdit ? lessonToEdit.task : [{id: `T${getRandomID()}`, type: 'open', answer: '', question: '', xp: 25}]);
   const [groups, setGroups] = React.useState<string[]>(lessonToEdit ? lessonToEdit.groups : [])
@@ -70,6 +70,8 @@ const HandleLesson = () => {
     }
   }
 
+  const options = [{name: 'Ativo', value: 'active'}, {name: 'Desativo', value: 'disable'}];
+
   if (loggedUser?.access !== 'admin' && loggedUser?.id !== lessonToEdit?.createdby && lessonToEdit)
   return <Navigate to='/painel/aulas' />
 
@@ -83,8 +85,7 @@ const HandleLesson = () => {
           <Textarea label='Descrição' rows={10} {...description} />
         </div>
 
-        {id && (<Select label='Estado' options={[{name: 'Ativo', value: 'active'}, {name: 'Desativo', value: 'disable'}]} {...status} />)}
-
+        {id && (<Select label='Estado' options={options} {...status} />)}
         <GroupsList groups={groups} setGroups={setGroups} />
         <SubjectsList subject={subject} setSubject={setSubject} />
         <Tasks task={task} setTask={setTask} />
