@@ -24,7 +24,8 @@ const UsersList = ({ users, setUserID, setMobileInfo}: IUsersListProps) => {
   }
 
   function handleRemove(email: string): void {
-    removeUser(email);
+    setToggle('confirm')
+    setConfirm({type: 'confirm', text: 'Deseja realmente excluir este usuário?', action: () => removeUser(email)})
   }
 
   function handleMobileInfo(user: IUser | IStudent): void {
@@ -48,7 +49,7 @@ const UsersList = ({ users, setUserID, setMobileInfo}: IUsersListProps) => {
           {m.id !== 'U1' && (
             <>
               <button onClick={() => handleEdit(m.id)}><EditIcon /></button>
-              <button onClick={() => setConfirm({type: 'confirm', text: 'Deseja realmente excluir este usuário?', action: () => handleRemove(m.email)})}><DeleteIcon /></button>
+              <button onClick={() => handleRemove(m.email)}><DeleteIcon /></button>
             </>
           )}
         </div>

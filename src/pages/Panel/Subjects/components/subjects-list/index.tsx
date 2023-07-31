@@ -22,7 +22,8 @@ const SubjectsList = ({ subjects, setSubjectID, setMobileInfo }: ISubjectsList) 
   }
 
   function handleRemoveSubject(id: string): void {
-    removeSubject(id);
+    setToggle('confirm');
+    setConfirm({type: 'confirm', text: 'Deseja realmente excluir está matéria?', action: () => removeSubject(id)});
   }
 
   function handleEdit(id: string): void {
@@ -47,7 +48,7 @@ const SubjectsList = ({ subjects, setSubjectID, setMobileInfo }: ISubjectsList) 
           <span>{subject.status === 'active' ? 'Ativado' : 'Desativado'}</span>
           <button className={Panel.mobile} onClick={() => handleMobileInfo(subject)} ><MoreInfo /></button>
           <button onClick={() => handleEdit(subject.id)}><EditIcon /></button>
-          <button onClick={() => setConfirm({type: 'confirm', text: 'Deseja realmente excluir está matéria?', action: () => handleRemoveSubject(subject.id)})}><DeleteIcon /></button>
+          <button onClick={() => handleRemoveSubject(subject.id)}><DeleteIcon /></button>
         </div>
       ))}
     </>

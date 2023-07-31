@@ -29,7 +29,8 @@ const GroupList = ({ setGroupID, setMobileInfo}: GroupListProps) => {
   }
 
   function handleRemoveGroup(id: string): void {
-    removeGroup(id);
+    setToggle('confirm');
+    setConfirm({type: 'confirm', text: 'Deseja realmente excluir essa turma?', action: () => removeGroup(id)});
   }
 
   function handleMobileInfo(m: Group): void {
@@ -50,7 +51,7 @@ const GroupList = ({ setGroupID, setMobileInfo}: GroupListProps) => {
             <span>{group.status === 'active' ? 'Ativado' : 'Desativado'}</span>
             <button className={Panel.mobile} onClick={() => handleMobileInfo(group)} ><MoreInfo /></button>
             <button onClick={() => handleEdit(group.id)}><EditIcon /></button>
-            <button onClick={() => setConfirm({type: 'confirm', text: 'Deseja realmente excluir essa turma?', action: () => handleRemoveGroup(group.id)})}><DeleteIcon /></button>
+            <button onClick={() => handleRemoveGroup(group.id)}><DeleteIcon /></button>
           </div>
         ))}
     </>

@@ -4,14 +4,14 @@ import Modal from "../Modal";
 import { GlobalContext } from '../../GlobalContext';
 
 const Message = () => {
-  const { confirm, setConfirm } = React.useContext(GlobalContext);
+  const { confirm, setToggle } = React.useContext(GlobalContext);
 
   function handleClick(choice: boolean): void {
     if (choice && confirm.type === 'confirm') {
       confirm.action?.();
     } 
 
-    setConfirm({type: 'message', text: '', action: () => ''});
+    setToggle('none');
   }
 
 

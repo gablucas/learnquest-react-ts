@@ -12,9 +12,9 @@ const EvaluateTask = () => {
   const { id } = useParams();
   const { lessonInfo } = useDataEvaluate(id)
 
-  if (!lessonInfo) return (<PageNotFound title='Esta tarefa não existe' path='/painel/avaliar' />)
+  if (toggleDoneEvaluate) return (<PageNotFound title='Tarefa avaliada com sucesso' path='/painel/avaliar' />)
+  else if (!lessonInfo) return (<PageNotFound title='Esta tarefa não existe' path='/painel/avaliar' />)
   else if (loggedUser?.access !== 'admin' && loggedUser?.id !== lessonInfo.createdby) return <Navigate to='/painel/avaliar' />
-  else if (toggleDoneEvaluate) return (<PageNotFound title='Tarefa avaliada com sucesso' path='/painel/avaliar' />)
   else return (<QuestionsToEvaluate setToggleDoneEvaluate={setToggleDoneEvaluate} />)
 }
 
