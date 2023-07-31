@@ -4,6 +4,17 @@
   margin-top: 40px;
 }
 
+.login_container > a {
+  margin-top: 40px;
+  font-weight: 600;
+  padding: 12px;
+  border: 1px solid #121214;
+  border-radius: 7px;
+  background-color: #302B33;
+
+}
+
+
 .test > span {
   display: block;
   font-size: .85rem;
@@ -13,7 +24,8 @@
   color: #a3a3a3;
 }
 
-.test div {
+.test div,
+.test > a {
   display: grid;
   background-color: #302B33;
   margin-bottom: 12px;
@@ -23,13 +35,16 @@
   transition: border .3s;
 }
 
-.test div span:first-of-type {
+.test div span:first-of-type,
+.test > a {
   font-weight: 600;
   text-transform: uppercase;
 }
 
-.test div:hover {
+.test div:hover,
+.test a:hover {
   border: 1px solid #a3a3a3;
+  color: #FFA700;
   cursor: pointer;
 }
 

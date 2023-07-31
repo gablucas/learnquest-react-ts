@@ -12,12 +12,10 @@ import UsersHeaders from './components/users-header';
 import UsersList from './components/users-list';
 
 const Users = () => {
+  const { data } = React.useContext(GlobalContext);
   const { filter, toggle, setToggle } = React.useContext(GlobalContext);
   const { isArrayEmpty,  isAnyArrayFilled, arrayIncludes, cleanFilter } = useHelpers();
-
   const [userID, setUserID] = React.useState<string>('');
-  const { data } = React.useContext(GlobalContext);
-
   const [mobileInfo, setMobileInfo] = React.useState<MobileInfoData[]>([{title: '', description: ''}]);
 
   let users = data.users;

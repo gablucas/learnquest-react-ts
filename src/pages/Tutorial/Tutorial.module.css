@@ -1,0 +1,54 @@
+.tutorial > a {
+  display: inline-block;
+  padding: 12px;
+  font-weight: 600;
+  border-radius: 7px;
+  margin-bottom: 20px;
+  color: #121214;
+  background-color: #FFA700;
+}
+
+.tutorial a:hover {
+  filter: brightness(1.2);
+}
+
+.tutorial h2 {
+  text-align: center;
+  font-size: 1.4rem;
+  text-transform: uppercase;
+  padding: 6px;
+  margin-bottom: 10px;
+  border-radius: 7px;
+  background-color: #302B33;
+}
+
+.tutorial > div + div {
+  margin-top: 40px;
+}
+
+.tutorial span {
+  color: #a3a3a3;
+}
+
+.tutorial .highlight {
+  font-weight: 500;
+  color: #FFA700;
+}
+
+.roles > div span {
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.roles div ul li {
+  color: #a3a3a3;
+}
+
+.roles div + div {
+  margin-top: 20px;
+}
+
+.faq > div + div {
+  margin-top: 20px;
+}
+

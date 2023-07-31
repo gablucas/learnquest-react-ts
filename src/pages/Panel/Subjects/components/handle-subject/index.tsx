@@ -1,5 +1,5 @@
 import React from 'react';
-import Panel from '../../Panel.module.css';
+import Panel from '../../../Panel.module.css';
 import Styles from './HandleSubject.module.css';
 import Input from '../../../../../components/Inputs/Input';
 import useForm, { UseFormType } from '../../../../../hooks/useForm';
@@ -67,7 +67,7 @@ const HandleSubject = ({ subjectID }: HandleSubjectProps) => {
           <Input type='text' label='Matéria' {...name} />
 
           <div>
-            <span> Adicionar professores a matéria</span>
+            <span>Adicionar professores a matéria</span>
             <div className={Panel.selectusers}>
               {data.users.map((user) => user.access === 'teacher' && (
                 <div key={user.id}>

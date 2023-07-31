@@ -10,9 +10,7 @@ import Dashboard from './pages/Panel/Dashboard/Dashboard';
 import Preferences from './pages/Panel/Preferences';
 import Lessons from './pages/Panel/Lessons';
 import Student from './pages/Student';
-import StudentLessons from './pages/Student/StudentLessons/StudentLessons';
-import StudentDashboard from './pages/Student/StudentDashboard/StudentDashboard';
-import StudentLesson from './pages/Student/StudentLesson/StudentLesson';
+import StudentLessons from './pages/Student/StudentLessons';
 import Subjects from './pages/Panel/Subjects';
 import Groups from './pages/Panel/Groups';
 import HandleLesson from './pages/Panel/HandleLesson';
@@ -20,6 +18,9 @@ import EvaluateTask from './pages/Panel/EvaluateTasks';
 import Students from './pages/Panel/Students/Students';
 import StudentData from './pages/Panel/StudentData';
 import Evaluate from './pages/Panel/Evaluate/Evaluate';
+import StudentInformations from './pages/Student/Student-Information';
+import StudentHandleLesson from './pages/Student/StudentLesson';
+import Tutorial from './pages/Tutorial';
 
 
 function App() {
@@ -31,6 +32,8 @@ function App() {
           <Header />
           <Routes>
             <Route path='/' element={<Login />} />
+            <Route path='/tutorial' element={<Tutorial />} />
+
             <Route element={<ProtectedRoutes allowedAccess={['admin', 'teacher']}/>}>
               <Route path='/painel/*' element={<Panel />}>
                 <Route path='' element={<Dashboard />} />
@@ -53,9 +56,9 @@ function App() {
 
             <Route element={<ProtectedRoutes allowedAccess={['student']}/>}>
               <Route path='/estudante/*' element={<Student />}>
-                <Route path='' element={<StudentDashboard />} />
+                <Route path='' element={<StudentInformations />} />
                 <Route path='aulas' element={<StudentLessons />} />
-                <Route path='aula/:id' element={<StudentLesson />} />
+                <Route path='aula/:id' element={<StudentHandleLesson />} />
               </Route>
             </Route>
 

@@ -2,15 +2,17 @@ import { Link } from 'react-router-dom';
 import Styles from './PageNotFount.module.css';
 
 interface IPageNotFoundProps {
-  message: string,
+  title: string,
+  message?: string,
   path: string,
 }
 
-const PageNotFound = ({message, path}: IPageNotFoundProps) => {
+const PageNotFound = ({ title, message, path }: IPageNotFoundProps) => {
 
   return (
     <div className={Styles.message}>
-      <h1>{message}</h1>
+      <h1>{title}</h1>
+      <span>{message}</span>
       <Link to={path}>Voltar</Link>
   </div>
   )
