@@ -17,7 +17,7 @@ type UseDataReturn = {
   authUser: (login: string, password: string, setError: Dispatch<SetStateAction<string | null>>) => void,
   getLoggedUser: () => IUser | IStudent | undefined,
   logoutUser: () => void,
-  checkUser: (type: ValidateOptions, value: string) => boolean,
+  someUserHasInfo: (type: ValidateOptions, value: string) => boolean,
   getLesson: (id: string | undefined) => ILesson | undefined,
   createLesson: (lesson: ILesson) => void,
   removeLesson: (id: string) => void,
@@ -39,7 +39,7 @@ type UseDataReturn = {
   getStudentLessons: (id?: string) => ILesson[],
   getStudentsByGroup: (groupID: string[]) => IStudent[],
   getStudentsByTeacher: (teacherID: string) => IStudent[],
-  counterCorrectWrongQuestions: (counterType: 'correct' | 'wrong', lesson: TaskStudent) => number,
+  counterQuestionsBy: (counterType: 'correct' | 'wrong', lesson: TaskStudent) => number,
 }
 
 const useData = (): UseDataReturn => {
@@ -280,7 +280,7 @@ const useData = (): UseDataReturn => {
     setUser(null);
   }
 
-  function checkUser(type: ValidateOptions, value: string): boolean {
+  function someUserHasInfo(type: ValidateOptions, value: string): boolean {
     const checkData = getData();
 
     return checkData.users.some((user) => user[type] === value);
@@ -543,7 +543,7 @@ const useData = (): UseDataReturn => {
     return getStudentsByGroup(teacherGroups);
   }
 
-  function counterCorrectWrongQuestions(counterType: 'correct' | 'wrong', lesson: TaskStudent): number {
+  function counterQuestionsBy(counterType: 'correct' | 'wrong', lesson: TaskStudent): number {
     if (counterType === 'correct') {
       return lesson.answers.filter((f) => f.isCorrect === true).length;
     } else if (counterType === 'wrong') {
@@ -564,7 +564,7 @@ const useData = (): UseDataReturn => {
     authUser,
     getLoggedUser,
     logoutUser,
-    checkUser,
+    someUserHasInfo,
     getLesson,
     createLesson,
     removeLesson,
@@ -586,7 +586,7 @@ const useData = (): UseDataReturn => {
     getStudentLessons,
     getStudentsByGroup,
     getStudentsByTeacher,
-    counterCorrectWrongQuestions,
+    counterQuestionsBy,
   }
 }
 

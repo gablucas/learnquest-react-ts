@@ -7,18 +7,18 @@ import ProtectedRoutes from './components/Helper/ProtectedRoutes';
 import { GlobalProvider } from './GlobalContext';
 import Users from './pages/Panel/Users/Users';
 import Dashboard from './pages/Panel/Dashboard/Dashboard';
-import Preferences from './pages/Panel/Preferences/Preferences';
-import Lessons from './pages/Panel/Lessons/Lessons';
+import Preferences from './pages/Panel/Preferences';
+import Lessons from './pages/Panel/Lessons';
 import Student from './pages/Student';
 import StudentLessons from './pages/Student/StudentLessons/StudentLessons';
 import StudentDashboard from './pages/Student/StudentDashboard/StudentDashboard';
 import StudentLesson from './pages/Student/StudentLesson/StudentLesson';
-import Subjects from './pages/Panel/Subjects/Subjects';
-import Groups from './pages/Panel/Groups/Groups';
+import Subjects from './pages/Panel/Subjects';
+import Groups from './pages/Panel/Groups';
 import HandleLesson from './pages/Panel/HandleLesson';
-import EvaluateTask from './pages/Panel/EvaluateTask';
+import EvaluateTask from './pages/Panel/EvaluateTasks';
 import Students from './pages/Panel/Students/Students';
-import StudentData from './pages/Panel/StudentData/StudentData';
+import StudentData from './pages/Panel/StudentData';
 import Evaluate from './pages/Panel/Evaluate/Evaluate';
 
 

@@ -18,14 +18,14 @@ type UseFormProps = {
 const useForm = ({type, initialValue}: UseFormProps): UseFormType => {
   const [value, setValue] = React.useState<string>(initialValue);
   const [error, setError] = React.useState<string | null>(null);
-  const { checkUser } = useData();
+  const { someUserHasInfo } = useData();
 
   function validate(): boolean {
 
     if (value.length === 0) {
       setError('Campo vazio');
       return false;
-    } else if ((type === 'login' || type === 'email') && checkUser(type, value)) {
+    } else if ((type === 'login' || type === 'email') && someUserHasInfo(type, value)) {
       setError(`Já existe um ${type} registrado`)
       return false;
     } else {

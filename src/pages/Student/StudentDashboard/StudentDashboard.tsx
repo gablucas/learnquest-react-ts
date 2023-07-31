@@ -9,7 +9,7 @@ import { MobileInfoData } from '../../../types/Commom';
 
 const StudentDashboard = () => {
   const { data, toggle, setToggle } = React.useContext(GlobalContext);
-  const { getLoggedUser, getLesson, getSubject, getStudentLessons, counterCorrectWrongQuestions } = useData();
+  const { getLoggedUser, getLesson, getSubject, getStudentLessons, counterQuestionsBy } = useData();
   const student = getLoggedUser() as IStudent;
   const [mobileInfo, setMobileInfo] = React.useState<MobileInfoData[]>([{title: '', description: ''}]);
 
@@ -21,8 +21,8 @@ const StudentDashboard = () => {
   function handleMobileInfo(index: number, lesson: TaskStudent): void {
     const subject = {title: 'Matéria', description: getSubject(getLesson(lesson.id)?.subject as string)?.name as string};
     const questions = {title: 'Questões', description: lesson.answers.length};
-    const correct = {title: 'Acertos', description: counterCorrectWrongQuestions('correct', lesson)};
-    const wrong = {title: 'Erros', description: counterCorrectWrongQuestions('wrong', lesson)};
+    const correct = {title: 'Acertos', description: counterQuestionsBy('correct', lesson)};
+    const wrong = {title: 'Erros', description: counterQuestionsBy('wrong', lesson)};
     const totalXP = {title: 'XP Ganho', description: totalXPEarned(index)};
 
     setMobileInfo([subject, questions, correct, wrong, totalXP]);
@@ -85,8 +85,8 @@ const StudentDashboard = () => {
               <button className={Styles.mobile} onClick={() => handleMobileInfo(index, lesson)}>imagem</button>
               <span>{getSubject(getLesson(lesson.id)?.subject as string)?.name}</span>
               <span>{lesson.answers.length}</span>
-              <span>{counterCorrectWrongQuestions('correct', lesson)}</span>
-              <span>{counterCorrectWrongQuestions('wrong', lesson)}</span>
+              <span>{counterQuestionsBy('correct', lesson)}</span>
+              <span>{counterQuestionsBy('wrong', lesson)}</span>
               <span>{totalXPEarned(index)}</span>
             </div>
           ))}

@@ -7,7 +7,8 @@ import FilterIcon from '../../../components/Icons/FilterIcon';
 import Filter from '../../../components/Filter/Filter';
 import { GlobalContext } from '../../../GlobalContext';
 import { MobileInfoData } from '../../../types/Commom';
-import EvaluateList from './evaluate-list';
+import EvaluateList from './components/evaluate-list';
+import EvaluateHeader from './components/evaluate-header';
 
 const Evaluaten = () => {
   const { data, filter, toggle, setToggle } = React.useContext(GlobalContext);
@@ -33,15 +34,7 @@ const Evaluaten = () => {
     </div>
 
     <div className={`${Panel.info} ${Panel.evaluate}`}>
-      <div>
-        <span>Título</span>
-        <span>Aluno</span>
-        <span>Criada por</span>
-        <span>Matéria</span>
-        <span className={Panel.mobile}>Informações</span>
-        <span>Avaliar</span>
-      </div>
-
+      <EvaluateHeader />
       <EvaluateList evaluate={evaluate} setMobileInfo={setMobileInfo} />
     </div>
 

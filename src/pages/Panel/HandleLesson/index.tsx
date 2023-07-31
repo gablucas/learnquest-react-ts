@@ -11,8 +11,8 @@ import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { GlobalContext } from '../../../GlobalContext';
 import { ILesson, Task } from '../../../types/Lessons';
 import { Status } from '../../../types/Commom';
-import GroupsList from './groups-list';
-import SubjectsList from './subjects-list';
+import GroupsList from './components/groups-list';
+import SubjectsList from './components/subjects-list';
 import Tasks from './tasks';
 
 const HandleLesson = () => {
