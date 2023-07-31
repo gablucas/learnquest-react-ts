@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 type UseDataReturn = {
   getData: () => IInstituition,
   createInitialUser: () => void,
-  getUser: (id: string) => IUser | IStudent | undefined,
+  getUser: (id: string | undefined) => IUser | IStudent | undefined,
   getUsersByAcess: (access: 'student' | 'teacher' | 'admin') => IUser[] | IStudent[] | undefined
   createUser: (user: IUser | IStudent) => void,
   removeUser: (email: string) => void,
@@ -17,8 +17,8 @@ type UseDataReturn = {
   authUser: (login: string, password: string, setError: Dispatch<SetStateAction<string | null>>) => void,
   getLoggedUser: () => IUser | IStudent | undefined,
   logoutUser: () => void,
-  checkUser: (type: ValidateOptions, value: string) => boolean,
-  getLesson: (id: string) => ILesson | undefined,
+  someUserHasInfo: (type: ValidateOptions, value: string) => boolean,
+  getLesson: (id: string | undefined) => ILesson | undefined,
   createLesson: (lesson: ILesson) => void,
   removeLesson: (id: string) => void,
   editLesson: (id: string, lesson: ILesson) => void,
@@ -39,7 +39,7 @@ type UseDataReturn = {
   getStudentLessons: (id?: string) => ILesson[],
   getStudentsByGroup: (groupID: string[]) => IStudent[],
   getStudentsByTeacher: (teacherID: string) => IStudent[],
-  counterCorrectWrongQuestions: (counterType: 'correct' | 'wrong', lesson: TaskStudent) => number,
+  counterQuestionsBy: (counterType: 'correct' | 'wrong', lesson: TaskStudent) => number,
 }
 
 const useData = (): UseDataReturn => {
@@ -195,10 +195,10 @@ const useData = (): UseDataReturn => {
     return JSON.parse(localStorage.getItem('data') as string);
   }
 
-  function getUser(id: string): IUser | IStudent | undefined {
+  function getUser(id: string | undefined): IUser | IStudent | undefined {
     const data = getData();
 
-    if (data) {
+    if (id) {
       return data.users.find((user) => user.id === id);
     }
   }
@@ -280,7 +280,7 @@ const useData = (): UseDataReturn => {
     setUser(null);
   }
 
-  function checkUser(type: ValidateOptions, value: string): boolean {
+  function someUserHasInfo(type: ValidateOptions, value: string): boolean {
     const checkData = getData();
 
     return checkData.users.some((user) => user[type] === value);
@@ -293,12 +293,14 @@ const useData = (): UseDataReturn => {
     setData(updateData);
   }
 
-  function getLesson(id: string): ILesson | undefined {
+  function getLesson(id: string | undefined): ILesson | undefined {
     const data = getData();
 
-    if (data) {
+    if (id) {
       return data.lessons.find((lesson) => lesson.id === id);
     }
+
+
   }
   
   function removeLesson(id: string) {
@@ -541,7 +543,7 @@ const useData = (): UseDataReturn => {
     return getStudentsByGroup(teacherGroups);
   }
 
-  function counterCorrectWrongQuestions(counterType: 'correct' | 'wrong', lesson: TaskStudent): number {
+  function counterQuestionsBy(counterType: 'correct' | 'wrong', lesson: TaskStudent): number {
     if (counterType === 'correct') {
       return lesson.answers.filter((f) => f.isCorrect === true).length;
     } else if (counterType === 'wrong') {
@@ -562,7 +564,7 @@ const useData = (): UseDataReturn => {
     authUser,
     getLoggedUser,
     logoutUser,
-    checkUser,
+    someUserHasInfo,
     getLesson,
     createLesson,
     removeLesson,
@@ -584,7 +586,7 @@ const useData = (): UseDataReturn => {
     getStudentLessons,
     getStudentsByGroup,
     getStudentsByTeacher,
-    counterCorrectWrongQuestions,
+    counterQuestionsBy,
   }
 }
 

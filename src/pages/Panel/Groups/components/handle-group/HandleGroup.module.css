@@ -1,0 +1,19 @@
+.container > div {
+  display: grid;
+  grid-template-columns: 1fr auto;
+}
+
+.container > div button {
+  font-weight: 600;
+}
+
+.container form {
+  display: grid;
+  grid-template-rows: repeat(3, auto);
+}
+
+.togglets {
+  display: flex;
+  cursor: pointer;
+  fill: #FFA700;
+}

@@ -1,16 +1,15 @@
-import React from 'react';
+import { useContext } from 'react';
 import Styles from './Sidebar.module.css';
 import Panel from '../Panel.module.css';
 import { Link, useParams } from "react-router-dom";
 import useData from '../../../hooks/useData';
+import { GlobalContext } from '../../../GlobalContext';
 
 const Sidebar = () => {
+  const { toggle, setToggle } = useContext(GlobalContext);
   const { getLoggedUser, logoutUser } = useData();
   const param = useParams();
   const route = param['*'];
-
-  
-  const [toggleMobileMenu, setToggleMobileMenu] = React.useState<boolean>(false);
 
   function userHasAccess(access: 'student' | 'teacher' | 'admin'): boolean {
     return getLoggedUser()?.access === access
@@ -25,16 +24,16 @@ const Sidebar = () => {
   }
 
   function closeMenuMobile(): void {
-    if (toggleMobileMenu) {
-      setToggleMobileMenu(false);
+    if (toggle !== 'none') {
+      setToggle('none');
     }
   }
 
   return (
     <nav className={Styles.sidebar}>
-      <button className={Panel.mobile} onClick={() => setToggleMobileMenu(!toggleMobileMenu)}>Menu</button>
+      <button className={Panel.mobile} onClick={() => setToggle('mobile')}>Menu</button>
 
-      <ul className={toggleMobileMenu ? Styles.open : Styles.closed}>
+      <ul className={toggle === 'mobile' ? Styles.open : Styles.closed}>
         <li className={selectedMenu([''])} onClick={closeMenuMobile}><Link to='/painel'>Visão geral</Link></li>
         {userHasAccess('admin') && <li className={selectedMenu(['usuarios'])} onClick={closeMenuMobile}><Link to='usuarios'>Usuarios</Link></li>}
         {userHasAccess('admin') && <li className={selectedMenu(['turmas'])} onClick={closeMenuMobile}><Link to='turmas'>Turmas</Link></li>}
