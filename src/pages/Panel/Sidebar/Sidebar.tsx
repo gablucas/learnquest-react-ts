@@ -32,7 +32,7 @@ const Sidebar = () => {
   return (
     <nav className={Styles.sidebar}>
       <button className={Panel.mobile} onClick={() => setToggle('mobile')}>Menu</button>
-
+      <h1>teste</h1>
       <ul className={toggle === 'mobile' ? Styles.open : Styles.closed}>
         <li className={selectedMenu([''])} onClick={closeMenuMobile}><Link to='/painel'>Visão geral</Link></li>
         {userHasAccess('admin') && <li className={selectedMenu(['usuarios'])} onClick={closeMenuMobile}><Link to='usuarios'>Usuarios</Link></li>}
