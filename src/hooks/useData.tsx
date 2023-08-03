@@ -18,6 +18,7 @@ type UseDataReturn = {
   getLoggedUser: () => IUser | IStudent | undefined,
   logoutUser: () => void,
   someUserHasInfo: (type: ValidateOptions, value: string) => boolean,
+  userHasAccess: (access: 'student' | 'teacher' | 'admin') => boolean,
   getLesson: (id: string | undefined) => ILesson | undefined,
   createLesson: (lesson: ILesson) => void,
   removeLesson: (id: string) => void,
@@ -284,6 +285,10 @@ const useData = (): UseDataReturn => {
     const checkData = getData();
 
     return checkData.users.some((user) => user[type] === value);
+  }
+
+  function userHasAccess(access: 'student' | 'teacher' | 'admin'): boolean {
+    return getLoggedUser()?.access === access
   }
 
   function createLesson(lesson: ILesson): void {
@@ -565,6 +570,7 @@ const useData = (): UseDataReturn => {
     getLoggedUser,
     logoutUser,
     someUserHasInfo,
+    userHasAccess,
     getLesson,
     createLesson,
     removeLesson,
