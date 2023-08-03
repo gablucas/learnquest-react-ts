@@ -1,7 +1,7 @@
 import Container from '../Container';
 import styles from './Header.module.css';
 import { Link } from 'react-router-dom';
-import Logo from '../../assets/logo.png';
+import Logo from '../../assets/logo.svg';
 import useData from '../../hooks/useData';
 
 const Header = () => {

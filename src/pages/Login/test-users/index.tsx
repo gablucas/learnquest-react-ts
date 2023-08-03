@@ -32,28 +32,18 @@ const TestUsers = ({ login, password }: ITestUsersProps) => {
       <span>Selecione para preencher automaticamente</span>
 
       <div onClick={() => testAccount({loginTest: 'admin', passwordTest: 'teste'})}>
-        <span>Administrador</span>
-        {/* <span>Login: admin</span>
-        <span>Senha: teste</span> */}
+        Administrador
       </div>
 
       <div onClick={() => testAccount({loginTest: 'professor', passwordTest: 'teste'})}>
-        <span>Professor</span>
-        {/* <span>Login: professor </span>
-        <span>Senha: teste</span> */}
+        Professor
       </div>
 
-      <div onClick={() => testAccount({loginTest: 'aluno', passwordTest: 'teste'})}>
-        <span>Aluno</span>
-        {/* <span>Login: aluno</span>
-        <span>Senha: teste</span> */}
-      </div>
+      <div onClick={() => testAccount({loginTest: 'aluno', passwordTest: 'teste'})}>Aluno</div>
 
-      <div onClick={resetData}>
-        <span>Defazer todas ações</span>
-      </div>
+      <div onClick={resetData}>Defazer todas ações</div>
 
-      <Link to='/tutorial'>Saiba como funciona</Link>
+      <Link role='link' to='/tutorial'>Saiba como funciona</Link>
     </div>
   )
 }

@@ -7,6 +7,11 @@ describe('Dashboard', () => {
     render(<Dashboard />)
     
     expect(screen.getByText("Administradores")).toBeInTheDocument();
+    expect(screen.getByText("Professores")).toBeInTheDocument();
+    expect(screen.getByText("Alunos")).toBeInTheDocument();
+    expect(screen.getByText("Aulas")).toBeInTheDocument();
+    expect(screen.getByText("Alunos online")).toBeInTheDocument();
+    expect(screen.getByText("Professores online")).toBeInTheDocument();
   })
 
 })
