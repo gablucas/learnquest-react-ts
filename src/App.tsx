@@ -6,7 +6,7 @@ import Login from './pages/Login';
 import ProtectedRoutes from './components/Helper/ProtectedRoutes';
 import { GlobalProvider } from './GlobalContext';
 import Users from './pages/Panel/Users/Users';
-import Dashboard from './pages/Panel/Dashboard/Dashboard';
+import Dashboard from './pages/Panel/Dashboard';
 import Preferences from './pages/Panel/Preferences';
 import Lessons from './pages/Panel/Lessons';
 import Student from './pages/Student';

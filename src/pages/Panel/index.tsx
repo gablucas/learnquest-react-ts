@@ -1,7 +1,7 @@
 import styles from './Panel.module.css';
 import Container from "../../components/Container";
 import { Outlet } from "react-router-dom";
-import Sidebar from "./Sidebar/Sidebar";
+import Sidebar from "./Sidebar";
 import ChangeDefaultPassword from '../../components/ChangeDefaultPassword/ChangeDefaultPassword';
 
 const Panel = () => {
