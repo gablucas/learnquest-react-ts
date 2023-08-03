@@ -25,6 +25,7 @@ const QuestionsToEvaluate = ({ setToggleDoneEvaluate}: IQuestionsToEvaluate) => 
     if (task?.answers.every((answer, index) => isEmpty(`answer${index}` ,answer.isCorrect)) && studentInfo && id) {
       evaluateLesson(id, studentInfo.id, task);
       setToggleDoneEvaluate(true);
+      window.scroll(0 ,0);
     }
   }
 

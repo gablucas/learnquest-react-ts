@@ -43,11 +43,12 @@ const LessonsList = ({ setMobileInfo }: ILessonsListProps) => {
   }
 
   function handleMobileInfo(lesson: ILesson): void {
+    const title = {title: 'Nome', description: lesson.title};
     const createdby = {title: 'Criado por', description: getUser(lesson.createdby)?.name || ''};
     const subject = {title: 'Matéria', description: getSubject(lesson.subject)?.name || ''};
     const questions = {title: 'Questões', description: lesson.task.length};
 
-    setMobileInfo([createdby, subject, questions]);
+    setMobileInfo([title, createdby, subject, questions]);
     setToggle('mobile');
   }
 

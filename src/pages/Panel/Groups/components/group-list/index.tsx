@@ -34,10 +34,11 @@ const GroupList = ({ setGroupID, setMobileInfo}: GroupListProps) => {
   }
 
   function handleMobileInfo(m: Group): void {
+    const name = {title: 'Nome', description: m.name};
     const students = {title: 'Estudantes', description: m.students.length};
     const status = {title: 'Estado', description: m.status ? 'Ativado' : 'Desativado'};
 
-    setMobileInfo([students, status]);
+    setMobileInfo([name, students, status]);
     setToggle('mobile');
   }
 

@@ -39,6 +39,7 @@ const StudentLesson = ({ student, toggleDoneLesson }: IStudentLessonProps) => {
     if (answer?.answers.every((answer, index) => isEmpty(`answer${index}`, answer.value))) {
       saveStudentLesson(answer);
       toggleDoneLesson();
+      window.scroll(0 ,0);
     }
   }
 

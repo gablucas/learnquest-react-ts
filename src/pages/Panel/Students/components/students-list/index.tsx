@@ -16,10 +16,11 @@ const StudentsList = ({ students, setMobileInfo }: IStudentsList) => {
   const { data, setToggle } = React.useContext(GlobalContext);
 
   function handleMobileInfo(user: IStudent): void {
+    const name = {title: 'Nome', description: user.name};
     const group = {title: 'Turma', description: data.groups.find((group) => group.students.some((studentID) => user.id === studentID))?.name || ''};
     const level = {title: 'Level', description: user.level};
 
-    setMobileInfo([group, level]);
+    setMobileInfo([name, group, level]);
     setToggle('mobile');
   }
 

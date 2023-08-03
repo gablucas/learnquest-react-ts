@@ -22,8 +22,6 @@ const Subjects = () => {
   if (!isArrayEmpty(filter.subject)) subjects = subjects.filter((subject) => arrayIncludes(filter.subject, subject.id));
   if (!isArrayEmpty(filter.status)) subjects = subjects.filter((subject) => arrayIncludes(filter.status, subject.status));
 
-
-
   return (
     <section className={Panel.container}>
 

@@ -32,10 +32,11 @@ const SubjectsList = ({ subjects, setSubjectID, setMobileInfo }: ISubjectsList) 
   }
 
   function handleMobileInfo(subject: Subject): void {
+    const name = {title: 'Nome', description: subject.name};
     const lessons = {title: 'Aulas', description: getLessonsPerSubject(subject.id)};
     const status = {title: 'Estado', description: subject.status ? 'Ativado' : 'Desativado'};
 
-    setMobileInfo([lessons, status]);
+    setMobileInfo([name, lessons, status]);
     setToggle('mobile');
   }
 

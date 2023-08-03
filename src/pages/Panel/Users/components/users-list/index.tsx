@@ -29,12 +29,13 @@ const UsersList = ({ users, setUserID, setMobileInfo}: IUsersListProps) => {
   }
 
   function handleMobileInfo(user: IUser | IStudent): void {
+    const name = {title: 'Nome', description: user.name};
     const email = {title: 'Email', description: user.email};
     const access = {title: 'Acesso', description: user.access};
     const status = {title: 'Estado', description: user.status ? 'Ativado' : 'Desativado'};
 
-    setMobileInfo([email, access, status]);
-    setToggle('edit');
+    setMobileInfo([name, email, access, status]);
+    setToggle('mobile');
   }
 
   return (

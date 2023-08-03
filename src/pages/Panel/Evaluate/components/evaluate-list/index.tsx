@@ -15,15 +15,16 @@ interface IEvaluateList {
 
 const EvaluateList = ({ evaluate, setMobileInfo }: IEvaluateList) => {
   const { data, setToggle } = React.useContext(GlobalContext);
-  const { getUser , getSubject } = useData();
+  const { getUser , getSubject, getLesson } = useData();
 
   function handleMobileInfo(lesson: IEvaluateTask): void {
+    const title = {title: 'Nome', description: getLesson(lesson.id)?.title || ''};
     const student = {title: 'Aluno', description: getUser(lesson.student)?.name || ''};
     const createdby = {title: 'Criado por', description: getUser(lesson.createdby)?.name || ''};
     const subject = {title: 'Matéria', description: getSubject(lesson.subject)?.name || ''};
 
-    setMobileInfo([student, createdby, subject]);
-    setToggle('none');
+    setMobileInfo([title, student, createdby, subject]);
+    setToggle('mobile');
   }
 
   return (

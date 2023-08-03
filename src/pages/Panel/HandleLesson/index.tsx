@@ -51,7 +51,7 @@ const HandleLesson = () => {
 
       const newLesson: ILesson = {
         id: lessonToEdit ? lessonToEdit.id : `L${getRandomID()}`,
-        createdby: lessonToEdit ? lessonToEdit.createdby : 'a',
+        createdby: lessonToEdit ? lessonToEdit.createdby : getLoggedUser()?.id as string,
         title: title.value,
         video: video.value,
         text: description.value,
@@ -63,8 +63,10 @@ const HandleLesson = () => {
 
       if (id) {
         editLesson(id, newLesson);
+        window.scroll(0 ,0);
       } else {
         createLesson(newLesson);
+        window.scroll(0 ,0);
       }
       navigate('/painel/aulas');
     }

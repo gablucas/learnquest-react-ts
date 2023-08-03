@@ -63,7 +63,7 @@ const useData = (): UseDataReturn => {
       const teacher_1: IUser = {
         id: 'U2',
         access: 'teacher',
-        name: 'Professor',
+        name: 'Paulo',
         login: 'professor',
         email: 'professor@edu.com.br',
         password: 'teste',
@@ -73,7 +73,7 @@ const useData = (): UseDataReturn => {
       const teacher_2: IUser = {
         id: 'U3',
         access: 'teacher',
-        name: 'Professor',
+        name: 'Lins',
         login: 'professor',
         email: 'professor@edu.com.br',
         password: 'teste',
@@ -83,7 +83,7 @@ const useData = (): UseDataReturn => {
       const student_1: IStudent = {
         id: 'U4',
         access: 'student',
-        name: 'Aluno',
+        name: 'Gabriel',
         login: 'aluno',
         email: 'aluno@edu.com.br',
         password: 'teste',
@@ -96,7 +96,7 @@ const useData = (): UseDataReturn => {
       const student_2: IStudent = {
         id: 'U5',
         access: 'student',
-        name: 'Aluno2',
+        name: 'Jefferson',
         login: 'aluno2',
         email: 'aluno2@edu.com.br',
         password: 'teste',
@@ -109,7 +109,7 @@ const useData = (): UseDataReturn => {
       const student_3: IStudent = {
         id: 'U6',
         access: 'student',
-        name: 'Aluno3',
+        name: 'Guilherme',
         login: 'aluno3',
         email: 'aluno3@edu.com.br',
         password: 'teste',
