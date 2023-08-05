@@ -1,7 +1,7 @@
 import React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
-import useData from '../../hooks/useData';
 import { Role } from '../../types/Commom';
+import { getLoggedUser } from '../../helpers/user/getLoggedUser';
 
 type RoutesProps = {
   children?: React.ReactNode,
@@ -9,7 +9,6 @@ type RoutesProps = {
 } 
 
 const ProtectedRoutes = ({ children, allowedAccess }: RoutesProps) => {
-  const { getLoggedUser } = useData();
   const user = getLoggedUser();
   
   if (user) {

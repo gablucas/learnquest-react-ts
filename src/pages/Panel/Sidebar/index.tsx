@@ -1,11 +1,12 @@
 import Styles from './Sidebar.module.css';
 import Panel from '../Panel.module.css';
 import { Link, useParams } from "react-router-dom";
-import useData from '../../../hooks/useData';
 import useToggle from '../../../hooks/useToggle';
+import { useAuth } from '../../../hooks/useAuth';
+import { userHasAccess } from '../../../helpers/user/userHasAccess';
 
 const Sidebar = () => {
-  const { userHasAccess, logoutUser } = useData();
+  const { logoutUser } = useAuth();
   const mobileMenu = useToggle();
   const param = useParams();
   const route = param['*'];

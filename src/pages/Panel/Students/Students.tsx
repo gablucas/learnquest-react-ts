@@ -3,22 +3,24 @@ import Panel from '../Panel.module.css';
 import MobileInfo from '../../../components/MobileInfo/MobileInfo';
 import Filter from '../../../components/Filter/Filter';
 import FilterIcon from '../../../components/Icons/FilterIcon';
-import useHelpers from '../../../hooks/useHelpers';
-import useData from '../../../hooks/useData';
+import { useHelpers } from '../../../hooks/useHelpers';
 import { GlobalContext } from '../../../GlobalContext';
 import { MobileInfoData } from '../../../types/Commom';
 import { IStudent, IUser } from '../../../types/Users';
 import { Group } from '../../../types/Group';
 import StudentsHeader from './components/students-header';
 import StudentsList from './components/students-list';
+import { getUsersByAccess } from '../../../helpers/user/getUsersByAccess';
+import { getLoggedUser } from '../../../helpers/user/getLoggedUser';
+import { getStudentsByTeacher } from '../../../helpers/group/getStudentsByGroup';
+import { getStudentGroup } from '../../../helpers/group/getStudentGroup';
 
 const Students = () => {
   const { filter, toggle, setToggle } = React.useContext(GlobalContext);
   const { isArrayEmpty, arrayIncludes, isAnyArrayFilled, cleanFilter } = useHelpers();
-  const { getUsersByAcess, getLoggedUser, getStudentGroup, getStudentsByTeacher } = useData();
 
   const loggedUser = getLoggedUser() as IUser;
-  let students = loggedUser.access === 'admin' ? getUsersByAcess('student') as IStudent[] : getStudentsByTeacher(loggedUser.id);
+  let students = loggedUser.access === 'admin' ? getUsersByAccess('student') as IStudent[] : getStudentsByTeacher(loggedUser.id);
   if (!isArrayEmpty(filter.group)) students = students.filter((student) => arrayIncludes(filter.group, (getStudentGroup(student.id) as Group).id));
   const [mobileInfo, setMobileInfo] = React.useState<MobileInfoData[]>([{title: '', description: ''}]);
 

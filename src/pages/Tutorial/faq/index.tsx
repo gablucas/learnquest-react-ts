@@ -13,7 +13,7 @@ const Faq = () => {
       
       <div>
         <h3>O que acontece após o aluno finalizar a aula?</h3>
-        <span>Após o aluno ter finalizado a aula, a tarefa que o mesmo realizou irá para fila de avaliações <span className={Styles.highlight}>(Avaliar tarefas)</span>, e após ser avaliada pelo professor reponsável ou algum administrador, o aluno receberá a XP pelo seus acertos na tarefa e as informações da mesma aparecerão em seu painel <span className={Styles.highlight}>(Minhas informações).</span></span>
+        <span data-testid='mainspan'>Após o aluno ter finalizado a aula, a tarefa que o mesmo realizou irá para fila de avaliações <span className={Styles.highlight}>(Avaliar tarefas)</span>, e após ser avaliada pelo professor reponsável ou algum administrador, o aluno receberá a XP pelo seus acertos na tarefa e as informações da mesma aparecerão em seu painel <span className={Styles.highlight}>(Minhas informações).</span></span>
       </div>
     </div>
   )

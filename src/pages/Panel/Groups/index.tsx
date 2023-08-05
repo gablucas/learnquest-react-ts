@@ -5,7 +5,7 @@ import Message from '../../../components/Message/Message';
 import HandleGroup from './components/handle-group/HandleGroup';
 import MobileInfo from '../../../components/MobileInfo/MobileInfo';
 import Filter from '../../../components/Filter/Filter';
-import useHelpers from '../../../hooks/useHelpers';
+import { useHelpers } from '../../../hooks/useHelpers';
 import FilterIcon from '../../../components/Icons/FilterIcon';
 import GroupHeader from './components/group-header';
 import GroupList from './components/group-list';
@@ -16,8 +16,6 @@ const Groups = () => {
   const { isAnyArrayFilled, cleanFilter } = useHelpers();
   const [groupID, setGroupID] = React.useState<string>('');
   const [mobileInfo, setMobileInfo] = React.useState<MobileInfoData[]>([{title: '', description: ''}]);
-
-
 
   return (
     <section className={Panel.container}>

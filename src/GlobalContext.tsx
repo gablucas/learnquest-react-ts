@@ -3,6 +3,7 @@ import useData from './hooks/useData';
 import { IInstituition } from './types/Users';
 import { ConfirmStateProps, Toggle } from './types/Commom';
 import { FilterStateProps } from './types/Filter';
+import { createInitialUser } from './helpers/user/createInitialUser';
 
 type GlobalContextProps = {
   data: IInstituition,
@@ -49,7 +50,7 @@ type GlobalProviderProps = {
 export const GlobalContext = React.createContext<GlobalContextProps>(intialValue);
 
 export const GlobalProvider = ({ children }: GlobalProviderProps) => {
-  const { createInitialUser, getData } = useData();
+  const { getData } = useData();
   createInitialUser();
 
   const [data, setData] = React.useState(getData);

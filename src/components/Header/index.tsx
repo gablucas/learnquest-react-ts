@@ -2,10 +2,9 @@ import Container from '../Container';
 import styles from './Header.module.css';
 import { Link } from 'react-router-dom';
 import Logo from '../../assets/logo.svg';
-import useData from '../../hooks/useData';
+import { getLoggedUser } from '../../helpers/user/getLoggedUser';
 
 const Header = () => {
-  const { getLoggedUser } = useData();
 
   return (
     <header className={styles.header}>

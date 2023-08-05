@@ -1,5 +1,5 @@
 import Input from '../../../components/Inputs/Input';
-import useData from '../../../hooks/useData';
+import { useAuth } from '../../../hooks/useAuth';
 import { UseFormType } from '../../../hooks/useForm';
 import Styles from '../Login.module.css';
 
@@ -10,7 +10,7 @@ interface ILoginFormProps {
 
 const LoginForm = ({ login, password }: ILoginFormProps) => {
 
-  const { authUser } = useData();
+  const { authUser } = useAuth();
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault();

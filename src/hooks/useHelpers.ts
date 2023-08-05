@@ -1,14 +1,14 @@
 import React from 'react';
 import { GlobalContext } from "../GlobalContext";
 
-interface IHelpersReturn<T> {
+export interface IHelpersReturn<T> {
   isArrayEmpty: (arr: T[]) => boolean,
   isAnyArrayFilled: (arrs: Array<T[]>) => boolean,
   arrayIncludes: (arr: string[], find: string) => boolean,
   cleanFilter: () => void,
 }
 
-const useHelpers = <T,>(): IHelpersReturn<T> => {
+export const useHelpers = <T,>(): IHelpersReturn<T> => {
   const { setFilter } = React.useContext(GlobalContext);
 
   function isArrayEmpty(arr: T[]): boolean {
@@ -34,5 +34,3 @@ const useHelpers = <T,>(): IHelpersReturn<T> => {
     cleanFilter,
   }
 }
-
-export default useHelpers;

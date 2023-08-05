@@ -8,7 +8,9 @@ import { MobileInfoData } from '../../../../../types/Commom';
 import { ILesson, TaskStudent } from '../../../../../types/Lessons';
 import MoreInfo from '../../../../../components/Icons/MoreInfo';
 import { GlobalContext } from '../../../../../GlobalContext';
-import useData from '../../../../../hooks/useData';
+import { getUser } from '../../../../../helpers/user/getUser';
+import { getSubject } from '../../../../../helpers/subject/getSubject';
+import { getLesson } from '../../../../../helpers/lesson/getLesson';
 
 interface ITodoLessonsStudentProps {
   setMobileInfo: React.Dispatch<React.SetStateAction<MobileInfoData[]>>,
@@ -17,7 +19,6 @@ interface ITodoLessonsStudentProps {
 
 const TodoLessonsStudent = ({ setMobileInfo, lessonsTodo }: ITodoLessonsStudentProps) => {
   const { setToggle } = React.useContext(GlobalContext);
-  const { getUser, getLesson, getSubject } = useData();
   const todolesson = useToggle();
 
   function handleMobileInfo(lesson: TaskStudent | ILesson): void {

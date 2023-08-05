@@ -10,7 +10,7 @@ const Tutorial = () => {
   return (
     <Container>
       <div className={Styles.tutorial}>
-        <Link to='/'>Voltar para a página de login</Link>
+        <Link role='link' to='/'>Voltar para a página de login</Link>
         <About />
         <RoleTypes />
         <Faq />

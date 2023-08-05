@@ -3,13 +3,13 @@ import Styles from './HandleUser.module.css';
 import Input from '../../../../../components/Inputs/Input';
 import Select from '../../../../../components/Inputs/Select';
 import useForm, { UseFormType } from '../../../../../hooks/useForm';
-import useRandom from '../../../../../hooks/useRandom';
-import useData from '../../../../../hooks/useData';
 import { GlobalContext } from '../../../../../GlobalContext';
 import { Link } from 'react-router-dom';
 import { IInstituition, IStudent, IUser } from '../../../../../types/Users';
 import Modal from '../../../../../components/Modal';
 import { Status } from '../../../../../types/Commom';
+import { useUser } from '../../../../../hooks/useUser';
+import { generateRandomID } from '../../../../../utils/generateRandomID';
 
 
 type HandleUserProps = {
@@ -18,9 +18,8 @@ type HandleUserProps = {
 
 const HandleUser = ({ userID }: HandleUserProps) => {
   const { data, setToggle } = React.useContext(GlobalContext);
-  const { createUser, editUser } = useData();
+  const { createUser, editUser } = useUser();
   const user = data.users.find((user) => user.id === userID);
-  const { getRandomID } = useRandom();
 
   const access: UseFormType = useForm({type: 'access', initialValue: ''});
   const name: UseFormType = useForm({type: 'name', initialValue: user ? user.name : ''});
@@ -37,7 +36,7 @@ const HandleUser = ({ userID }: HandleUserProps) => {
     if (!userID && access.validate() && login.validate() && access.validate() && name.validate() && email.validate()) {
 
       const user: IUser = {
-        id: `U${getRandomID()}`,
+        id: `U${generateRandomID()}`,
         access: access.value as 'admin' | 'teacher' | 'student',
         login: login.value.toLowerCase(),
         email: email.value.toLowerCase(),

@@ -4,12 +4,15 @@ import useToggle from '../../../../../hooks/useToggle';
 import Styles from '../../StudentData.module.css'
 import Panel from '../../../Panel.module.css';
 import { IStudent } from '../../../../../types/Users';
-import useData from '../../../../../hooks/useData';
 import { ILesson, TaskStudent } from '../../../../../types/Lessons';
 import { useContext } from 'react';
 import { GlobalContext } from '../../../../../GlobalContext';
 import { MobileInfoData } from '../../../../../types/Commom';
 import MoreInfo from '../../../../../components/Icons/MoreInfo';
+import { getUser } from '../../../../../helpers/user/getUser';
+import { getLesson } from '../../../../../helpers/lesson/getLesson';
+import { getSubject } from '../../../../../helpers/subject/getSubject';
+import { counterQuestionsBy } from '../../../../../helpers/lesson/counterQuestionsBy';
 
 interface IDoneLessonsStudentProps {
   student: IStudent,
@@ -19,8 +22,6 @@ interface IDoneLessonsStudentProps {
 const DoneLessonsStudent = ({ student, setMobileInfo }: IDoneLessonsStudentProps) => {
   const { setToggle } = useContext(GlobalContext);
   const donelesson = useToggle();
-  const { getUser, getLesson, getSubject, counterQuestionsBy} = useData();
-
 
   function handleMobileInfo(lesson: TaskStudent | ILesson): void {
     const createdby = {title: 'Criado por', description: getUser(getLesson(lesson.id)?.createdby as string)?.name || ''};
