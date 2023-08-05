@@ -1,5 +1,5 @@
-import useRandom from '../../../../../../hooks/useRandom';
 import { Task } from '../../../../../../types/Lessons';
+import { generateRandomID } from '../../../../../../utils/generateRandomID';
 import Styles from '../../../HandleLesson.module.css';
 
 interface IQuestionType {
@@ -9,7 +9,6 @@ interface IQuestionType {
 }
 
 const QuestionType = ({ index, task, setTask }: IQuestionType) => {
-  const { getRandomID } = useRandom();
 
   function changeTaskType(e: React.ChangeEvent<HTMLInputElement>, index: number): void {
     const type = e.target.value;
@@ -20,7 +19,7 @@ const QuestionType = ({ index, task, setTask }: IQuestionType) => {
       delete updateTask[index].options;
     } else if (type === `alternatives${index}`) {
       updateTask[index].type = 'alternatives';
-      updateTask[index].options = [{id: `O${getRandomID()}`, option: ''}, {id: `O${getRandomID()}`, option: ''}];
+      updateTask[index].options = [{id: `O${generateRandomID()}`, option: ''}, {id: `O${generateRandomID()}`, option: ''}];
     }
 
     setTask(updateTask);

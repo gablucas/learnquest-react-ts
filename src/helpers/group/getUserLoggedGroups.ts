@@ -1,6 +1,6 @@
 import { Group } from "../../types/Group";
 import { getData } from "../data/getData";
-import { getLoggedUser } from "./getLoggedUser";
+import { getLoggedUser } from "../user/getLoggedUser";
 
 function getUserLoggedGroups(): Group[] {
   const data = getData();

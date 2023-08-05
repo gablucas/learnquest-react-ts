@@ -1,8 +1,8 @@
 import React, { SetStateAction } from 'react';
 import Error from '../../../../../components/Helper/Error';
-import useData from '../../../../../hooks/useData';
 import useValidate from '../../../../../hooks/useValidate';
 import Styles from '../../HandleLesson.module.css';
+import { getUserLoggedGroups } from '../../../../../helpers/group/getUserLoggedGroups';
 
 interface IGroupListProps {
   groups: string[],
@@ -10,8 +10,8 @@ interface IGroupListProps {
 }
 
 const GroupsList = ({ groups, setGroups }: IGroupListProps) => {
-  const { showUserGroups } = useData();
   const { error } = useValidate();
+  const userGroups = getUserLoggedGroups();
 
   function handleGroups(e: React.ChangeEvent<HTMLInputElement>, groupID: string): void {
     if (e.target.checked) {
@@ -25,13 +25,13 @@ const GroupsList = ({ groups, setGroups }: IGroupListProps) => {
     <div>
     <h2>Turmas</h2>
     <div className={Styles.groups}>
-      {showUserGroups().map((groupMap) => (
+      {userGroups.map((groupMap) => (
         <div key={groupMap.id}>
           <input type='checkbox' checked={groups.some((group) => group === groupMap.id)} onChange={(e) => handleGroups(e, groupMap.id)}/>
           <label>{groupMap.name}</label>
         </div>
       ))}
-      {showUserGroups().length === 0 && (<label>Sem turma criada, ativa ou vinculada</label>)}
+      {userGroups.length === 0 && (<label>Sem turma criada, ativa ou vinculada</label>)}
     </div>
     {error === 'group' && (<Error>Selecione pelo menos uma turma</Error>)}
   </div>

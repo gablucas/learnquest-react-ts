@@ -1,10 +1,12 @@
 import React from 'react';
 import { GlobalContext } from '../../../../GlobalContext';
-import useData from '../../../../hooks/useData';
 import { MobileInfoData } from '../../../../types/Commom';
 import { TaskStudent } from '../../../../types/Lessons';
 import { IStudent } from '../../../../types/Users';
 import Styles from '../StudentInformations.module.css';
+import { getSubject } from '../../../../helpers/subject/getSubject';
+import { getLesson } from '../../../../helpers/lesson/getLesson';
+import { counterQuestionsBy } from '../../../../helpers/lesson/counterQuestionsBy';
 
 interface IStudentDoneLessonsProps {
   student: IStudent,
@@ -13,7 +15,6 @@ interface IStudentDoneLessonsProps {
 
 const StudentDoneLessons = ({ student, setMobileInfo }: IStudentDoneLessonsProps) => {
   const { setToggle } = React.useContext(GlobalContext);
-  const { getLesson, getSubject, counterQuestionsBy } = useData();
 
   function totalXPEarned(index: number): number {
     const totalXP = student.lessons[index].answers.map((l) => l.xp).reduce((acc, cur) => acc + cur);

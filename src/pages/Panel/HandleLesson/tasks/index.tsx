@@ -3,8 +3,8 @@ import Styles from '../HandleLesson.module.css';
 import { Task } from '../../../../types/Lessons';
 import Question from './question';
 import Answer from './answer';
-import useRandom from '../../../../hooks/useRandom';
 import SelectXP from './selectxp';
+import { generateRandomID } from '../../../../utils/generateRandomID';
 
 interface ITasksProps {
   task: Task[],
@@ -12,12 +12,11 @@ interface ITasksProps {
 }
 
 const Tasks = ({ task, setTask }: ITasksProps) => {
-  const { getRandomID } = useRandom();
 
   function handleCreateQuestion(e: React.MouseEvent<HTMLButtonElement>): void {
     e.stopPropagation();
     const addNewQuestion = [...task];
-    addNewQuestion.push({id: `T${getRandomID()}`, type: 'open', question: '', answer: '', xp: 25});
+    addNewQuestion.push({id: `T${generateRandomID()}`, type: 'open', question: '', answer: '', xp: 25});
     setTask(addNewQuestion);
   }
 

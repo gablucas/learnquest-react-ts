@@ -1,5 +1,6 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import useData from './useData';
+import { someUserHasInfo } from '../helpers/user/someUserHasInfo';
 
 export type UseFormType = {
   onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => void,
@@ -18,7 +19,6 @@ type UseFormProps = {
 const useForm = ({type, initialValue}: UseFormProps): UseFormType => {
   const [value, setValue] = React.useState<string>(initialValue);
   const [error, setError] = React.useState<string | null>(null);
-  const { someUserHasInfo } = useData();
 
   function validate(): boolean {
 

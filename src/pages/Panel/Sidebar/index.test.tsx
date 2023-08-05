@@ -1,9 +1,10 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import Sidebar from ".";
 import { BrowserRouter } from "react-router-dom";
-import useData from "../../../hooks/useData";
+import * as userHasAccess from '../../../helpers/user/userHasAccess';
 
-jest.mock("../../../hooks/useData");
+const mockUserHasAccess = jest.spyOn(userHasAccess, 'userHasAccess');
+
 
 describe('Sidebar', () => {
 
@@ -12,7 +13,7 @@ describe('Sidebar', () => {
   });
 
   it ('should render correctly', () => {
-    (useData as jest.Mock).mockReturnValue({ userHasAccess: jest.fn().mockReturnValue(false)})
+    mockUserHasAccess.mockReturnValue(true);
 
     render(<BrowserRouter><Sidebar /></BrowserRouter>)
 
@@ -24,9 +25,8 @@ describe('Sidebar', () => {
   })
 
   it('should render for admin permission', () => {
-    (useData as jest.Mock).mockReturnValue({ userHasAccess: jest.fn().mockReturnValue(true)})
+    mockUserHasAccess.mockReturnValue(true);
     
-
     render(<BrowserRouter><Sidebar /></BrowserRouter>)
 
     expect(screen.getByText('Usuários')).toBeInTheDocument();
@@ -36,18 +36,18 @@ describe('Sidebar', () => {
   })
 
   it('should not render for teacher permission', () => {
-    (useData as jest.Mock).mockReturnValue({ userHasAccess: jest.fn().mockReturnValue(false)})
+    mockUserHasAccess.mockReturnValue(false);
 
     render(<BrowserRouter><Sidebar /></BrowserRouter>)
 
-    expect(screen.queryByText('Usuários')).not.toBeInTheDocument();
+    expect(screen.queryByRole('Usuários')).not.toBeInTheDocument();
     expect(screen.queryByText('Turmas')).not.toBeInTheDocument();
     expect(screen.queryByText('Matérias')).not.toBeInTheDocument();
     expect(screen.queryByText("Preferências")).not.toBeInTheDocument();
   });
   
   it('should navigate to /painel when click on "Visão geral" link', () => {
-    (useData as jest.Mock).mockReturnValue({ userHasAccess: jest.fn().mockReturnValue(true)})
+    mockUserHasAccess.mockReturnValue(true);
 
     render(<BrowserRouter><Sidebar /></BrowserRouter>)
 
@@ -59,7 +59,7 @@ describe('Sidebar', () => {
   })
 
   it('should navigate to /usuarios when click on "Usuários" link', () => {
-    (useData as jest.Mock).mockReturnValue({ userHasAccess: jest.fn().mockReturnValue(true)})
+    mockUserHasAccess.mockReturnValue(true);
 
     render(<BrowserRouter><Sidebar /></BrowserRouter>)
 
@@ -71,7 +71,7 @@ describe('Sidebar', () => {
   })
 
   it('should navigate to /turmas when click on "Turmas" link', () => {
-    (useData as jest.Mock).mockReturnValue({ userHasAccess: jest.fn().mockReturnValue(true)})
+    mockUserHasAccess.mockReturnValue(true);
 
     render(<BrowserRouter><Sidebar /></BrowserRouter>)
 
@@ -83,7 +83,7 @@ describe('Sidebar', () => {
   })
 
   it('should navigate to /materias when click on "Matérias" link', () => {
-    (useData as jest.Mock).mockReturnValue({ userHasAccess: jest.fn().mockReturnValue(true)})
+    mockUserHasAccess.mockReturnValue(true);
 
     render(<BrowserRouter><Sidebar /></BrowserRouter>)
 
@@ -95,7 +95,7 @@ describe('Sidebar', () => {
   })
 
   it('should navigate to /alunos when click on "Alunos" link', () => {
-    (useData as jest.Mock).mockReturnValue({ userHasAccess: jest.fn().mockReturnValue(true)})
+    mockUserHasAccess.mockReturnValue(true);
 
     render(<BrowserRouter><Sidebar /></BrowserRouter>)
 
@@ -107,7 +107,7 @@ describe('Sidebar', () => {
   })
 
   it('should navigate to /aulas when click on "Aulas" link', () => {
-    (useData as jest.Mock).mockReturnValue({ userHasAccess: jest.fn().mockReturnValue(true)})
+    mockUserHasAccess.mockReturnValue(true);
 
     render(<BrowserRouter><Sidebar /></BrowserRouter>)
 
@@ -119,7 +119,7 @@ describe('Sidebar', () => {
   })
 
   it('should navigate to /avaliar when click on "Avaliar tarefas" link', () => {
-    (useData as jest.Mock).mockReturnValue({ userHasAccess: jest.fn().mockReturnValue(true)})
+    mockUserHasAccess.mockReturnValue(true);
 
     render(<BrowserRouter><Sidebar /></BrowserRouter>)
 
@@ -131,7 +131,7 @@ describe('Sidebar', () => {
   })
 
   it('should navigate to /preferencias when click on "Preferências" link', () => {
-    (useData as jest.Mock).mockReturnValue({ userHasAccess: jest.fn().mockReturnValue(true)})
+    mockUserHasAccess.mockReturnValue(true);
 
     render(<BrowserRouter><Sidebar /></BrowserRouter>)
 

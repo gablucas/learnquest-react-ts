@@ -1,9 +1,9 @@
 import React from 'react';
 import Styles from '../../../HandleLesson.module.css';
 import { Task, TaskOptions } from '../../../../../../types/Lessons';
-import useRandom from '../../../../../../hooks/useRandom';
 import Error from '../../../../../../components/Helper/Error';
 import useValidate from '../../../../../../hooks/useValidate';
+import { generateRandomID } from '../../../../../../utils/generateRandomID';
 
 interface IAlternativeProps {
   questionIndex: number,
@@ -14,12 +14,11 @@ interface IAlternativeProps {
 
 const Alternative = ({ questionIndex, question, task, setTask }: IAlternativeProps) => {
   const { error } = useValidate();
-  const { getRandomID } = useRandom();
 
   function handleAddAlternative(e: React.MouseEvent<HTMLButtonElement> ,index: number): void {
     e.preventDefault();
     const updateTask = [...task];
-    updateTask[index].options?.push({id: `O${getRandomID()}`, option: ''});
+    updateTask[index].options?.push({id: `O${generateRandomID()}`, option: ''});
     setTask(updateTask);
   }
 

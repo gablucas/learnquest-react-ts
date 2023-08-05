@@ -1,8 +1,8 @@
 import React from 'react';
 import { GlobalContext } from '../../../../GlobalContext';
-import useData from '../../../../hooks/useData';
 import { IStudent } from '../../../../types/Users';
 import Styles from '../StudentInformations.module.css';
+import { getStudentLessons } from '../../../../helpers/lesson/getStudentLessons';
 
 interface IStudentDashboardProps {
   student: IStudent,
@@ -10,7 +10,6 @@ interface IStudentDashboardProps {
 
 const StudentDashboard = ({ student }: IStudentDashboardProps) => {
   const { data } = React.useContext(GlobalContext);
-  const { getStudentLessons } = useData();
 
   return (
     <div className={Styles.dashboard}>
