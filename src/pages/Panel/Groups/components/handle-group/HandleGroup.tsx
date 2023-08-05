@@ -1,9 +1,7 @@
 import React from 'react';
 import Panel from '../../../Panel.module.css';
 import Styles from './HandleGroup.module.css'
-import useData from '../../../../../hooks/useData';
 import Modal from '../../../../../components/Modal';
-import useRandom from '../../../../../hooks/useRandom';
 import Select from '../../../../../components/Inputs/Select';
 import useForm from '../../../../../hooks/useForm';
 import Input from '../../../../../components/Inputs/Input';
@@ -12,14 +10,15 @@ import { Group } from '../../../../../types/Group';
 import { Status } from '../../../../../types/Commom';
 import Expand from '../../../../../components/Icons/Contract';
 import Contract from '../../../../../components/Icons/Expand';
+import { useGroup } from '../../../../../hooks/useGroup';
+import { generateRandomID } from '../../../../../utils/generateRandomID';
 
 type HandleUserProps = {
   groupID?: string,
 }
 
 const HandleGroup = ({ groupID }: HandleUserProps) => {
-  const { createGroup, editGroup } = useData();
-  const { getRandomID } = useRandom();
+  const { createGroup, editGroup } = useGroup();
   const { data, setToggle } = React.useContext(GlobalContext);
   const groupToEdit = data.groups.find((group) => group.id === groupID);
 
@@ -59,7 +58,7 @@ const HandleGroup = ({ groupID }: HandleUserProps) => {
     e.preventDefault();
     
     const group: Group = {
-      id: groupToEdit ? groupToEdit.id : `G${getRandomID()}`,
+      id: groupToEdit ? groupToEdit.id : `G${generateRandomID()}`,
       name: name.value,
       students,
       teachers,

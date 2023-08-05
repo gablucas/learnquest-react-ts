@@ -1,10 +1,8 @@
 import React, { useContext } from 'react';
 import Styles from './HandleLesson.module.css';
-import useData from '../../../hooks/useData';
 import Input from '../../../components/Inputs/Input';
 import useForm from '../../../hooks/useForm';
 import Textarea from '../../../components/Inputs/Textarea';
-import useRandom from '../../../hooks/useRandom';
 import useValidate from '../../../hooks/useValidate';
 import Select from '../../../components/Inputs/Select';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
@@ -14,12 +12,14 @@ import { Status } from '../../../types/Commom';
 import GroupsList from './components/groups-list';
 import SubjectsList from './components/subjects-list';
 import Tasks from './tasks';
+import { getLoggedUser } from '../../../helpers/user/getLoggedUser';
+import { useLesson } from '../../../hooks/useLesson';
+import { generateRandomID } from '../../../utils/generateRandomID';
 
 const HandleLesson = () => {
   const { data } = useContext(GlobalContext);
   const { id } = useParams();
-  const { getLoggedUser, createLesson, editLesson } = useData();
-  const { getRandomID } = useRandom();
+  const { createLesson, editLesson } = useLesson();
   const loggedUser = getLoggedUser();
   const navigate = useNavigate();
   const { isEmpty } = useValidate();
@@ -31,7 +31,7 @@ const HandleLesson = () => {
   const description =  useForm({type: 'video', initialValue: lessonToEdit ? lessonToEdit.text : ''});
   const status =  useForm({type: 'status', initialValue: lessonToEdit ? lessonToEdit.status : ''});
 
-  const [task, setTask] = React.useState<Task[]>(lessonToEdit ? lessonToEdit.task : [{id: `T${getRandomID()}`, type: 'open', answer: '', question: '', xp: 25}]);
+  const [task, setTask] = React.useState<Task[]>(lessonToEdit ? lessonToEdit.task : [{id: `T${generateRandomID()}`, type: 'open', answer: '', question: '', xp: 25}]);
   const [groups, setGroups] = React.useState<string[]>(lessonToEdit ? lessonToEdit.groups : [])
   const [subject, setSubject] = React.useState<string>(lessonToEdit ? lessonToEdit.subject : '');
 
@@ -50,7 +50,7 @@ const HandleLesson = () => {
     if (title.validate() && description.validate() && isEmpty('group', groups) && isEmpty('subject', subject) && loggedUser && (validateOpenTasks() || validateOpenAlternativeTasks())) {
 
       const newLesson: ILesson = {
-        id: lessonToEdit ? lessonToEdit.id : `L${getRandomID()}`,
+        id: lessonToEdit ? lessonToEdit.id : `L${generateRandomID()}`,
         createdby: lessonToEdit ? lessonToEdit.createdby : getLoggedUser()?.id as string,
         title: title.value,
         video: video.value,

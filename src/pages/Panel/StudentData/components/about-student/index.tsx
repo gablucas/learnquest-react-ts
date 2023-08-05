@@ -27,7 +27,7 @@ const AboutStudent = ({ student, lessonsTodo }: IAboutStudentProps) => {
         <span>Level: {student.level}</span>
         <span>XP Atual: {student.xp}</span>
         <span>XP Próx nível: {student.level * 125}</span>
-        <span>XP Total {student.xp + (student.level - 1) * 125}</span>
+        <span>XP Total: {student.xp + (student.level - 1) * 125}</span>
         <span>Rank 1</span>
       </div>
       

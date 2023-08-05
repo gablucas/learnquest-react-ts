@@ -3,12 +3,12 @@ import Panel from '../../../Panel.module.css';
 import Styles from './HandleSubject.module.css';
 import Input from '../../../../../components/Inputs/Input';
 import useForm, { UseFormType } from '../../../../../hooks/useForm';
-import useData from '../../../../../hooks/useData';
 import Modal from '../../../../../components/Modal';
-import useRandom from '../../../../../hooks/useRandom';
 import Select from '../../../../../components/Inputs/Select';
 import { GlobalContext } from '../../../../../GlobalContext';
 import { Status } from '../../../../../types/Commom';
+import { generateRandomID } from '../../../../../utils/generateRandomID';
+import { useSubject } from '../../../../../hooks/useSubject';
 
 type HandleSubjectProps = {
   subjectID?: string,
@@ -16,8 +16,7 @@ type HandleSubjectProps = {
 
 const HandleSubject = ({ subjectID }: HandleSubjectProps) => {
   const { data, setToggle } = React.useContext(GlobalContext);
-  const { getRandomID } = useRandom();
-  const { createSubject, editSubject } = useData();
+  const { createSubject, editSubject } = useSubject();
   
   const subjectToEdit = data.subjects.find((subject) => subject.id === subjectID);
 
@@ -39,7 +38,7 @@ const HandleSubject = ({ subjectID }: HandleSubjectProps) => {
 
     if (name.validate()) {
       const subject = {
-        id: subjectToEdit ? subjectToEdit.id : `S${getRandomID()}`,
+        id: subjectToEdit ? subjectToEdit.id : `S${generateRandomID()}`,
         name: name.value,
         teachers,
         status: subjectToEdit ? status.value as Status : 'active',

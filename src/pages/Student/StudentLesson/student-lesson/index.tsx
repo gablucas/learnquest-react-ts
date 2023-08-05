@@ -1,13 +1,13 @@
 import React from 'react';
 import Styles from '../StudentLesson.module.css'
 import { IEvaluateTask } from '../../../../types/Lessons';
-import useData from '../../../../hooks/useData';
 import useValidate from '../../../../hooks/useValidate';
 import QuestionToSolve from './question-to-solve';
-import useRandom from '../../../../hooks/useRandom';
 import { GlobalContext } from '../../../../GlobalContext';
 import { IStudent } from '../../../../types/Users';
 import { useParams } from 'react-router-dom';
+import { useLesson } from '../../../../hooks/useLesson';
+import { generateRandomID } from '../../../../utils/generateRandomID';
 
 interface IStudentLessonProps {
   student: IStudent,
@@ -17,14 +17,13 @@ interface IStudentLessonProps {
 const StudentLesson = ({ student, toggleDoneLesson }: IStudentLessonProps) => {
   const { data } = React.useContext(GlobalContext);
   const { id } = useParams();
-  const { saveStudentLesson } = useData();
+  const { saveStudentLesson } = useLesson();
   const { isEmpty } = useValidate();
-  const { getRandomID } = useRandom();
   const lesson = data.lessons.find((f) => f.id === id);
 
   const [answer, setAnswer] = React.useState<IEvaluateTask | undefined>(lesson &&
     {
-      id: `E${getRandomID()}`, 
+      id: `E${generateRandomID()}`, 
       createdby: lesson.createdby, 
       lessonID: lesson.id,
       student: student.id, 

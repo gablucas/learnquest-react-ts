@@ -2,11 +2,11 @@ import React from 'react';
 import Styles from '../../EvaluateTasks.module.css';
 import { TaskStudent } from "../../../../../types/Lessons";
 import useValidate from '../../../../../hooks/useValidate';
-import useDataEvaluate from '../../hooks/useDataEvaluate';
-import useData from '../../../../../hooks/useData';
 import { GlobalContext } from '../../../../../GlobalContext';
 import { useParams } from 'react-router-dom';
 import Question from './question';
+import { checkEvaluateLesson } from '../../../../../helpers/lesson/checkEvaluateLesson';
+import { useLesson } from '../../../../../hooks/useLesson';
 
 interface IQuestionsToEvaluate {
   setToggleDoneEvaluate: React.Dispatch<React.SetStateAction<boolean>>,
@@ -15,9 +15,9 @@ interface IQuestionsToEvaluate {
 const QuestionsToEvaluate = ({ setToggleDoneEvaluate}: IQuestionsToEvaluate) => {
   const { data } = React.useContext(GlobalContext);
   const { id } = useParams();
-  const { evaluateLesson } = useData();
+  const { evaluateLesson } = useLesson();
   const { isEmpty } = useValidate();
-  const { lessonToEvaluate, lessonInfo, studentInfo } = useDataEvaluate(id);
+  const { lessonToEvaluate, lessonInfo, studentInfo } = checkEvaluateLesson(id);
 
   const [task, setTask] = React.useState<TaskStudent>(lessonToEvaluate ? {id: lessonToEvaluate.lessonID, answers: [...lessonToEvaluate.answers]} : {id: '', answers: []});
 

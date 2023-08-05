@@ -2,12 +2,11 @@ import Styles from './Login.module.css';
 import Container from '../../components/Container';
 import useForm, { UseFormType } from '../../hooks/useForm';
 import { Navigate } from 'react-router-dom';
-import useData from '../../hooks/useData';
 import TestUsers from './test-users';
 import LoginForm from './login-form';
+import { getLoggedUser } from '../../helpers/user/getLoggedUser';
 
 const Login = () => {
-  const { getLoggedUser } = useData();
   const user = getLoggedUser();
 
   const login: UseFormType = useForm({type: 'user', initialValue: ''});

@@ -5,7 +5,7 @@ import Panel from './pages/Panel';
 import Login from './pages/Login';
 import ProtectedRoutes from './components/Helper/ProtectedRoutes';
 import { GlobalProvider } from './GlobalContext';
-import Users from './pages/Panel/Users/Users';
+import Users from './pages/Panel/Users';
 import Dashboard from './pages/Panel/Dashboard';
 import Preferences from './pages/Panel/Preferences';
 import Lessons from './pages/Panel/Lessons';

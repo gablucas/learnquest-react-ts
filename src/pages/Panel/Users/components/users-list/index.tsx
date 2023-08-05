@@ -4,9 +4,9 @@ import DeleteIcon from '../../../../../components/Icons/DeleteIcon';
 import EditIcon from '../../../../../components/Icons/EditIcon';
 import MoreInfo from '../../../../../components/Icons/MoreInfo';
 import Panel from '../../../Panel.module.css';
-import useData from '../../../../../hooks/useData';
 import { IStudent, IUser } from '../../../../../types/Users';
 import { MobileInfoData } from '../../../../../types/Commom';
+import { useUser } from '../../../../../hooks/useUser';
 
 interface IUsersListProps {
   users: IUser[] | IStudent[],
@@ -16,7 +16,7 @@ interface IUsersListProps {
 
 const UsersList = ({ users, setUserID, setMobileInfo}: IUsersListProps) => {
   const { setConfirm, setToggle } = React.useContext(GlobalContext);
-  const { removeUser } = useData();
+  const { deleteUser } = useUser();
 
   function handleEdit(userid: string): void {
     setUserID(userid);
@@ -25,7 +25,7 @@ const UsersList = ({ users, setUserID, setMobileInfo}: IUsersListProps) => {
 
   function handleRemove(email: string): void {
     setToggle('confirm')
-    setConfirm({type: 'confirm', text: 'Deseja realmente excluir este usuário?', action: () => removeUser(email)})
+    setConfirm({type: 'confirm', text: 'Deseja realmente excluir este usuário?', action: () => deleteUser(email)})
   }
 
   function handleMobileInfo(user: IUser | IStudent): void {

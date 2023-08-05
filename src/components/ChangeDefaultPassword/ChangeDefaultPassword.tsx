@@ -1,13 +1,14 @@
 import React from 'react';
 import { GlobalContext } from "../../GlobalContext";
-import useData from "../../hooks/useData";
 import useForm from "../../hooks/useForm";
 import Input from "../Inputs/Input";
 import Modal from "../Modal";
+import { getLoggedUser } from '../../helpers/user/getLoggedUser';
+import { useUser } from '../../hooks/useUser';
 
 const ChangeDefaultPassword = () => {
   const { data } = React.useContext(GlobalContext)
-  const { getLoggedUser, editPassword } = useData();
+  const { changeUserPassword } = useUser();
   const password = useForm({type: 'password', initialValue: ''});
   const confirmPassword = useForm({type: 'confirmPassword', initialValue: ''});
 
@@ -16,7 +17,7 @@ const ChangeDefaultPassword = () => {
 
     if (password.validate() && confirmPassword.validate() && password.value === confirmPassword.value) {
       e.preventDefault();
-      editPassword(password.value)
+      changeUserPassword(password.value);
     }
   }
 

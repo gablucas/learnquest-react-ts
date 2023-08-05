@@ -1,16 +1,16 @@
 import React from 'react';
 import { GlobalContext } from '../../../GlobalContext';
 import { useParams } from 'react-router-dom';
-import useData from '../../../hooks/useData';
 import { IStudent } from '../../../types/Users';
 import PageNotFound from '../../../components/PageNotFount';
 import StudentLesson from './student-lesson';
 import useToggle from '../../../hooks/useToggle';
+import { getLoggedUser } from '../../../helpers/user/getLoggedUser';
+import { getLesson } from '../../../helpers/lesson/getLesson';
 
 const StudentHandleLesson = () => {
   const { data } = React.useContext(GlobalContext);
   const { id } = useParams();
-  const { getLoggedUser, getLesson } = useData();
   const doneLesson = useToggle();
   const student = getLoggedUser() as IStudent;
 

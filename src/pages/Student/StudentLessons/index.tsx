@@ -1,15 +1,15 @@
 import React from 'react';
 import Styles from './StudentLessons.module.css';
-import useData from '../../../hooks/useData';
 import { Link } from 'react-router-dom';
 import MoreInfo from '../../../components/Icons/MoreInfo';
 import StartLesson from '../../../components/Icons/StartLesson';
 import { MobileInfoData, Subject } from '../../../types/Commom';
 import MobileInfo from '../../../components/MobileInfo/MobileInfo';
 import { ILesson } from '../../../types/Lessons';
+import { getSubject } from '../../../helpers/subject/getSubject';
+import { getStudentLessons } from '../../../helpers/lesson/getStudentLessons';
 
 const StudentLessons = () => {
-  const { getSubject, getStudentLessons } = useData();
 
   const [toggleMobile, setToggleMobile] = React.useState(false);
   const [mobileInfo, setMobileInfo] = React.useState<MobileInfoData[]>([{title: '', description: ''}]);

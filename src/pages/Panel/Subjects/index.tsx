@@ -5,7 +5,7 @@ import Message from '../../../components/Message/Message';
 import HandleSubject from './components/handle-subject';
 import { MobileInfoData } from '../../../types/Commom';
 import MobileInfo from '../../../components/MobileInfo/MobileInfo';
-import useHelpers from '../../../hooks/useHelpers';
+import { useHelpers } from '../../../hooks/useHelpers';
 import FilterIcon from '../../../components/Icons/FilterIcon';
 import Filter from '../../../components/Filter/Filter';
 import SubjectsHeader from './components/subjects-header';

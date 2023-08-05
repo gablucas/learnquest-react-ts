@@ -2,12 +2,12 @@ import React from 'react';
 import { GlobalContext } from '../../../../../GlobalContext';
 import { Group } from '../../../../../types/Group';
 import Panel from '../../../Panel.module.css';
-import useData from '../../../../../hooks/useData';
-import useHelpers from '../../../../../hooks/useHelpers';
+import { useHelpers } from '../../../../../hooks/useHelpers';
 import { MobileInfoData } from '../../../../../types/Commom';
 import EditIcon from '../../../../../components/Icons/EditIcon';
 import DeleteIcon from '../../../../../components/Icons/DeleteIcon';
 import MoreInfo from '../../../../../components/Icons/MoreInfo';
+import { useGroup } from '../../../../../hooks/useGroup';
 
 interface GroupListProps {
   setGroupID: React.Dispatch<React.SetStateAction<string>>,
@@ -16,7 +16,7 @@ interface GroupListProps {
 
 const GroupList = ({ setGroupID, setMobileInfo}: GroupListProps) => {
   const { data, filter, setConfirm, setToggle } = React.useContext(GlobalContext);
-  const { removeGroup } = useData();
+  const { deleteGroup } = useGroup();
   const { isArrayEmpty, arrayIncludes } = useHelpers();
 
   let groups = data.groups;
@@ -30,7 +30,7 @@ const GroupList = ({ setGroupID, setMobileInfo}: GroupListProps) => {
 
   function handleRemoveGroup(id: string): void {
     setToggle('confirm');
-    setConfirm({type: 'confirm', text: 'Deseja realmente excluir essa turma?', action: () => removeGroup(id)});
+    setConfirm({type: 'confirm', text: 'Deseja realmente excluir essa turma?', action: () => deleteGroup(id)});
   }
 
   function handleMobileInfo(m: Group): void {

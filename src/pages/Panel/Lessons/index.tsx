@@ -3,7 +3,7 @@ import Panel from '../Panel.module.css';
 import Message from '../../../components/Message/Message';
 import MobileInfo from '../../../components/MobileInfo/MobileInfo';
 import Filter from '../../../components/Filter/Filter';
-import useHelpers from '../../../hooks/useHelpers';
+import { useHelpers } from '../../../hooks/useHelpers';
 import FilterIcon from '../../../components/Icons/FilterIcon';
 import LessonsHeader from './components/lessons-header';
 import LessonsList from './components/lessons-list';

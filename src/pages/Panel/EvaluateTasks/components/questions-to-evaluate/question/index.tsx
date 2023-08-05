@@ -1,11 +1,10 @@
-
-
 import { useParams } from 'react-router-dom';
 import { Task, TaskStudent } from '../../../../../../types/Lessons';
 import Styles from '../../../EvaluateTasks.module.css';
-import useDataEvaluate from '../../../hooks/useDataEvaluate';
+
 import Error from '../../../../../../components/Helper/Error';
 import useValidate from '../../../../../../hooks/useValidate';
+import { checkEvaluateLesson } from '../../../../../../helpers/lesson/checkEvaluateLesson';
 
 interface IQuestionProps {
   index: number,
@@ -17,7 +16,7 @@ interface IQuestionProps {
 const Question = ({ index, question, task, setTask }: IQuestionProps) => {
   const { id } = useParams();
   const { error } = useValidate();
-  const { lessonToEvaluate, lessonInfo } = useDataEvaluate(id);
+  const { lessonToEvaluate, lessonInfo } = checkEvaluateLesson(id);
 
   function handleEvaluate(index: number, isCorrect: boolean): void {
     if (task && lessonInfo) {

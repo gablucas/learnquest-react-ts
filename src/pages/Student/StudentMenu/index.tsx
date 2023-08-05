@@ -1,10 +1,10 @@
 import { Link, useParams } from 'react-router-dom';
 import Styles from './StudentMenu.module.css';
-import useData from '../../../hooks/useData';
+import { useAuth } from '../../../hooks/useAuth';
 
 
 const StudentMenu = () => {
-  const { logoutUser } = useData();
+  const { logoutUser } = useAuth();
   const param = useParams();
   const route = param['*'];
 

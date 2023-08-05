@@ -2,10 +2,10 @@ import React from 'react';
 import Panel from '../../../Panel.module.css';
 import { GlobalContext } from "../../../../../GlobalContext";
 import { MobileInfoData, Subject } from "../../../../../types/Commom";
-import useData from '../../../../../hooks/useData';
 import EditIcon from '../../../../../components/Icons/EditIcon';
 import MoreInfo from '../../../../../components/Icons/MoreInfo';
 import DeleteIcon from '../../../../../components/Icons/DeleteIcon';
+import { useSubject } from '../../../../../hooks/useSubject';
 
 interface ISubjectsList {
   subjects: Subject[],
@@ -15,15 +15,15 @@ interface ISubjectsList {
 
 const SubjectsList = ({ subjects, setSubjectID, setMobileInfo }: ISubjectsList) => {
   const { data, setConfirm, setToggle } = React.useContext(GlobalContext);
-  const { removeSubject } = useData();
+  const { deleteSubject } = useSubject();
 
   function getLessonsPerSubject(id: string): number {
     return data.lessons.map((lesson) => lesson.subject === id).length
   }
 
-  function handleRemoveSubject(id: string): void {
+  function handleDeleteSubject(id: string): void {
     setToggle('confirm');
-    setConfirm({type: 'confirm', text: 'Deseja realmente excluir está matéria?', action: () => removeSubject(id)});
+    setConfirm({type: 'confirm', text: 'Deseja realmente excluir está matéria?', action: () => deleteSubject(id)});
   }
 
   function handleEdit(id: string): void {
@@ -49,7 +49,7 @@ const SubjectsList = ({ subjects, setSubjectID, setMobileInfo }: ISubjectsList) 
           <span>{subject.status === 'active' ? 'Ativado' : 'Desativado'}</span>
           <button className={Panel.mobile} onClick={() => handleMobileInfo(subject)} ><MoreInfo /></button>
           <button onClick={() => handleEdit(subject.id)}><EditIcon /></button>
-          <button onClick={() => handleRemoveSubject(subject.id)}><DeleteIcon /></button>
+          <button onClick={() => handleDeleteSubject(subject.id)}><DeleteIcon /></button>
         </div>
       ))}
     </>

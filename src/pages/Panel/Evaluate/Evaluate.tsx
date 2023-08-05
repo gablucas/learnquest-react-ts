@@ -1,19 +1,18 @@
 import React from 'react';
 import Panel from '../Panel.module.css';
-import useData from '../../../hooks/useData';
 import MobileInfo from '../../../components/MobileInfo/MobileInfo';
-import useHelpers from '../../../hooks/useHelpers';
+import { useHelpers } from '../../../hooks/useHelpers';
 import FilterIcon from '../../../components/Icons/FilterIcon';
 import Filter from '../../../components/Filter/Filter';
 import { GlobalContext } from '../../../GlobalContext';
 import { MobileInfoData } from '../../../types/Commom';
 import EvaluateList from './components/evaluate-list';
 import EvaluateHeader from './components/evaluate-header';
+import { getLoggedUser } from '../../../helpers/user/getLoggedUser';
 
-const Evaluaten = () => {
+const Evaluate = () => {
   const { data, filter, toggle, setToggle } = React.useContext(GlobalContext);
   const { isArrayEmpty, isAnyArrayFilled, arrayIncludes, cleanFilter } = useHelpers();
-  const { getLoggedUser } = useData();
   const loggedUser = getLoggedUser();
   
   const [mobileInfo, setMobileInfo] = React.useState<MobileInfoData[]>([{title: '', description: ''}]);
@@ -29,7 +28,7 @@ const Evaluaten = () => {
     <section className={Panel.container}>
 
     <div className={Panel.options}>
-      <button onClick={() => setToggle('filter')} className={isAnyArrayFilled(checkFilter) ? Panel.filter : ''} >Filtrar<FilterIcon /></button>
+      <button role='button' onClick={() => setToggle('filter')} className={isAnyArrayFilled(checkFilter) ? Panel.filter : ''} >Filtrar<FilterIcon /></button>
       {isAnyArrayFilled(checkFilter) && (<button onClick={() => cleanFilter()} className={Panel.cleanfilter}>Limpar filtro</button>)}
     </div>
 
@@ -44,4 +43,4 @@ const Evaluaten = () => {
   )
 }
 
-export default Evaluaten;
+export default Evaluate;
