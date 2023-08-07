@@ -24,7 +24,7 @@ const LoginForm = ({ login, password }: ILoginFormProps) => {
     <div className={Styles.login}>
       <h1>Faça o login</h1>
       <form role='form' onSubmit={handleSubmit}>
-        <Input type='text' label='Login' {...login} />
+        <Input data-testid='login-input' type='text' label='Login' {...login} />
         <Input type='password' label='Senha' {...password} />
         <button>Entrar</button>
       </form>
