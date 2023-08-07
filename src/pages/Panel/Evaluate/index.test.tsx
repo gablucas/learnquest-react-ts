@@ -16,7 +16,7 @@ describe('Evaluate', () => {
     render(<BrowserRouter><Evaluate /></BrowserRouter>);
 
     expect(screen.getByText('Filtrar')).toBeInTheDocument();
-    expect(screen.getByText('Limpar filtro')).not.toBeInTheDocument();
+    expect(screen.queryByText('Limpar filtro')).not.toBeInTheDocument();
   })
 
   it('the Limpar Filtro button should appear when the isAnyArrayFilled return true', () => {

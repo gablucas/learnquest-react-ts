@@ -13,8 +13,8 @@ const useAuth = () => {
     const user = data.users.find((user) => user.login.toLowerCase() === login.toLowerCase() && user.password === password);
 
     if (user && user.status === 'active') {
-      localStorage.setItem('logged', login);
-      setUser(login);
+      localStorage.setItem('logged', user.id);
+      setUser(user.id);
 
       if (getLoggedUser()?.access === "student") {
         navigate('/estudante');

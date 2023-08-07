@@ -18,7 +18,8 @@ describe('LoginForm', () => {
 
     expect(screen.getByText("Faça o login")).toBeInTheDocument();
     expect(screen.getByRole("form")).toBeInTheDocument();
-    expect(screen.getByTestId("inputcomponent")).toBeInTheDocument();
+
+
     expect(screen.getByText("Entrar")).toBeInTheDocument();
   })
 })

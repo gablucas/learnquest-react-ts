@@ -1,7 +1,8 @@
 import { fireEvent, render, screen } from "@testing-library/react"
 import EvaluateList from ".";
 import { BrowserRouter } from "react-router-dom";
-import useData from "../../../../../hooks/useData";
+import * as getUser from "../../../../../helpers/user/getUser";
+import * as getSubject from "../../../../../helpers/subject/getSubject";
 
 const evaluateTask = [{        
   id: '1',
@@ -12,7 +13,9 @@ const evaluateTask = [{
   answers: []
 }]
 
-jest.mock("../../../../../hooks/useData");
+const mockGetUser = jest.spyOn(getUser, "getUser");
+const mockGetSubject = jest.spyOn(getSubject, "getSubject");
+
 
 const renderComponent = () => {
   render(
@@ -24,7 +27,8 @@ const renderComponent = () => {
 describe('EvaluateList', () => {
 
   it('should render correctly', () => {
-    (useData as jest.Mock).mockReturnValue({getUser: jest.fn().mockReturnValue({name: 'Gabriel'}), getSubject: jest.fn().mockReturnValue({name: 'Matemática'})})
+    mockGetUser.mockReturnValue({id: 'U1', name: 'Gabriel', email: 'test', access: 'student', lessons: [], level: 1, xp: 0, login: 'test', password: 'test', status: 'active'});
+    mockGetSubject.mockReturnValue({id: 'S1', name: 'Matemática', status: 'active', teachers: ['T1']});
 
     renderComponent();
     
@@ -38,7 +42,8 @@ describe('EvaluateList', () => {
   })
 
   it('should navigate /painel/avaliar/id to when click on EvaluateIcon link', () => {
-    (useData as jest.Mock).mockReturnValue({getUser: jest.fn().mockReturnValue({name: 'Gabriel'}), getSubject: jest.fn().mockReturnValue({name: 'Matemática'})})
+    mockGetUser.mockReturnValue({id: 'U1', name: 'Gabriel', email: 'test', access: 'student', lessons: [], level: 1, xp: 0, login: 'test', password: 'test', status: 'active'});
+    mockGetSubject.mockReturnValue({id: 'S1', name: 'Matemática', status: 'active', teachers: ['T1']});
 
     renderComponent();
 

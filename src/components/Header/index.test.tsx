@@ -1,9 +1,9 @@
 import { fireEvent, render, screen } from "@testing-library/react"
 import Header from "."
 import { BrowserRouter } from "react-router-dom";
-import useData from "../../hooks/useData";
+import * as getLoggedUser from '../../helpers/user/getLoggedUser';
 
-jest.mock("../../hooks/useData")
+const mockGetLoggedUser = jest.spyOn(getLoggedUser, "getLoggedUser");
 
 describe("Header", () => {
   afterEach(() => {
@@ -11,7 +11,7 @@ describe("Header", () => {
   });
 
   it('should renders correctly', () => {
-    (useData as jest.Mock).mockReturnValue({ getLoggedUser: jest.fn().mockReturnValue(undefined)});
+    mockGetLoggedUser.mockReturnValue(undefined);
     
     render(<BrowserRouter><Header /></BrowserRouter>);
 
@@ -23,7 +23,7 @@ describe("Header", () => {
   })
 
   it('should render when user is not logged in', () => {
-    (useData as jest.Mock).mockReturnValue({ getLoggedUser: jest.fn().mockReturnValue(undefined)});
+    mockGetLoggedUser.mockReturnValue(undefined);
 
     render(<BrowserRouter><Header /></BrowserRouter>);
 
@@ -32,7 +32,7 @@ describe("Header", () => {
   })
 
   it('should render when user is logged in', () => {
-    (useData as jest.Mock).mockReturnValue({ getLoggedUser: jest.fn().mockReturnValue({ access: 'student', name: 'Gabriel' })});
+    mockGetLoggedUser.mockReturnValue({id: '1', name: 'Gabriel', email:' test', access: 'student', lessons: [], level: 1, xp: 0, login: 'test', password: 'test', status: 'active'  })
 
     render(<BrowserRouter><Header /></BrowserRouter>);
 
@@ -41,7 +41,7 @@ describe("Header", () => {
   })
 
   it('should navigate to / when click on "Logo" link', () => {
-    (useData as jest.Mock).mockReturnValue({ getLoggedUser: jest.fn().mockReturnValue(undefined)});
+    mockGetLoggedUser.mockReturnValue(undefined);
 
     render(<BrowserRouter><Header /></BrowserRouter>);
 
@@ -53,7 +53,7 @@ describe("Header", () => {
   })
 
   it('should navigate to / when click on "Entrar" link', () => {
-    (useData as jest.Mock).mockReturnValue({ getLoggedUser: jest.fn().mockReturnValue(undefined)});
+    mockGetLoggedUser.mockReturnValue(undefined);
 
     render(<BrowserRouter><Header /></BrowserRouter>);
 
@@ -65,7 +65,7 @@ describe("Header", () => {
   })
 
   it('should navigate to /estudante when student click on his name', () => {
-    (useData as jest.Mock).mockReturnValue({ getLoggedUser: jest.fn().mockReturnValue({ access: 'teacher', name: 'Gabriel' })});
+    mockGetLoggedUser.mockReturnValue({id: '1', name: 'Gabriel', email:' test', access: 'student', lessons: [], level: 1, xp: 0, login: 'test', password: 'test', status: 'active'  })
 
     render(<BrowserRouter><Header /></BrowserRouter>);
 
@@ -77,7 +77,7 @@ describe("Header", () => {
   })
 
   it('should navigate to /painel when admin/teacher click on his name', () => {
-    (useData as jest.Mock).mockReturnValue({ getLoggedUser: jest.fn().mockReturnValue({ access: 'admin', name: 'Gabriel' })});
+    mockGetLoggedUser.mockReturnValue({id: '1', name: 'Gabriel', email:' test', access: 'admin', lessons: [], level: 1, xp: 0, login: 'test', password: 'test', status: 'active'  })
 
     render(<BrowserRouter><Header /></BrowserRouter>);
 

@@ -3,10 +3,10 @@ import { getData } from "../data/getData";
 
 function getLoggedUser(): IUser | IStudent | undefined {
   const data = getData();
-  const userLogin = localStorage.getItem('logged');
+  const userID = localStorage.getItem('logged');
 
-  if (data && userLogin) {
-    return data.users.find((user) => user.login.toLowerCase() === userLogin.toLowerCase());
+  if (data && userID) {
+    return data.users.find((user) => user.id === userID);
   } else {
     return undefined;
   }
