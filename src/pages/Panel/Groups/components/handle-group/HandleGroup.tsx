@@ -15,9 +15,10 @@ import { generateRandomID } from '../../../../../utils/generateRandomID';
 
 type HandleUserProps = {
   groupID?: string,
+  handleToggle: () => void,
 }
 
-const HandleGroup = ({ groupID }: HandleUserProps) => {
+const HandleGroup = ({ groupID, handleToggle }: HandleUserProps) => {
   const { createGroup, editGroup } = useGroup();
   const { data, setToggle } = React.useContext(GlobalContext);
   const groupToEdit = data.groups.find((group) => group.id === groupID);
@@ -76,7 +77,7 @@ const HandleGroup = ({ groupID }: HandleUserProps) => {
 
   if (data)
   return (
-    <Modal>
+    <Modal handleToggle={handleToggle}>
 
       <div className={Styles.container}>
 

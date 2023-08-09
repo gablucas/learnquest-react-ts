@@ -6,7 +6,7 @@ import { GlobalContext } from '../../../GlobalContext';
 import { useHelpers } from '../../../hooks/useHelpers';
 import { ButtonCreateUser } from './components/button-create-user';
 import { ButtonFilterUser } from './components/button-filter-user';
-import { ButtonCleanFilter } from './components/button-clean-filter';
+import { ButtonCleanFilter } from '../../../components/button-clean-filter';
 
 const Users = () => {
   const { data } = React.useContext(GlobalContext);
@@ -25,7 +25,7 @@ const Users = () => {
       <div className={Panel.options}>
         <ButtonCreateUser />
         <ButtonFilterUser />
-        <ButtonCleanFilter />
+        <ButtonCleanFilter isFiltered={['access', 'status']} />
       </div>
 
       <div className={`${Panel.info} ${Panel.users}`}>
