@@ -1,20 +1,32 @@
 import React from 'react';
 import Styles from './Filter.module.css';
 import Modal from "../Modal";
-import { GlobalContext } from '../../GlobalContext';
-import { FilterProp } from '../../types/Filter';
 import FilterOptions from './FilterOptions';
+import { GlobalContext } from '../../GlobalContext';
+
+type FilterProps = {
+  handleToggle: () => void,
+  options: {
+    access: boolean,
+    student: boolean,
+    subject: boolean,
+    group: boolean,
+    createdby: boolean,
+    status: boolean,
+  },
+}
 
 
-const Filter = ({ options }: FilterProp) => {
-  const { data, setToggle } = React.useContext(GlobalContext)
+const Filter = ({ handleToggle, options }: FilterProps) => {
+  const { data } = React.useContext(GlobalContext);
+
 
   return (
-    <Modal>
+    <Modal handleToggle={handleToggle}>
       <div className={Styles.container}>
         <div>
           <h2>Filtro</h2>
-          <button onClick={() => setToggle('none')}>Fechar</button>
+          <button onClick={handleToggle}>Fechar</button>
         </div>
 
         <div className={Styles.options}>

@@ -16,7 +16,6 @@ const Groups = () => {
   const { isAnyArrayFilled, cleanFilter } = useHelpers();
   const [groupID, setGroupID] = React.useState<string>('');
   const [mobileInfo, setMobileInfo] = React.useState<MobileInfoData[]>([{title: '', description: ''}]);
-
   return (
     <section className={Panel.container}>
 

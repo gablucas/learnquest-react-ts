@@ -1,26 +1,29 @@
-import React from 'react';
 import Styles from './Message.module.css';
 import Modal from "../Modal";
-import { GlobalContext } from '../../GlobalContext';
 
-const Message = () => {
-  const { confirm, setToggle } = React.useContext(GlobalContext);
+type MessageProps = {
+  type: string,
+  text: string,
+  handleToggle: () => void,
+  action: () => void,
+}
+
+const Message = ({ handleToggle, type, text, action }: MessageProps) => {
 
   function handleClick(choice: boolean): void {
-    if (choice && confirm.type === 'confirm') {
-      confirm.action?.();
+    if (choice && type === 'confirm') {
+      action?.();
     } 
-
-    setToggle('none');
+    handleToggle();
   }
 
 
   return (
-    <Modal>
+    <Modal handleToggle={handleToggle}>
       <div className={Styles.message}>
-        <p>{confirm.text}</p>
-        {confirm.type === 'confirm' && (<button onClick={() => handleClick(true)}>Prosseguir</button>)}
-        <button onClick={() => handleClick(false)}>{confirm.type === 'confirm' ? 'Cancelar' : 'OK'}</button>
+        <p>{text}</p>
+        {type === 'confirm' && (<button onClick={() => handleClick(true)}>Prosseguir</button>)}
+        <button onClick={() => handleClick(false)}>{type === 'confirm' ? 'Cancelar' : 'OK'}</button>
       </div>
     </Modal>
   )

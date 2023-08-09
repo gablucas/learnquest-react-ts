@@ -29,7 +29,6 @@ const HandleGroup = ({ groupID }: HandleUserProps) => {
   const name = useForm({type: 'name', initialValue: groupToEdit ? groupToEdit.name : ''});
   const status = useForm({type: 'status', initialValue: groupToEdit ? groupToEdit.status : ''})
 
-
   function studentHasGroup(userid: string): boolean {
     return data.groups.every((group) => group.students.every((id) => id !== userid));
   }

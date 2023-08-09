@@ -14,10 +14,11 @@ import { generateRandomID } from '../../../../../utils/generateRandomID';
 
 type HandleUserProps = {
   userID?: string,
+  handleToggle: () => void,
 }
 
-const HandleUser = ({ userID }: HandleUserProps) => {
-  const { data, setToggle } = React.useContext(GlobalContext);
+const HandleUser = ({ userID, handleToggle }: HandleUserProps) => {
+  const { data } = React.useContext(GlobalContext);
   const { createUser, editUser } = useUser();
   const user = data.users.find((user) => user.id === userID);
 
@@ -57,19 +58,19 @@ const HandleUser = ({ userID }: HandleUserProps) => {
         createUser(user);
       }
       
-      setToggle('none');
+      handleToggle();
     } else if (userID && name.validate() && login.validate() && email.validate() && password.validate() && status.validate()) {
       editUser(userID, name.value, login.value, email.value, password.value, status.value as Status);
-      setToggle('none');
+      handleToggle();
     }
   }
 
   return (
-    <Modal>
+    <Modal handleToggle={handleToggle} >
       <div className={Styles.container}>
         <div>
           <h2>{userID ? 'Editar': 'Criar novo'} usuário</h2>
-          <button onClick={() => setToggle('none')}>Fechar</button>
+          <button onClick={handleToggle}>Fechar</button>
         </div>
         
         <form onSubmit={handleSubmit}>

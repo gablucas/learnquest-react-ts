@@ -7,3 +7,8 @@
 .info span:first-of-type {
   color :#a3a3a3;
 }
+
+.info span:last-of-type {
+  display: initial !Important;
+  color: #FFFFFF;
+}

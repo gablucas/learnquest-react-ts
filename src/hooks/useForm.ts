@@ -1,5 +1,4 @@
 import React, { Dispatch, SetStateAction } from 'react';
-import useData from './useData';
 import { someUserHasInfo } from '../helpers/user/someUserHasInfo';
 
 export type UseFormType = {
