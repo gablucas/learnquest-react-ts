@@ -4,7 +4,7 @@ import { GlobalContext } from "../../GlobalContext";
 import { isAnyArrayFilled } from "../../utils/isAnyArrayFilled";
 import { FilterStateProps } from '../../types/Filter';
 
-type ButtonCleanFilterProps<T extends keyof FilterStateProps> = {
+type ButtonCleanFilterProps<T> = {
   isFiltered: T[];
 }
 
