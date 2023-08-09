@@ -2,7 +2,7 @@ import Styles from './Message.module.css';
 import Modal from "../Modal";
 
 type MessageProps = {
-  type: string,
+  type: 'confirm' | 'message',
   text: string,
   handleToggle: () => void,
   action: () => void,
