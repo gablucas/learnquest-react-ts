@@ -22,8 +22,5 @@ export type MobileInfoData = {
   description: string | number,
 }
 
-export type MobileInfoProps = {
-  info: MobileInfoData[],
-}
 
 export type Toggle = 'create' | 'edit' | 'filter' | 'confirm' | 'mobile' | 'none';

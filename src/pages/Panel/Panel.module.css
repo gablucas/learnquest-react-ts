@@ -29,8 +29,8 @@
   gap: 10px;
 }
 
-.options button,
-.options a {
+.options > button,
+.options > a {
   display: flex;
   align-items: center;
   gap: 4px;
@@ -40,22 +40,22 @@
   background-color: #302B33; 
 }
 
-.options button:hover,
-.options a:hover {
+.options > button:hover,
+.options > a:hover {
   background-color: #464149;
 }
 
-.options button.filter {
+.options > button.filter {
   font-weight: 600;
   color: #121214;
   background-color: #FFA700;
 }
 
-.options button.filter svg {
+.options > button.filter svg {
   fill: #121214;
 }
 
-.options .cleanfilter {
+.option > .cleanfilter {
   font-size: .8rem;
   background-color: rgba(48, 43, 51, .4);
 }
@@ -71,7 +71,7 @@
   background-color: #FFA700;
 }
 
-.info div {
+.info > div {
   display: grid;
   place-items: center;
   height: 46px;

@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react"
+import { render } from "@testing-library/react"
 import { BrowserRouter } from "react-router-dom"
 import DoneLessonsStudent from "."
 import { IStudent } from "../../../../../types/Users"
@@ -16,11 +16,10 @@ const mockStudent: IStudent = {
   status: 'active',
 }
 
-
 const renderComponent = () => {
   render(
   <BrowserRouter>
-    <DoneLessonsStudent student={mockStudent} setMobileInfo={[{}]}/>
+    <DoneLessonsStudent student={mockStudent} setMobileInfo={jest.fn()}/>
   </BrowserRouter>)
 }
 
