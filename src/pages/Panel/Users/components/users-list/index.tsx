@@ -1,14 +1,21 @@
+import React from 'react';
 import Panel from '../../../Panel.module.css';
-import { IStudent, IUser } from '../../../../../types/Users';
 import { ButtonEditUser } from '../button-edit-user';
 import { ButtonMobileInfo } from '../../../../../components/button-mobile-info';
 import { ButtonDeleteUser } from '../button-delete-user';
+import { GlobalContext } from '../../../../../GlobalContext';
+import { useHelpers } from '../../../../../hooks/useHelpers';
 
-interface IUsersListProps {
-  users: IUser[] | IStudent[],
-}
+const UsersList = () => {
+  const { data } = React.useContext(GlobalContext);
+  const { filter } = React.useContext(GlobalContext);
+  const { isArrayEmpty, arrayIncludes } = useHelpers();
 
-const UsersList = ({ users }: IUsersListProps) => {
+  let users = data.users;
+  if (!isArrayEmpty(filter.access)) users = users.filter((user) => arrayIncludes(filter.access, user.access));
+  if (!isArrayEmpty(filter.status)) users = users.filter((user) => arrayIncludes(filter.status, user.status));
+
+  console.log('List Users Renderizou')
 
   return (
     <>

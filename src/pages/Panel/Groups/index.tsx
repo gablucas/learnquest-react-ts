@@ -4,7 +4,7 @@ import GroupList from './components/group-list';
 
 import { ButtonCleanFilter } from '../../../components/button-clean-filter';
 import { ButtonCreateGroup } from './components/button-create-group';
-import { ButtonFilterGroup } from './components/button-filter-group';
+import { ButtonFilter } from '../../../components/button-filter';
 
 const Groups = () => {
   return (
@@ -12,7 +12,7 @@ const Groups = () => {
 
       <div className={Panel.options}>
         <ButtonCreateGroup />
-        <ButtonFilterGroup />
+        <ButtonFilter isFiltered={['group' ,'status']} />
         <ButtonCleanFilter isFiltered={['group' ,'status']} />
       </div>
 

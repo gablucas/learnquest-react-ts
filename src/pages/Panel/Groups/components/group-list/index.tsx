@@ -15,7 +15,6 @@ const GroupList = () => {
   if (!isArrayEmpty(filter.status)) groups = groups.filter((groups) => arrayIncludes(filter.status, groups.status));
 
 
-
   return (
       <>
         {groups.map((group) => (

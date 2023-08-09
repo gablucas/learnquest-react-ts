@@ -4,36 +4,31 @@ import useToggle from '../../../../../hooks/useToggle';
 import Styles from '../../StudentData.module.css'
 import Panel from '../../../Panel.module.css';
 import { IStudent } from '../../../../../types/Users';
-import { ILesson, TaskStudent } from '../../../../../types/Lessons';
-import { useContext } from 'react';
-import { GlobalContext } from '../../../../../GlobalContext';
-import { MobileInfoData } from '../../../../../types/Commom';
-import MoreInfo from '../../../../../components/Icons/MoreInfo';
+import { TaskStudent } from '../../../../../types/Lessons';
 import { getUser } from '../../../../../helpers/user/getUser';
 import { getLesson } from '../../../../../helpers/lesson/getLesson';
 import { getSubject } from '../../../../../helpers/subject/getSubject';
 import { counterQuestionsBy } from '../../../../../helpers/lesson/counterQuestionsBy';
+import { ButtonMobileInfo } from '../../../../../components/button-mobile-info';
 
 interface IDoneLessonsStudentProps {
   student: IStudent,
-  setMobileInfo: React.Dispatch<React.SetStateAction<MobileInfoData[]>>,
 }
 
-const DoneLessonsStudent = ({ student, setMobileInfo }: IDoneLessonsStudentProps) => {
-  const { setToggle } = useContext(GlobalContext);
+const DoneLessonsStudent = ({ student }: IDoneLessonsStudentProps) => {
   const donelesson = useToggle();
 
-  function handleMobileInfo(lesson: TaskStudent | ILesson): void {
-    const createdby = {title: 'Criado por', description: getUser(getLesson(lesson.id)?.createdby as string)?.name || ''};
-    const subject = {title: 'Matéria', description: getSubject(getLesson(lesson.id)?.subject as string)?.name || ''};
-    const questions = {title: 'Questões', description: ((lesson as TaskStudent).answers.length)};
-    const correct = {title: 'Corretas', description: counterQuestionsBy('correct', lesson as TaskStudent)};
-    const wrong = {title: 'Erradas', description: counterQuestionsBy('wrong', lesson as TaskStudent)};
-    setMobileInfo([createdby, subject, questions, correct, wrong]);
-    setToggle('mobile');
+  function MobileInfo(lesson: TaskStudent): [string, string | number][] {
+
+    return [
+      ['Criado por', getUser(getLesson(lesson.id)?.createdby as string)?.name || ''],
+      ['Matéria', getSubject(getLesson(lesson.id)?.subject as string)?.name || ''],
+      ['Questões', ((lesson as TaskStudent).answers.length)],
+      ['Corretas', counterQuestionsBy('correct', lesson as TaskStudent)],
+      ['Erradas', counterQuestionsBy('wrong', lesson as TaskStudent)],
+    ]
   }
-
-
+  
   if (student)
   return (
     <div className={Styles.lessons_container}>
@@ -58,7 +53,7 @@ const DoneLessonsStudent = ({ student, setMobileInfo }: IDoneLessonsStudentProps
             {student.lessons.map((lesson) => (
               <div className={Styles.lessons_done} key={lesson.id}>
                 <span>{getLesson(lesson.id)?.title}</span>
-                <button className={Panel.mobile} onClick={() => handleMobileInfo(lesson)} ><MoreInfo /></button>
+                <ButtonMobileInfo info={MobileInfo(lesson)} />
                 <span>{getUser(getLesson(lesson.id)?.createdby as string)?.name}</span>
                 <span>{getSubject(getLesson(lesson.id)?.subject as string)?.name}</span>
                 <span>{lesson.answers.length}</span>
