@@ -13,9 +13,9 @@ const useGroup = () => {
     setData(updateData);
   }
 
-  function deleteGroup(groupid: string): void {
+  function deleteGroup(id: string): void {
     const updateData = getData();
-    updateData.groups = updateData.groups.filter((c) => c.id !== groupid);
+    updateData.groups = updateData.groups.filter((c) => c.id !== id);
     localStorage.setItem('data', JSON.stringify(updateData));
     setData(updateData);
   }

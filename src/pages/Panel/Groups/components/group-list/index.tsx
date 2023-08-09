@@ -1,46 +1,19 @@
 import React from 'react';
 import { GlobalContext } from '../../../../../GlobalContext';
-import { Group } from '../../../../../types/Group';
 import Panel from '../../../Panel.module.css';
 import { useHelpers } from '../../../../../hooks/useHelpers';
-import { MobileInfoData } from '../../../../../types/Commom';
-import EditIcon from '../../../../../components/Icons/EditIcon';
-import DeleteIcon from '../../../../../components/Icons/DeleteIcon';
-import MoreInfo from '../../../../../components/Icons/MoreInfo';
-import { useGroup } from '../../../../../hooks/useGroup';
+import { ButtonEditGroup } from '../button-edit-group';
+import { ButtonMobileInfo } from '../../../../../components/button-mobile-info';
+import { ButtonDeleteGroup } from '../button-delete-group';
 
-interface GroupListProps {
-  setGroupID: React.Dispatch<React.SetStateAction<string>>,
-  setMobileInfo: React.Dispatch<React.SetStateAction<MobileInfoData[]>>,
-}
-
-const GroupList = ({ setGroupID, setMobileInfo}: GroupListProps) => {
-  const { data, filter, setConfirm, setToggle } = React.useContext(GlobalContext);
-  const { deleteGroup } = useGroup();
+const GroupList = () => {
+  const { data, filter } = React.useContext(GlobalContext);
   const { isArrayEmpty, arrayIncludes } = useHelpers();
 
   let groups = data.groups;
   if (!isArrayEmpty(filter.group)) groups = groups.filter((groups) => arrayIncludes(filter.group, groups.id));
   if (!isArrayEmpty(filter.status)) groups = groups.filter((groups) => arrayIncludes(filter.status, groups.status));
 
-  function handleEdit(classid: string): void {
-    setGroupID(classid);
-    setToggle('edit');
-  }
-
-  function handleRemoveGroup(id: string): void {
-    setToggle('confirm');
-    setConfirm({type: 'confirm', text: 'Deseja realmente excluir essa turma?', action: () => deleteGroup(id)});
-  }
-
-  function handleMobileInfo(m: Group): void {
-    const name = {title: 'Nome', description: m.name};
-    const students = {title: 'Estudantes', description: m.students.length};
-    const status = {title: 'Estado', description: m.status ? 'Ativado' : 'Desativado'};
-
-    setMobileInfo([name, students, status]);
-    setToggle('mobile');
-  }
 
   return (
       <>
@@ -50,9 +23,9 @@ const GroupList = ({ setGroupID, setMobileInfo}: GroupListProps) => {
             <span>{group.students.length}</span>
             <span>{group.teachers.length}</span>
             <span>{group.status === 'active' ? 'Ativado' : 'Desativado'}</span>
-            <button className={Panel.mobile} onClick={() => handleMobileInfo(group)} ><MoreInfo /></button>
-            <button onClick={() => handleEdit(group.id)}><EditIcon /></button>
-            <button onClick={() => handleRemoveGroup(group.id)}><DeleteIcon /></button>
+            <ButtonMobileInfo info={[['Nome', group.name], ['Alunos', group.students.length], ['Professores', group.teachers.length], ['Estado', group.status === 'active' ? 'Ativado' : 'Desativado']]} />
+            <ButtonEditGroup groupID={group.id} />
+            <ButtonDeleteGroup groupID={group.id} />
           </div>
         ))}
     </>

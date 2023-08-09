@@ -1,33 +1,28 @@
-import React from 'react';
 import Panel from '../../../Panel.module.css';
 import Styles from '../../StudentData.module.css';
 import Expand from '../../../../../components/Icons/Contract';
 import Contract from '../../../../../components/Icons/Expand';
 import useToggle from '../../../../../hooks/useToggle';
-import { MobileInfoData } from '../../../../../types/Commom';
-import { ILesson, TaskStudent } from '../../../../../types/Lessons';
-import MoreInfo from '../../../../../components/Icons/MoreInfo';
-import { GlobalContext } from '../../../../../GlobalContext';
+import { ILesson } from '../../../../../types/Lessons';
 import { getUser } from '../../../../../helpers/user/getUser';
 import { getSubject } from '../../../../../helpers/subject/getSubject';
 import { getLesson } from '../../../../../helpers/lesson/getLesson';
+import { ButtonMobileInfo } from '../../../../../components/button-mobile-info';
 
 interface ITodoLessonsStudentProps {
-  setMobileInfo: React.Dispatch<React.SetStateAction<MobileInfoData[]>>,
   lessonsTodo: ILesson[],
 }
 
-const TodoLessonsStudent = ({ setMobileInfo, lessonsTodo }: ITodoLessonsStudentProps) => {
-  const { setToggle } = React.useContext(GlobalContext);
+const TodoLessonsStudent = ({ lessonsTodo }: ITodoLessonsStudentProps) => {
   const todolesson = useToggle();
 
-  function handleMobileInfo(lesson: TaskStudent | ILesson): void {
-    const createdby = {title: 'Criado por', description: getUser(getLesson(lesson.id)?.createdby as string)?.name || ''};
-    const subject = {title: 'Matéria', description: getSubject(getLesson(lesson.id)?.subject as string)?.name || ''};
-    const questions = {title: 'Questões', description: ((lesson as ILesson).task.length)};
-    setMobileInfo([createdby, subject, questions]);
-  
-    setToggle('mobile');
+  function mobileInfo(lesson: ILesson): [string, string | number][] {
+
+    return [
+      ['Criado por', getUser(getLesson(lesson.id)?.createdby as string)?.name || ''],
+      ['Matéria',  getSubject(getLesson(lesson.id)?.subject as string)?.name || ''],
+      ['Questões', getLesson(lesson.id)?.task.length || 0],
+    ]
   }
 
   return (
@@ -52,7 +47,7 @@ const TodoLessonsStudent = ({ setMobileInfo, lessonsTodo }: ITodoLessonsStudentP
             {lessonsTodo && lessonsTodo.map((lesson) => (
               <div className={Styles.lessons_todo} key={lesson.id}>
                 <span>{lesson.title}</span>
-                <button className={Panel.mobile} onClick={() => handleMobileInfo(lesson)} ><MoreInfo /></button>
+                <ButtonMobileInfo info={mobileInfo(lesson)} />
                 <span>{getUser(lesson.createdby)?.name}</span>
                 <span>{getSubject(lesson.subject)?.name}</span>
                 <span>{lesson.task.length}</span>

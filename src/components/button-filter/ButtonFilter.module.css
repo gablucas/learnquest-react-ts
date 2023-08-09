@@ -1,0 +1,14 @@
+button.filter {
+  font-weight: 600;
+  color: #121214;
+  background-color: #FFA700;
+}
+
+button.filter svg {
+  fill: #121214;
+}
+
+button:hover.filter {
+  filter: brightness(1.2);
+  background-color: #FFA700;
+}

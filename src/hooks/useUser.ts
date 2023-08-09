@@ -15,9 +15,9 @@ const useUser = () => {
     setData(updateData);
   }
 
-  function deleteUser(email: string): void {
+  function deleteUser(id: string): void {
     let updateData = getData();
-    updateData = {...updateData, users: updateData.users.filter((user) => user.email !== email)};
+    updateData = {...updateData, users: updateData.users.filter((user) => user.id !== id)};
     localStorage.setItem('data', JSON.stringify(updateData));
     setData(updateData);
   }

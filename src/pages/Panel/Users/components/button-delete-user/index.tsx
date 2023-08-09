@@ -4,19 +4,20 @@ import useToggle from "../../../../../hooks/useToggle";
 import { useUser } from '../../../../../hooks/useUser';
 
 type ButtonRemoverUserProps = {
-  userEmail: string,
+  userID: string,
 }
 
-const ButtonRemoveUser = ({ userEmail }: ButtonRemoverUserProps) => {
+const ButtonDeleteUser = ({ userID }: ButtonRemoverUserProps) => {
   const { deleteUser } = useUser();
   const { toggle, handleToggle } = useToggle();
 
   return (
     <>
       <button onClick={handleToggle}><DeleteIcon /></button>
-      {toggle && <Message handleToggle={handleToggle} type='confirm' text='Deseja realmente excluir este usuário?' action={() => deleteUser(userEmail)} />}
+      {toggle && <Message handleToggle={handleToggle} type='confirm' text='Deseja realmente excluir este usuário?' action={() => deleteUser(userID)} />}
     </>
   )
 }
 
-export { ButtonRemoveUser };
+export { ButtonDeleteUser
+ };

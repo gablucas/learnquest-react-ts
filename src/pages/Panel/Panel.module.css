@@ -45,21 +45,6 @@
   background-color: #464149;
 }
 
-.options > button.filter {
-  font-weight: 600;
-  color: #121214;
-  background-color: #FFA700;
-}
-
-.options > button.filter svg {
-  fill: #121214;
-}
-
-.option > .cleanfilter {
-  font-size: .8rem;
-  background-color: rgba(48, 43, 51, .4);
-}
-
 .info div + div {
   border-top: 1px solid #121214;
 }

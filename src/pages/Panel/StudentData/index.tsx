@@ -1,10 +1,6 @@
-import React from 'react';
 import Styles from './StudentData.module.css';
 import { Navigate, useParams } from "react-router-dom";
 import { IStudent } from "../../../types/Users";
-import { GlobalContext } from "../../../GlobalContext";
-import { MobileInfoData } from '../../../types/Commom';
-import MobileInfo from '../../../components/MobileInfo/MobileInfo';
 import AboutStudent from './components/about-student';
 import DoneLessonsStudent from './components/done-lessons-student';
 import TodoLessonsStudent from './components/todo-lessons-student';
@@ -13,8 +9,6 @@ import { getStudentLessons } from '../../../helpers/lesson/getStudentLessons';
 
 const StudentData = () => {
   const { id } = useParams();
-  const { toggle } = React.useContext(GlobalContext);
-  const [mobileInfo, setMobileInfo] = React.useState<MobileInfoData[]>([{title: '', description: ''}]);
 
   const student = id && getUser(id)?.access === 'student' ? getUser(id) as IStudent : '';
   const lessonsTodo = student ? getStudentLessons(student.id) : [];
@@ -23,9 +17,8 @@ const StudentData = () => {
   return (
     <section className={Styles.studentdata}>
       <AboutStudent student={student} lessonsTodo={lessonsTodo} />
-      <DoneLessonsStudent student={student} setMobileInfo={setMobileInfo} />
-      <TodoLessonsStudent lessonsTodo={lessonsTodo} setMobileInfo={setMobileInfo} />
-      {toggle === 'mobile' && mobileInfo && (<MobileInfo info={mobileInfo} />)}
+      <DoneLessonsStudent student={student} />
+      <TodoLessonsStudent lessonsTodo={lessonsTodo} />
     </section>
   )
 }

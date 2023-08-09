@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react"
-import Evaluate from "./Evaluate"
+import Evaluate from "."
 import { BrowserRouter } from "react-router-dom"
 import { useHelpers } from "../../../hooks/useHelpers"
 

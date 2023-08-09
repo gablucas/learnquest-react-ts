@@ -2,32 +2,24 @@ import React from 'react'
 import { GlobalContext } from "../../../../../GlobalContext";
 import Panel from '../../../Panel.module.css';
 import EvaluateIcon from "../../../../../components/Icons/EvaluateIcon";
-import MoreInfo from "../../../../../components/Icons/MoreInfo";
-import { MobileInfoData, Subject } from "../../../../../types/Commom";
-import { IEvaluateTask } from "../../../../../types/Lessons";
+import { Subject } from "../../../../../types/Commom";
 import { Link } from 'react-router-dom';
 import { getLesson } from '../../../../../helpers/lesson/getLesson';
 import { getUser } from '../../../../../helpers/user/getUser';
 import { getSubject } from '../../../../../helpers/subject/getSubject';
+import { ButtonMobileInfo } from '../../../../../components/button-mobile-info';
+import { useHelpers } from '../../../../../hooks/useHelpers';
+import { getLoggedUser } from '../../../../../helpers/user/getLoggedUser';
 
-interface IEvaluateList {
-  evaluate: IEvaluateTask[],
-  setMobileInfo: React.Dispatch<React.SetStateAction<MobileInfoData[]>>,
-}
-
-const EvaluateList = ({ evaluate, setMobileInfo }: IEvaluateList) => {
-  const { data, setToggle } = React.useContext(GlobalContext);
-
-
-  function handleMobileInfo(lesson: IEvaluateTask): void {
-    const title = {title: 'Nome', description: getLesson(lesson.id)?.title || ''};
-    const student = {title: 'Aluno', description: getUser(lesson.student)?.name || ''};
-    const createdby = {title: 'Criado por', description: getUser(lesson.createdby)?.name || ''};
-    const subject = {title: 'Matéria', description: getSubject(lesson.subject)?.name || ''};
-
-    setMobileInfo([title, student, createdby, subject]);
-    setToggle('mobile');
-  }
+const EvaluateList = () => {
+  const { data, filter } = React.useContext(GlobalContext);
+  const { isArrayEmpty, arrayIncludes } = useHelpers();
+  const loggedUser = getLoggedUser();
+  
+  let evaluate = loggedUser?.access === 'admin' ? data.evaluate : data.evaluate.filter((e) => e.createdby === loggedUser?.id);
+  if (!isArrayEmpty(filter.student)) evaluate = evaluate.filter((evaluate) => arrayIncludes(filter.student, evaluate.student));
+  if (!isArrayEmpty(filter.subject)) evaluate = evaluate.filter((evaluate) => arrayIncludes(filter.subject, evaluate.subject));
+  if (!isArrayEmpty(filter.createdby)) evaluate = evaluate.filter((evaluate) => arrayIncludes(filter.createdby, evaluate.createdby));
 
   return (
     <>
@@ -37,7 +29,7 @@ const EvaluateList = ({ evaluate, setMobileInfo }: IEvaluateList) => {
           <span>{getUser(lesson.student)?.name}</span>
           <span>{getUser(lesson.createdby)?.name}</span>
           <span>{(getSubject(lesson.subject) as Subject).name}</span>
-          <button role='button' className={Panel.mobile} onClick={() => handleMobileInfo(lesson)} ><MoreInfo /></button>
+          <ButtonMobileInfo info={[['Nome', getLesson(lesson.id)?.title || ''], ['Aluno', getUser(lesson.student)?.name || ''], ['Criado por', getUser(lesson.createdby)?.name || ''], ['Matéria', getSubject(lesson.subject)?.name || '']]} />
           <Link role='link' className={Panel.action} to={`/painel/avaliar/${lesson.id}`}><EvaluateIcon /></Link>
         </div>
       ))}
