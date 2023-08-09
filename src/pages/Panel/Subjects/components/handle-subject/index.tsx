@@ -12,9 +12,10 @@ import { useSubject } from '../../../../../hooks/useSubject';
 
 type HandleSubjectProps = {
   subjectID?: string,
+  handleToggle: () => void,
 }
 
-const HandleSubject = ({ subjectID }: HandleSubjectProps) => {
+const HandleSubject = ({ subjectID, handleToggle }: HandleSubjectProps) => {
   const { data, setToggle } = React.useContext(GlobalContext);
   const { createSubject, editSubject } = useSubject();
   
@@ -55,11 +56,11 @@ const HandleSubject = ({ subjectID }: HandleSubjectProps) => {
   }
 
   return (
-    <Modal>
+    <Modal handleToggle={handleToggle}>
       <div className={Styles.container}>
         <div>
           <h2>{subjectID ? 'Editar' : 'Criar nova'} matéria</h2>
-          <button onClick={() => setToggle('none')}>Fechar</button>
+          <button onClick={handleToggle}>Fechar</button>
         </div>
         
         <form onSubmit={handleSubmit}>

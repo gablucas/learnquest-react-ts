@@ -83,7 +83,7 @@ const HandleGroup = ({ groupID, handleToggle }: HandleUserProps) => {
 
         <div>
           <h2>{groupID ? 'Editar' : 'Criar nova'} turma</h2>
-          <button onClick={() => setToggle('none')}>Fechar</button>
+          <button onClick={handleToggle}>Fechar</button>
         </div>
 
         <form onSubmit={handleSubmit}>
