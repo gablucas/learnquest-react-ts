@@ -19,7 +19,7 @@ const mockStudent: IStudent = {
 const renderComponent = () => {
   render(
   <BrowserRouter>
-    <DoneLessonsStudent student={mockStudent} setMobileInfo={jest.fn()}/>
+    <DoneLessonsStudent student={mockStudent} />
   </BrowserRouter>)
 }
 

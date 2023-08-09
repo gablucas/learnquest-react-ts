@@ -22,7 +22,7 @@ const ButtonEditLesson = ({ lessonID }: {lessonID: string}) => {
   return (
     <>
       <button onClick={handleEdit}><EditIcon /></button>
-      {toggle && <Message handleToggle={handleToggle} type='message' text='Não é mais possível editar essa aula, pois ela já foi finalizada por um ou mais alunos' action={() => ''} />}
+      {toggle && <Message handleToggle={handleToggle} type='message' text='Não é mais possível editar essa aula, pois ela já foi finalizada por um ou mais alunos' action={() => null} />}
     </>
   )
 }

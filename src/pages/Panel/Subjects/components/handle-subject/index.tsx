@@ -16,7 +16,7 @@ type HandleSubjectProps = {
 }
 
 const HandleSubject = ({ subjectID, handleToggle }: HandleSubjectProps) => {
-  const { data, setToggle } = React.useContext(GlobalContext);
+  const { data } = React.useContext(GlobalContext);
   const { createSubject, editSubject } = useSubject();
   
   const subjectToEdit = data.subjects.find((subject) => subject.id === subjectID);
@@ -51,7 +51,7 @@ const HandleSubject = ({ subjectID, handleToggle }: HandleSubjectProps) => {
         editSubject(subjectID, subject);
       }
 
-      setToggle('none');
+      handleToggle();
     }
   }
 

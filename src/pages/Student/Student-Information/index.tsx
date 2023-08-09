@@ -2,24 +2,20 @@ import React from 'react';
 import Styles from './StudentInformations.module.css'
 import { IStudent } from "../../../types/Users";
 import { GlobalContext } from '../../../GlobalContext';
-import MobileInfo from '../../../components/MobileInfo/MobileInfo';
-import { MobileInfoData } from '../../../types/Commom';
 import StudentDashboard from './student-dashboard';
 import StudentDoneLessons from './student-done-lessons';
 import { getLoggedUser } from '../../../helpers/user/getLoggedUser';
 
 const StudentInformations = () => {
-  const { data, toggle } = React.useContext(GlobalContext);
+  const { data } = React.useContext(GlobalContext);
   const student = getLoggedUser() as IStudent;
-  const [mobileInfo, setMobileInfo] = React.useState<MobileInfoData[]>([{title: '', description: ''}]);
 
   if (data)
   return (
     <div className={Styles.container}>
       <h1>Suas informações</h1>
       <StudentDashboard student={student} />
-      <StudentDoneLessons student={student} setMobileInfo={setMobileInfo} />
-      {toggle === 'mobile' && (<MobileInfo info={mobileInfo} />)}
+      <StudentDoneLessons student={student} />
     </div>
   )
 }

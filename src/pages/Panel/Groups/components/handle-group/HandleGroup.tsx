@@ -20,7 +20,7 @@ type HandleUserProps = {
 
 const HandleGroup = ({ groupID, handleToggle }: HandleUserProps) => {
   const { createGroup, editGroup } = useGroup();
-  const { data, setToggle } = React.useContext(GlobalContext);
+  const { data } = React.useContext(GlobalContext);
   const groupToEdit = data.groups.find((group) => group.id === groupID);
 
   const [students, setStudents] = React.useState<string[]>(groupToEdit ? groupToEdit.students : []);
@@ -67,11 +67,11 @@ const HandleGroup = ({ groupID, handleToggle }: HandleUserProps) => {
 
     if (!groupID && name.validate()) {
       createGroup(group);
-      setToggle('none');
+      handleToggle();
 
     } else if(groupID && name.validate() && status.validate()) {
       editGroup(groupID, group)
-      setToggle('none');
+      handleToggle();
     }
   }
 

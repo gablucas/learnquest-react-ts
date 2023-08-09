@@ -1,33 +1,26 @@
-import React from 'react';
 import Styles from './StudentLessons.module.css';
 import { Link } from 'react-router-dom';
-import MoreInfo from '../../../components/Icons/MoreInfo';
 import StartLesson from '../../../components/Icons/StartLesson';
-import { MobileInfoData, Subject } from '../../../types/Commom';
-import MobileInfo from '../../../components/MobileInfo/MobileInfo';
+import { Subject } from '../../../types/Commom';
+
 import { ILesson } from '../../../types/Lessons';
 import { getSubject } from '../../../helpers/subject/getSubject';
 import { getStudentLessons } from '../../../helpers/lesson/getStudentLessons';
+import { ButtonMobileInfo } from '../../../components/button-mobile-info';
 
 const StudentLessons = () => {
-
-  const [toggleMobile, setToggleMobile] = React.useState(false);
-  const [mobileInfo, setMobileInfo] = React.useState<MobileInfoData[]>([{title: '', description: ''}]);
-
   function getTotalXP(lesson: ILesson): number {
     const totalXP = lesson.task.map((m) => m.xp).reduce((acc, cur) => acc + cur);
     return totalXP;
   }
 
-  function handleMobileInfo(lesson: ILesson): void {
-    const subject = {title: 'Matéria', description: (getSubject(lesson.subject) as Subject).name};
-    const questions = {title: 'Questões', description: lesson.task.length}
-    const totalXP = {title: 'XP Total', description: getTotalXP(lesson)};
-
-    setMobileInfo([subject, questions, totalXP]);
-    setToggleMobile(true);
+  function mobileInfo(lesson: ILesson): [string, string | number][] {
+    return [
+      ['Matéria', (getSubject(lesson.subject) as Subject).name],
+      ['Questões', lesson.task.length],
+      ['XP Total', getTotalXP(lesson)]
+    ]
   }
-
 
   return (
     <div className={Styles.container}>
@@ -52,17 +45,13 @@ const StudentLessons = () => {
                 <span>{getSubject(lesson.subject)?.name}</span>
                 <span>{lesson.task.length}</span>
                 <span>{getTotalXP(lesson)}</span>
-                <button className={Styles.mobile} onClick={() => handleMobileInfo(lesson)}><MoreInfo /></button>
+                <ButtonMobileInfo info={mobileInfo(lesson)} />
                 <Link to={`/estudante/aula/${lesson.id}`}  key={lesson.id}><StartLesson /></Link>
               </div>  
             </li>
           ))}
         </ul>
       </div>
-
-      {toggleMobile && mobileInfo && (
-        <MobileInfo info={mobileInfo} />
-      )}
     </div>
   )
 }

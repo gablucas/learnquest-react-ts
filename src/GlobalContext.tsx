@@ -32,7 +32,7 @@ const intialValue: GlobalContextProps = {
   user: null,
   setUser: () => null,
   filter: {access: [], student: [],  subject: [], group: [], createdby: [], status: [],},
-  setFilter: () => '',
+  setFilter: () => null,
 };
 
 type GlobalProviderProps = {

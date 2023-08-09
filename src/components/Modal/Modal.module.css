@@ -13,7 +13,6 @@
   left: 50%;
   transform: translate(-50%, -50%);
   border-radius: 7px;
-  padding: 40px;
   width: 100%;
   max-width: 600px;
 }

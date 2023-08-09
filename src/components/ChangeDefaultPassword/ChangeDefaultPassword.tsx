@@ -9,6 +9,7 @@ import { useUser } from '../../hooks/useUser';
 const ChangeDefaultPassword = () => {
   const { data } = React.useContext(GlobalContext)
   const { changeUserPassword } = useUser();
+
   const password = useForm({type: 'password', initialValue: ''});
   const confirmPassword = useForm({type: 'confirmPassword', initialValue: ''});
 
@@ -23,7 +24,7 @@ const ChangeDefaultPassword = () => {
 
   if (getLoggedUser()?.password == data?.preferences.defaultPassword)
   return (
-    <Modal>
+    <Modal handleToggle={() => null}>
       <h2>Defina uma nova senha</h2>
       <form onSubmit={handleSubmit}>
         <Input type="password" label="Nova senha" {...password} />

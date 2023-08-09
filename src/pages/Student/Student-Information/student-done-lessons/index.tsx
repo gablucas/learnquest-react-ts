@@ -1,35 +1,30 @@
-import React from 'react';
-import { GlobalContext } from '../../../../GlobalContext';
-import { MobileInfoData } from '../../../../types/Commom';
 import { TaskStudent } from '../../../../types/Lessons';
 import { IStudent } from '../../../../types/Users';
 import Styles from '../StudentInformations.module.css';
 import { getSubject } from '../../../../helpers/subject/getSubject';
 import { getLesson } from '../../../../helpers/lesson/getLesson';
 import { counterQuestionsBy } from '../../../../helpers/lesson/counterQuestionsBy';
+import { ButtonMobileInfo } from '../../../../components/button-mobile-info';
 
 interface IStudentDoneLessonsProps {
   student: IStudent,
-  setMobileInfo: React.Dispatch<React.SetStateAction<MobileInfoData[]>>,
 }
 
-const StudentDoneLessons = ({ student, setMobileInfo }: IStudentDoneLessonsProps) => {
-  const { setToggle } = React.useContext(GlobalContext);
+const StudentDoneLessons = ({ student }: IStudentDoneLessonsProps) => {
 
   function totalXPEarned(index: number): number {
     const totalXP = student.lessons[index].answers.map((l) => l.xp).reduce((acc, cur) => acc + cur);
     return totalXP;
   }
 
-  function handleMobileInfo(index: number, lesson: TaskStudent): void {
-    const subject = {title: 'Matéria', description: getSubject(getLesson(lesson.id)?.subject as string)?.name as string};
-    const questions = {title: 'Questões', description: lesson.answers.length};
-    const correct = {title: 'Acertos', description: counterQuestionsBy('correct', lesson)};
-    const wrong = {title: 'Erros', description: counterQuestionsBy('wrong', lesson)};
-    const totalXP = {title: 'XP Ganho', description: totalXPEarned(index)};
-
-    setMobileInfo([subject, questions, correct, wrong, totalXP]);
-    setToggle('mobile');
+  function mobileInfo(index: number, lesson: TaskStudent): [string, string | number][] {
+    return [
+      ['Matéria', getSubject(getLesson(lesson.id)?.subject as string)?.name as string],
+      ['Questões', lesson.answers.length],
+      ['Acertos', counterQuestionsBy('correct', lesson)],
+      ['Erros', counterQuestionsBy('wrong', lesson)],
+      ['XP Ganho', totalXPEarned(index)],
+    ]
   }
 
   return (
@@ -50,7 +45,7 @@ const StudentDoneLessons = ({ student, setMobileInfo }: IStudentDoneLessonsProps
         {student.lessons.map((lesson, index) => (
           <div key={lesson.id}>
             <span>{getLesson(lesson.id)?.title}</span>
-            <button className={Styles.mobile} onClick={() => handleMobileInfo(index, lesson)}>imagem</button>
+            <ButtonMobileInfo info={mobileInfo(index, lesson)} />
             <span>{getSubject(getLesson(lesson.id)?.subject as string)?.name}</span>
             <span>{lesson.answers.length}</span>
             <span>{counterQuestionsBy('correct', lesson)}</span>
