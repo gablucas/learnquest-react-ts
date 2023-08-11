@@ -82,8 +82,8 @@ const HandleLesson = () => {
       <form onSubmit={handleSubmit}>
 
         <div>
-          <Input type='text' label='Título da aula' {...title} />
-          <Input type='text' label='Link do youtube' {...video} />
+          <Input id='lesson_title' type='text' label='Título da aula' {...title} />
+          <Input id='youtube_link' type='text' label='Link do youtube' {...video} />
           <Textarea label='Descrição' rows={10} {...description} />
         </div>
 

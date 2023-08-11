@@ -1,6 +1,6 @@
 .login_container {
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: 320px 1fr;
   margin-top: 40px;
 }
 
@@ -15,38 +15,34 @@
 
 .test > span {
   display: block;
+  text-align: start;
   font-size: .85rem;
   line-height: 1;
-  text-align: center;
   margin-bottom: 4px;
   color: #a3a3a3;
 }
 
-.test div,
+.test button,
 .test > a {
-  display: grid;
+  width: 100%;
+  text-align: center;
   background-color: #302B33;
   margin-bottom: 12px;
   padding: 12px;
   border-radius: 7px;
   border: 1px solid #121214;
+  font-weight: 500;
   transition: border .3s;
 }
 
-.test div span:first-of-type,
-.test a {
-  font-weight: 600;
-  text-transform: uppercase;
-}
-
-.test div:hover,
+.test button:hover,
 .test a:hover {
   border: 1px solid #a3a3a3;
   cursor: pointer;
 }
 
-.test a:hover,
-.test div:hover span {
+.test button:hover,
+.test a:hover {
   color: #FFA700;
 }
 

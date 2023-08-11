@@ -88,7 +88,7 @@ const HandleGroup = ({ groupID, handleToggle }: HandleUserProps) => {
 
         <form onSubmit={handleSubmit}>
 
-          <Input label='Nome da turma' type='text' {...name} />
+          <Input id='group_name' label='Nome da turma' type='text' {...name} />
 
           <div>
             <span className={Styles.togglets} onClick={() => setToggleTeacherStudent('student')}>Adicionar aluno a turma {toggleTeacherStudent === 'student' ? <Expand /> : <Contract />}</span>

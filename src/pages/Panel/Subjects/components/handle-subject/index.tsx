@@ -64,7 +64,7 @@ const HandleSubject = ({ subjectID, handleToggle }: HandleSubjectProps) => {
         </div>
         
         <form onSubmit={handleSubmit}>
-          <Input type='text' label='Matéria' {...name} />
+          <Input id='subject_name' type='text' label='Matéria' {...name} />
 
           <div>
             <span>Adicionar professores a matéria</span>

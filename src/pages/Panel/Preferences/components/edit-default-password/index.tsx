@@ -1,9 +1,9 @@
 import React from 'react';
-import Styles from '../DefaultPassword.module.css';
-import Input from "../../../../../../components/Inputs/Input";
-import Modal from "../../../../../../components/Modal";
-import useForm from "../../../../../../hooks/useForm";
-import useData from '../../../../../../hooks/useData';
+import Styles from '../../Preferences.module.css';
+import Input from "../../../../../components/Inputs/Input";
+import Modal from "../../../../../components/Modal";
+import useForm from "../../../../../hooks/useForm";
+import useData from '../../../../../hooks/useData';
 
 type EditDefaultPasswordProps = {
   handleToggle: () => void,
@@ -30,7 +30,7 @@ const EditDefaultPassword = ({ handleToggle }: EditDefaultPasswordProps) => {
           <button onClick={handleToggle}>Fechar</button>
         </div>
         <form onSubmit={handleSubmit}>
-          <Input type="text" label="Alterar senha padrão" {...editPassword}/>
+          <Input id='change_default_password' type="text" label="Alterar senha padrão" {...editPassword}/>
           <button>Salvar nova senha</button>
         </form>
       </div>

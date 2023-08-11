@@ -75,10 +75,10 @@ const HandleUser = ({ userID, handleToggle }: HandleUserProps) => {
         
         <form onSubmit={handleSubmit}>
          {!userID && (<Select label='Acesso' options={[{ name: 'Administrador', value: 'admin'}, { name: 'Professor', value: 'teacher'}, { name: 'Estudante', value: 'student'}]} {...access} />)}
-          <Input type='text' label='Nome' {...name} />
-          <Input type='text' label='Login' {...login} />
-          <Input type='email' label='Email' {...email} />
-          {userID && (<Input type='text' label='Senha' {...password} />)}
+          <Input id='user_name' type='text' label='Nome' {...name} />
+          <Input id='user_login' type='text' label='Login' {...login} />
+          <Input id='user_email' type='email' label='Email' {...email} />
+          {userID && (<Input id='user_password' type='text' label='Senha' {...password} />)}
           {userID && (<Select label='Estado' options={[{name: 'Ativo', value: 'active'}, {name: 'Desativo', value: 'disable'}]} {...status} />)}
           <button>{!userID ? 'Cadastrar' : 'Atualizar'}</button>
         </form>

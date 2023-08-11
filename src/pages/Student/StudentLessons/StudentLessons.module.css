@@ -30,12 +30,6 @@
   background-color: #1E1C1F;
 }
 
-.list button,
-.list a {
-  display: flex;
-  justify-content: center;
-}
-
 .list svg {
   border-radius: 7px;
   fill: #E4E4E5;
@@ -49,12 +43,12 @@
 }
 
 .mobile {
-  display: none !important;
+  display: none;
 }
 
 @media (max-width: 1024px) {
   .mobile {
-    display: initial !important;
+    display: initial;
   }
 
   .list div,

@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react"
+import { render, screen, fireEvent } from "@testing-library/react"
 import TestUsers from "."
 import useForm from "../../../hooks/useForm"
 import { BrowserRouter } from "react-router-dom"
@@ -17,13 +17,13 @@ describe("TestUsers", () => {
       </BrowserRouter>
       )
 
-    expect(screen.getByText("Contas para teste")).toBeInTheDocument();
-    expect(screen.getByText("Administrador")).toBeInTheDocument();
-    expect(screen.getByText("Professor")).toBeInTheDocument();
-    expect(screen.getByText("Aluno")).toBeInTheDocument();
-    expect(screen.getByText("Defazer todas ações")).toBeInTheDocument();
-    expect(screen.getByText("Defazer todas ações")).toBeInTheDocument();
-    expect(screen.getByText("Saiba como funciona")).toBeInTheDocument();
+      expect(screen.getByRole('heading', {level: 2})).toBeInTheDocument();
+      expect(screen.getByText('Selecione para preencher automaticamente')).toBeInTheDocument();
+      expect(screen.getByRole('button', {name: 'Administrador'})).toBeInTheDocument();
+      expect(screen.getByRole('button', {name: 'Professor'})).toBeInTheDocument();
+      expect(screen.getByRole('button', {name: 'Aluno'})).toBeInTheDocument();
+      expect(screen.getByRole('button', {name: 'Desfazer todas ações'})).toBeInTheDocument();
+      expect(screen.getByRole("link", { name: "Saiba como funciona" })).toBeInTheDocument();
   })
 
   it('should navigate to tutorial when click on Saiba como funciona link', () => {

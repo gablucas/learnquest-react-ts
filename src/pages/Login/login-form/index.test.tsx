@@ -16,10 +16,9 @@ describe('LoginForm', () => {
       <LoginForm login={login} password={password} />
     </BrowserRouter>)
 
-    expect(screen.getByText("Faça o login")).toBeInTheDocument();
-    expect(screen.getByRole("form")).toBeInTheDocument();
-
-
-    expect(screen.getByText("Entrar")).toBeInTheDocument();
+    expect(screen.getByRole('heading', {level: 1})).toBeInTheDocument();
+    expect(screen.getByRole('textbox', {name: 'Login'})).toBeInTheDocument();
+    expect(screen.getByLabelText('Senha')).toBeInTheDocument();
+    expect(screen.getByRole('button', {name: 'Entrar'})).toBeInTheDocument();
   })
 })

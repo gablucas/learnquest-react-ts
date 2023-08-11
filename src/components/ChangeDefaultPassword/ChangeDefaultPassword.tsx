@@ -27,8 +27,8 @@ const ChangeDefaultPassword = () => {
     <Modal handleToggle={() => null}>
       <h2>Defina uma nova senha</h2>
       <form onSubmit={handleSubmit}>
-        <Input type="password" label="Nova senha" {...password} />
-        <Input type="password" label="Confirmar nova senha" {...confirmPassword} />
+        <Input id='new_password' type="password" label="Nova senha" {...password} />
+        <Input id='confirm_new_password' type="password" label="Confirmar nova senha" {...confirmPassword} />
         <button>Salvar nova senha</button>
       </form>
     </Modal>
